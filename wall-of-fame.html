@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall of Fame | Wimpie &amp; de Domino's Highlights 🏆🎶</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="app.js" defer></script>
+</head>
+
+<body class="bg-amber-50/50 text-slate-800 font-sans antialiased selection:bg-brand-sun selection:text-slate-900">
+
+    <!-- Top Bar: Navigatie & Snelle Hulp -->
+    <header class="bg-amber-100 border-b-2 border-amber-200 sticky top-0 z-50 px-4 py-2 shadow-sm">
+        <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <a href="index.html" class="font-heading text-lg font-bold text-amber-900 hover:text-rose-600 transition flex items-center gap-1.5">
+                🎵 Wimpie &amp; de Domino's
+            </a>
+            <div class="flex items-center gap-2">
+                <a href="boeken.html"
+                    class="text-xs bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-full font-bold shadow-sm transition flex items-center gap-1">
+                    <span>🎺</span> Boek ons
+                </a>
+                <button id="tts-btn" onclick="toggleReadAloud()"
+                    class="bg-white hover:bg-yellow-100 text-amber-900 font-bold px-3 sm:px-4 py-1.5 rounded-full border-2 border-amber-300 shadow-sm flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm transition transform active:scale-95"
+                    aria-label="Lees de pagina voor">
+                    <span id="tts-icon">🔊</span>
+                    <span id="tts-text">Lees voor</span>
+                </button>
+                <a href="begeleiders.html"
+                    class="text-xs bg-amber-200/80 hover:bg-amber-300 text-amber-900 px-3 py-1.5 rounded-full font-bold transition">
+                    ℹ️ Voor begeleiders
+                </a>
+                <a href="index.html"
+                    class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1.5 rounded-full font-bold transition">
+                    ← Terug
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Sectie Wall of Fame -->
+    <section class="relative bg-gradient-to-b from-amber-400 via-amber-300 to-amber-50 text-slate-900 pt-10 pb-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-white text-amber-950 font-heading text-sm md:text-base font-bold px-5 py-2 rounded-full shadow-md mb-4 border-2 border-amber-300">
+                ✨ Ons Portfolio &amp; Hoogtepunten ✨
+            </div>
+            <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 drop-shadow-sm mb-4 leading-tight">
+                Onze <span class="text-rose-600 underline decoration-wavy decoration-yellow-400">Wall of Fame</span> 🏆
+            </h1>
+            <p class="text-slate-800 text-lg md:text-xl font-bold max-w-2xl mx-auto leading-relaxed">
+                Van nationale televisie tot het Koninklijk Theater: bekijk hier de allermooiste optredens, video's en belevenissen van Wimpie &amp; de Domino's!
+            </p>
+        </div>
+    </section>
+
+    <!-- Wall of Fame Items Grid -->
+    <main class="max-w-5xl mx-auto py-8 px-4 space-y-12">
+
+        <!-- Item 1: DWDD -->
+        <article class="bg-white rounded-3xl overflow-hidden shadow-xl border-4 border-emerald-300 grid md:grid-cols-12 gap-0 transition hover:shadow-2xl">
+            <div class="md:col-span-7 relative aspect-video bg-slate-900">
+                <iframe class="w-full h-full"
+                    src="https://www.youtube-nocookie.com/embed/S-ZFQPv2SAc"
+                    title="Wimpie & de Domino's - Live bij De Wereld Draait Door"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner">
+                        📺
+                    </div>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+                        Live bij De Wereld Draait Door!
+                    </h2>
+                    <p class="text-slate-700 text-base leading-relaxed mb-4">
+                        Een onvergetelijk moment op nationale televisie! Wimpie &amp; de Domino's speelden live in de studio van DWDD voor honderdduizenden kijkers. Een geweldig feest vol muzikaal plezier en pure energie.
+                    </p>
+                </div>
+                <div class="bg-emerald-50 rounded-2xl p-3.5 border border-emerald-200 text-xs font-bold text-emerald-900 flex items-center gap-2">
+                    <span>⭐</span>
+                    <span>Bekijk het complete optreden in de video hiernaast!</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Item 2: Carré -->
+        <article class="bg-white rounded-3xl overflow-hidden shadow-xl border-4 border-sky-300 grid md:grid-cols-12 gap-0 transition hover:shadow-2xl">
+            <div class="md:col-span-7 relative aspect-video bg-slate-900">
+                <iframe class="w-full h-full"
+                    src="https://www.youtube-nocookie.com/embed/b7E6zPIfTJM"
+                    title="Wimpie & de Domino's - Optreden in Koninklijk Theater Carré"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 bg-sky-100 text-sky-800 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner">
+                        🎭
+                    </div>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+                        Met Ronnie Flex in Carré
+                    </h2>
+                    <p class="text-slate-700 text-base leading-relaxed mb-4">
+                        Staan op het meest iconische theaterpodium van Nederland: Koninklijk Theater Carré in Amsterdam! Een bomvolle zaal, uitzinnig publiek en met Ronnie Flex een magische dag voor al onze bandleden.
+                    </p>
+                </div>
+                <div class="bg-sky-50 rounded-2xl p-3.5 border border-sky-200 text-xs font-bold text-sky-900 flex items-center gap-2">
+                    <span>🌟</span>
+                    <span>Een historische mijlpaal voor de band en onze muzikanten!</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Item 3: Feesten & Zorghuizen -->
+        <article class="bg-white rounded-3xl overflow-hidden shadow-xl border-4 border-rose-300 grid md:grid-cols-12 gap-0 transition hover:shadow-2xl">
+            <div class="md:col-span-7 relative aspect-video bg-slate-900">
+                <iframe class="w-full h-full"
+                    src="https://www.youtube-nocookie.com/embed/0gOF-DIxyFY"
+                    title="Wimpie & de Domino's - Zorghuizen & Evenementen"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 bg-rose-100 text-rose-800 rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-inner">
+                        🎺
+                    </div>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+                        Zorghuizen &amp; Evenementen
+                    </h2>
+                    <p class="text-slate-700 text-base leading-relaxed mb-4">
+                        Naast grote podia spelen we met evenveel liefde op festivals, wijkfeesten en in zorghuizen door heel Nederland. Samen zingen, dansen en genieten van zelfgeschreven vrolijke liedjes.
+                    </p>
+                </div>
+                <div class="bg-rose-50 rounded-2xl p-3.5 border border-rose-200 text-xs font-bold text-rose-900 flex items-center gap-2">
+                    <span>💖</span>
+                    <span>Bekijk de sfeerimpressie in de video hiernaast!</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Boeking Callout Banner -->
+        <section class="bg-gradient-to-r from-rose-500 via-rose-600 to-amber-500 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-4 border-rose-300">
+            <div class="text-center md:text-left">
+                <span class="bg-yellow-300 text-amber-950 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider">Wil je ons ook live meemaken?</span>
+                <h3 class="font-heading text-2xl sm:text-3xl font-bold mt-2 mb-1">Boek Wimpie &amp; de Domino's! 🎺</h3>
+                <p class="text-rose-100 text-base max-w-xl">Haal dit vrolijke muziekspektakel naar jouw zorghuis, festival, theater of evenement.</p>
+            </div>
+            <a href="boeken.html" class="flex-shrink-0 bg-white hover:bg-amber-100 text-rose-700 font-heading text-lg sm:text-xl font-bold px-7 py-3.5 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2 border-b-4 border-rose-200">
+                <span>🎉</span> Direct Boeken &rarr;
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-xs mt-12">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Aletta Jacobsstraat 59, 1349 HB Almere | KvK: 96802863</p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="index.html" class="text-amber-300 hover:text-amber-200 font-bold underline transition">
+                    ← Terug naar hoofdpagina
+                </a>
+                <a href="boeken.html" class="text-rose-300 hover:text-rose-200 font-bold underline transition">
+                    🎺 Boek een optreden ↗
+                </a>
+                <a href="begeleiders.html" class="text-amber-300 hover:text-amber-200 font-bold underline transition">
+                    Voor begeleiders &amp; PB'ers ↗
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
