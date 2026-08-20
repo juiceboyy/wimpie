@@ -12,14 +12,16 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
     <!-- Hero Sectie -->
-    <header class="bg-blue-600 text-white text-center py-20 px-4">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Wimpie & de Domino's</h1>
-        <p class="text-xl md:text-2xl font-light mb-8 italic">"Je bent mooi zoals je bent!"</p>
-        <p class="max-w-2xl mx-auto text-lg mb-8">Een inspirerende, professionele en veilige muzikale dagbesteding waar
-            talent en inclusiviteit centraal staan.</p>
-        <a href="#contact"
-            class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition shadow-lg">Kom
-            sfeer proeven</a>
+    <header class="relative bg-slate-900 text-white text-center py-24 md:py-32 px-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('banner.jpg');">
+        <div class="max-w-3xl mx-auto relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">Wimpie & de Domino's</h1>
+            <p class="text-xl md:text-2xl font-light mb-8 italic text-blue-200 drop-shadow">"Je bent mooi zoals je bent!"</p>
+            <p class="max-w-2xl mx-auto text-lg mb-8 text-slate-100 drop-shadow">Een inspirerende, professionele en veilige muzikale dagbesteding waar
+                talent en inclusiviteit centraal staan.</p>
+            <a href="#contact"
+                class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg">Kom
+                sfeer proeven</a>
+        </div>
     </header>
 
     <!-- Programma Sectie -->
@@ -119,7 +121,25 @@
     </footer>
 
     <script>
-        lucide.createIcons();
+        function initIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            } else {
+                const interval = setInterval(() => {
+                    if (typeof lucide !== 'undefined') {
+                        clearInterval(interval);
+                        lucide.createIcons();
+                    }
+                }, 100);
+                setTimeout(() => clearInterval(interval), 10000);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initIcons);
+        } else {
+            initIcons();
+        }
     </script>
 </body>
 
