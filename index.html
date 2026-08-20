@@ -1,146 +1,298 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wimpie & de Domino's | Muzikale Dagbesteding</title>
+    <title>Wimpie & de Domino's | Gezellig Samen Muziek Maken! 🎶</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="app.js" defer></script>
 </head>
 
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-amber-50/50 text-slate-800 font-sans antialiased selection:bg-brand-sun selection:text-slate-900">
 
-    <!-- Hero Sectie -->
-    <header class="relative bg-slate-900 text-white text-center py-24 md:py-32 px-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('banner.jpg');">
-        <div class="max-w-3xl mx-auto relative z-10">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">Wimpie & de Domino's</h1>
-            <p class="text-xl md:text-2xl font-light mb-8 italic text-blue-200 drop-shadow">"Je bent mooi zoals je bent!"</p>
-            <p class="max-w-2xl mx-auto text-lg mb-8 text-slate-100 drop-shadow">Een inspirerende, professionele en veilige muzikale dagbesteding waar
-                talent en inclusiviteit centraal staan.</p>
-            <a href="#contact"
-                class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg">Kom
-                sfeer proeven</a>
+    <!-- Top Bar: Voorleesknop & Snelle Hulp -->
+    <header class="bg-amber-100 border-b-2 border-amber-200 sticky top-0 z-50 px-4 py-2 shadow-sm">
+        <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <span class="font-heading text-lg font-bold text-amber-900 flex items-center gap-1.5">
+                🎵 Wimpie &amp; de Domino's
+            </span>
+            <div class="flex items-center gap-2">
+                <button id="tts-btn" onclick="toggleReadAloud()"
+                    class="bg-white hover:bg-yellow-100 text-amber-900 font-bold px-4 py-1.5 rounded-full border-2 border-amber-300 shadow-sm flex items-center gap-2 text-sm transition transform active:scale-95"
+                    aria-label="Lees de pagina voor">
+                    <span id="tts-icon">🔊</span>
+                    <span id="tts-text">Lees de tekst voor</span>
+                </button>
+                <a href="#begeleiders"
+                    class="text-xs bg-amber-200/80 hover:bg-amber-300 text-amber-900 px-3 py-1.5 rounded-full font-bold transition">
+                    ℹ️ Voor begeleiders &amp; ouders
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Programma Sectie -->
-    <section class="max-w-5xl mx-auto py-16 px-4">
-        <h2 class="text-3xl font-bold text-center mb-12 text-blue-700">Ons Programma in Parochie De Boom</h2>
+    <!-- Vrolijke Hero Sectie -->
+    <section class="relative bg-gradient-to-b from-sky-400 via-sky-300 to-amber-50 text-white pt-10 pb-16 px-4 text-center overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 bg-yellow-300 text-amber-950 font-heading text-base md:text-lg font-bold px-5 py-2 rounded-full shadow-md mb-6 rotate-[-1deg] border-2 border-yellow-400">
+                ✨ "Je bent mooi zoals je bent!" ✨
+            </div>
+
+            <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 drop-shadow-sm mb-4 leading-tight">
+                Muziek maken met <br class="hidden sm:inline" />
+                <span class="text-rose-600 underline decoration-wavy decoration-yellow-300">Wimpie &amp; de Domino's!</span> 🎸
+            </h1>
+
+            <p class="text-slate-800 text-xl md:text-2xl font-bold max-w-2xl mx-auto mb-8 leading-relaxed">
+                Houd jij ook zo van muziek? Kom gezellig zingen, drummen of gitaar spelen bij onze muziekgroep in Amsterdam! 🎤🥁
+            </p>
+
+            <!-- Foto banner met speels kader -->
+            <div class="relative max-w-3xl mx-auto mb-10 rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900">
+                <img src="banner.jpg" alt="Wimpie en de Domino's maken vrolijk muziek op het podium" class="w-full h-64 sm:h-80 md:h-96 object-cover hover:scale-105 transition duration-500">
+            </div>
+
+            <!-- Grote Actieknoppen -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#dagen"
+                    class="bg-emerald-500 hover:bg-emerald-600 text-white font-heading text-xl md:text-2xl font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex items-center gap-3 border-b-4 border-emerald-700">
+                    <span>👀</span> Wat doen we allemaal?
+                </a>
+                <a href="#contact"
+                    class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-heading text-xl md:text-2xl font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex items-center gap-3 border-b-4 border-amber-600">
+                    <span>👋</span> Kom je meedoen?
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wat doen we op maandag en dinsdag? -->
+    <section id="dagen" class="max-w-5xl mx-auto py-12 px-4">
+        <div class="text-center mb-10">
+            <span class="bg-rose-100 text-rose-700 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Onze Gezellige Dagen</span>
+            <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mt-3">
+                Kies wat jij leuk vindt! 🌟
+            </h2>
+            <p class="text-lg text-slate-600 font-semibold mt-2">Iedereen kan meedoen op zijn of haar eigen tempo.</p>
+        </div>
+
         <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-                <h3 class="text-xl font-bold mb-4 flex items-center text-orange-600"><i data-lucide="music"
-                        class="mr-3"></i> Maandag: De Band</h3>
-                <p class="mb-4">Elke maandag repeteren we met de band, bestaande uit tien getalenteerde muzikanten met
-                    een verstandelijke beperking. We schrijven eigen muziek, staan midden in de maatschappij en hebben
-                    opgetreden <a href="https://youtu.be/b7E6zPIfTJM?si=Ws3hhGVzsfxAyM4v" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline hover:text-blue-800">in Carré</a> en <a href="https://youtu.be/S-ZFQPv2SAc?si=MTqNqoR67nBtOJpE" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline hover:text-blue-800">bij DWDD</a>!</p>
+            <!-- Kaart Maandag -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-amber-300 hover:border-amber-400 transition flex flex-col justify-between">
+                <div>
+                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-inner">
+                        🎸
+                    </div>
+                    <span class="inline-block bg-amber-400 text-amber-950 font-heading font-bold px-3.5 py-1 rounded-full text-sm mb-3">
+                        Elke Maandag
+                    </span>
+                    <h3 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+                        De Band (Lekker Knallen!)
+                    </h3>
+                    <p class="text-slate-700 text-lg leading-relaxed mb-4">
+                        Samen spelen in een echte band met 10 muzikanten! We schrijven eigen liedjes, zingen in de microfoon en oefenen voor vrolijke optredens.
+                    </p>
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 mb-6">
+                        <p class="font-bold text-amber-900 text-sm flex items-center gap-2">
+                            <span>⭐</span> Wist je dat? Wij hebben opgetreden in <strong>Carré</strong> en op TV bij <strong>DWDD</strong>!
+                        </p>
+                    </div>
+                </div>
+                <a href="#videos" class="inline-flex items-center justify-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-heading font-bold py-3 px-6 rounded-2xl transition">
+                    <span>🎬</span> Bekijk de filmpjes
+                </a>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-                <h3 class="text-xl font-bold mb-4 flex items-center text-purple-600"><i data-lucide="heart"
-                        class="mr-3"></i> Dinsdag: Muziekbeleving</h3>
-                <p class="mb-4">Elke dinsdag is er een laagdrempelige muzikale dagbesteding in dezelfde locatie. Hier
-                    staat muziekbeleving, ritme en ontspanning in een vertrouwde setting centraal, op het eigen tempo
-                    van de deelnemer.</p>
+
+            <!-- Kaart Dinsdag -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-purple-300 hover:border-purple-400 transition flex flex-col justify-between">
+                <div>
+                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-inner">
+                        🎶
+                    </div>
+                    <span class="inline-block bg-purple-400 text-white font-heading font-bold px-3.5 py-1 rounded-full text-sm mb-3">
+                        Elke Dinsdag
+                    </span>
+                    <h3 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+                        Muziek Beleven &amp; Ontspannen
+                    </h3>
+                    <p class="text-slate-700 text-lg leading-relaxed mb-4">
+                        Heerlijk ontspannen met muziek. Lekker luisteren, trommelen op ritme-instrumenten, meezingen of gewoon rustig genieten in een warme en veilige groep.
+                    </p>
+                    <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 mb-6">
+                        <p class="font-bold text-purple-900 text-sm flex items-center gap-2">
+                            <span>💖</span> Niets moet, alles mag! Lekker genieten op jouw eigen manier.
+                        </p>
+                    </div>
+                </div>
+                <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-900 font-heading font-bold py-3 px-6 rounded-2xl transition">
+                    <span>☕</span> Kom sfeer proeven
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Informatie voor PB'ers en Verwanten -->
-    <section class="bg-slate-100 py-16 px-4">
+    <!-- Filmpjes & Optredens Sectie -->
+    <section id="videos" class="bg-amber-100/60 py-12 px-4 border-y-2 border-amber-200">
         <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12 text-slate-800">Informatie voor Begeleiders & Verwanten</h2>
-            <div class="bg-white rounded-xl shadow-sm p-8 border border-slate-200">
-                <p class="mb-6 text-lg">Als professionele VOF (geleid door Auck Boersma en Ronald van Holst) zorgen wij
-                    voor heldere, efficiënte communicatie met zorgpartners en verwanten.</p>
-                <ul class="space-y-4 mb-6">
-                    <li class="flex items-start"><i data-lucide="check-circle-2"
-                            class="text-green-600 mr-3 mt-1 min-w-[24px]"></i> <span><strong>Financiering:</strong>
-                            Plaatsing is mogelijk via o.a. onderaannemingsovereenkomsten (zoals met Cordaan, Stichting
-                            Amsta en Thomashuis) of PGB.</span></li>
-                    <li class="flex items-start"><i data-lucide="check-circle-2"
-                            class="text-green-600 mr-3 mt-1 min-w-[24px]"></i> <span><strong>Tarieven:</strong> Onze
-                            urendeclaraties zijn gebaseerd op de ZZP-tariefstructuur voor dagbesteding. Zorg is
-                            vrijgesteld van btw.</span></li>
-                    <li class="flex items-start"><i data-lucide="check-circle-2"
-                            class="text-green-600 mr-3 mt-1 min-w-[24px]"></i> <span><strong>Locatie:</strong> We
-                            repeteren wekelijks in Parochie De Boom (onderdeel van de Boomkerk) in Amsterdam.</span>
-                    </li>
-                </ul>
+            <div class="text-center mb-8">
+                <span class="bg-sky-200 text-sky-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Kijk en Luister</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-slate-900 mt-2">
+                    Onze Mooiste Optredens! 📺🎉
+                </h2>
+                <p class="text-slate-700 font-semibold mt-1">Klik op een filmpje om ons te zien spelen!</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6">
+                <!-- Video 1: Carré -->
+                <a href="https://youtu.be/b7E6zPIfTJM?si=Ws3hhGVzsfxAyM4v" target="_blank" rel="noopener noreferrer"
+                    class="group bg-white rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border-3 border-sky-300 flex items-center gap-5">
+                    <div class="w-16 h-16 bg-rose-500 group-hover:bg-rose-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow transition flex-shrink-0">
+                        ▶️
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-sky-700">Theater Carré</span>
+                        <h4 class="font-heading text-xl font-bold text-slate-900 group-hover:text-sky-700 transition">
+                            Optreden in Koninklijk Theater Carré! 👑
+                        </h4>
+                        <p class="text-sm text-slate-600 font-medium mt-1">Bekijk de video op YouTube ↗</p>
+                    </div>
+                </a>
+
+                <!-- Video 2: DWDD -->
+                <a href="https://youtu.be/S-ZFQPv2SAc?si=MTqNqoR67nBtOJpE" target="_blank" rel="noopener noreferrer"
+                    class="group bg-white rounded-3xl p-6 shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border-3 border-emerald-300 flex items-center gap-5">
+                    <div class="w-16 h-16 bg-rose-500 group-hover:bg-rose-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow transition flex-shrink-0">
+                        ▶️
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Op Televisie</span>
+                        <h4 class="font-heading text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition">
+                            Live bij De Wereld Draait Door! 📺
+                        </h4>
+                        <p class="text-sm text-slate-600 font-medium mt-1">Bekijk de uitzending op YouTube ↗</p>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Contact & Optredens -->
-    <section id="contact" class="max-w-5xl mx-auto py-16 px-4 grid md:grid-cols-2 gap-12">
-        <div>
-            <h2 class="text-3xl font-bold mb-6 text-blue-700">Neem Contact Op</h2>
-            <p class="mb-6">Heeft u een cliënt voor wie onze dagbesteding een fijne plek is? Of wilt u ons boeken voor
-                een optreden?</p>
-            <div class="space-y-4 mb-8">
-                <p class="flex items-center"><i data-lucide="phone" class="mr-3 text-slate-500"></i> 06-28143815</p>
-                <p class="flex items-center"><i data-lucide="mail" class="mr-3 text-slate-500"></i> wimpieweg@gmail.com
-                </p>
-                <p class="flex items-center"><i data-lucide="info" class="mr-3 text-slate-500"></i> KvK: 96802863</p>
-            </div>
-            <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
-                <strong>Optredens boeken?</strong> Vraag naar onze technische rider (wij hebben o.a. een trapje naar het
-                podium nodig en drinken graag Fernandes!).
+    <!-- Waar en Hoe? Eenvoudig Contact voor Deelnemers -->
+    <section id="contact" class="max-w-5xl mx-auto py-12 px-4">
+        <div class="bg-gradient-to-br from-amber-300 via-amber-200 to-yellow-100 rounded-3xl p-8 md:p-12 shadow-xl border-4 border-amber-400 text-center">
+            <div class="inline-block text-4xl mb-3">📍🏰</div>
+            <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-amber-950 mb-3">
+                Kom je gezellig bij ons kijken?
+            </h2>
+            <p class="text-slate-800 text-lg sm:text-xl font-bold max-w-2xl mx-auto mb-6">
+                We repeteren elke week in de fijne <strong>Parochie De Boom (Boomkerk) in Amsterdam</strong>!
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 max-w-xl mx-auto">
+                <a href="tel:0628143815"
+                    class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-heading text-xl font-bold px-8 py-4 rounded-full shadow-lg transition flex items-center justify-center gap-3">
+                    <i data-lucide="phone" class="w-6 h-6"></i> Bel direct: 06-28143815
+                </a>
+                <a href="mailto:wimpieweg@gmail.com"
+                    class="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-heading text-xl font-bold px-8 py-4 rounded-full shadow-lg transition flex items-center justify-center gap-3">
+                    <i data-lucide="mail" class="w-6 h-6"></i> Stuur een mailtje
+                </a>
             </div>
         </div>
+    </section>
 
-        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-            <h3 class="text-xl font-bold mb-6">Stel uw vraag of meld aan</h3>
-            <form class="space-y-4" action="#" method="POST">
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Naam contactpersoon</label>
-                    <input type="text" placeholder="Naam PB'er of verwant"
-                        class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        required>
+    <!-- Informatie voor Begeleiders, Ouders & Boekingen (Rustige & Duidelijke Sectie) -->
+    <section id="begeleiders" class="bg-slate-100 py-16 px-4 border-t-2 border-slate-200">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="bg-slate-200 text-slate-700 font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider">Professionele Informatie</span>
+                <h2 class="font-heading text-3xl font-bold text-slate-800 mt-2">Voor Begeleiders, PB'ers &amp; Verwanten</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto mt-2">
+                    Wimpie &amp; de Domino's is een professionele VOF (geleid door Auck Boersma en Ronald van Holst) gericht op kwalitatieve muzikale dagbesteding en optredens.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Zakelijke Info & Boekingen -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <h3 class="font-heading text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="file-check" class="text-blue-600 w-5 h-5"></i> Plaatsing &amp; Financiering
+                        </h3>
+                        <ul class="space-y-3 text-slate-700 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle-2" class="text-green-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
+                                <span><strong>Plaatsing:</strong> Mogelijk via onderaannemingsovereenkomsten (o.a. met Cordaan, Stichting Amsta, Thomashuis) of via PGB.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle-2" class="text-green-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
+                                <span><strong>Tarieven:</strong> Urendeclaraties conform de ZZP-tariefstructuur voor dagbesteding. Zorgverlening is vrijgesteld van btw.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle-2" class="text-green-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
+                                <span><strong>Locatie:</strong> Wekelijkse repetitieruimte in Parochie De Boom (Boomkerk), Amsterdam.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+                        <h3 class="font-heading text-xl font-bold text-amber-900 mb-2 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="text-amber-600 w-5 h-5"></i> Optredens Boeken?
+                        </h3>
+                        <p class="text-sm text-amber-900 mb-3">
+                            Wilt u onze band boeken voor een feest, congres of festival? Vraag naar onze technische rider (wij hebben o.a. een trapje naar het podium nodig en drinken graag Fernandes!).
+                        </p>
+                        <div class="text-xs text-amber-800 space-y-1 font-medium">
+                            <p>📞 <strong>Telefoon:</strong> 06-28143815</p>
+                            <p>✉️ <strong>E-mail:</strong> wimpieweg@gmail.com</p>
+                            <p>🏢 <strong>KvK-nummer:</strong> 96802863</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">E-mailadres</label>
-                    <input type="email" placeholder="uw@email.nl"
-                        class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        required>
+
+                <!-- Formulier voor PB'ers / Begeleiders -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+                    <h3 class="font-heading text-xl font-bold text-slate-800 mb-2">Vraag stellen of Aanmelden</h3>
+                    <p class="text-sm text-slate-600 mb-6">Meld een cliënt aan of stel een vraag over beschikbaarheid en tarieven.</p>
+                    <form class="space-y-4" action="mailto:wimpieweg@gmail.com" method="GET">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Naam contactpersoon / PB'er</label>
+                            <input type="text" placeholder="Bijv. Jan de Vries"
+                                class="w-full border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-sky-500 outline-none" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">E-mailadres</label>
+                            <input type="email" placeholder="uw@organisatie.nl"
+                                class="w-full border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-sky-500 outline-none" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Toelichting of vraag</label>
+                            <textarea rows="3" placeholder="Wat is de ondersteuningsvraag van de cliënt?"
+                                class="w-full border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-sky-500 outline-none" required></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <span>✉️</span> Bericht Versturen
+                        </button>
+                    </form>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Korte toelichting</label>
-                    <textarea rows="4" placeholder="Waar kunnen we u mee helpen?"
-                        class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        required></textarea>
-                </div>
-                <button type="submit"
-                    class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Versturen</button>
-            </form>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-800 text-slate-400 text-center py-8">
-        <p>&copy; 2026 VOF Wimpie & de Domino's | Aletta Jacobsstraat 59, 1349 HB Almere.</p>
+    <footer class="bg-slate-900 text-slate-400 text-center py-6 px-4 text-xs">
+        <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Aletta Jacobsstraat 59, 1349 HB Almere | KvK: 96802863</p>
     </footer>
 
-    <script>
-        function initIcons() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            } else {
-                const interval = setInterval(() => {
-                    if (typeof lucide !== 'undefined') {
-                        clearInterval(interval);
-                        lucide.createIcons();
-                    }
-                }, 100);
-                setTimeout(() => clearInterval(interval), 10000);
-            }
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initIcons);
-        } else {
-            initIcons();
-        }
-    </script>
+    <!-- Scripts: Laad modulaire app.js -->
+    <script src="app.js"></script>
 </body>
 
 </html>
