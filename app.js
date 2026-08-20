@@ -23,21 +23,62 @@ tailwind.config = {
     }
 };
 
-let isSpeaking = false;
+let audioPlayer = null;
+let isAudioPlaying = false;
 
 function toggleReadAloud() {
-    if (!('speechSynthesis' in window)) {
-        alert('Helaas ondersteunt jouw browser geen voorleesfunctie.');
+    if (isAudioPlaying) {
+        stopAudio();
         return;
     }
 
-    if (isSpeaking) {
+    playAudio();
+}
+
+function playAudio() {
+    if (!audioPlayer) {
+        audioPlayer = new Audio('audio/intro.mp3');
+        audioPlayer.addEventListener('ended', () => {
+            isAudioPlaying = false;
+            updateTtsButton(false);
+        });
+        audioPlayer.addEventListener('error', () => {
+            console.warn('Audiobestand kon niet worden afgespeeld, fallback naar spraaksynthese.');
+            playSpeechSynthesisFallback();
+        });
+    }
+
+    audioPlayer.currentTime = 0;
+    audioPlayer.play().then(() => {
+        isAudioPlaying = true;
+        updateTtsButton(true);
+    }).catch(err => {
+        console.warn('Direct audio afspelen geblokkeerd of mislukt, fallback:', err);
+        playSpeechSynthesisFallback();
+    });
+}
+
+function stopAudio() {
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
         window.speechSynthesis.cancel();
-        isSpeaking = false;
+    }
+    isAudioPlaying = false;
+    updateTtsButton(false);
+}
+
+function playSpeechSynthesisFallback() {
+    if (!('speechSynthesis' in window)) {
+        alert('Helaas ondersteunt jouw browser geen voorleesfunctie.');
+        isAudioPlaying = false;
         updateTtsButton(false);
         return;
     }
 
+    window.speechSynthesis.cancel();
     const textToRead = "Welkom bij Wimpie en de Domino's! Je bent mooi zoals je bent! Houd jij ook zo van muziek? Kom gezellig zingen, drummen of gitaar spelen bij onze muziekgroep in Amsterdam! Op maandag hebben we de Band en schrijven we eigen liedjes. Op dinsdag hebben we muziekbeleving en ontspanning. Wil je meedoen? Bel ons op 06 28 14 38 15!";
 
     const utterance = new SpeechSynthesisUtterance(textToRead);
@@ -46,17 +87,17 @@ function toggleReadAloud() {
     utterance.pitch = 1.05;
 
     utterance.onend = function () {
-        isSpeaking = false;
+        isAudioPlaying = false;
         updateTtsButton(false);
     };
 
     utterance.onerror = function () {
-        isSpeaking = false;
+        isAudioPlaying = false;
         updateTtsButton(false);
     };
 
     window.speechSynthesis.speak(utterance);
-    isSpeaking = true;
+    isAudioPlaying = true;
     updateTtsButton(true);
 }
 
