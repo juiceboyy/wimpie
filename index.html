@@ -32,7 +32,7 @@
                 </button>
                 <a href="single.html"
                     class="h-9 px-3.5 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]">
-                    Nieuwe Single
+                    Single
                 </a>
                 <a href="wall-of-fame.html"
                     class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
@@ -50,29 +50,24 @@
         </div>
     </header>
 
-    <!-- Full-Bleed Panoramic Hero -->
-    <section class="relative w-full min-h-[85vh] sm:min-h-[88vh] flex flex-col justify-between p-6 sm:p-10 lg:p-14 bg-[#0C0C0C] text-[#FDFBF7] overflow-hidden">
+    <!-- Editorial Hero Section (Uncluttered Narrative & Dedicated Panoramic Photo) -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-8 sm:pt-12 pb-8 space-y-8">
         
-        <!-- Right-Side Photography Canvas -->
-        <div class="absolute inset-y-0 right-0 w-full sm:w-3/5 lg:w-[52%] pointer-events-none select-none overflow-hidden">
-            <img src="banner.jpg" alt="Wimpie en de Domino's op het podium" class="w-full h-full object-cover object-[center_20%] lg:object-center">
-            <div class="hidden sm:block absolute inset-y-0 left-0 w-28 sm:w-48 bg-gradient-to-r from-[#0C0C0C] to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-[#0C0C0C] to-transparent"></div>
-            <div class="sm:hidden absolute inset-0 bg-gradient-to-t from-[#0C0C0C] via-[#0C0C0C]/75 to-transparent"></div>
-        </div>
-
-        <!-- Centerpiece Narrative Column -->
-        <div class="relative z-10 my-auto py-8 sm:py-12 max-w-lg lg:max-w-xl xl:max-w-2xl space-y-6">
+        <!-- Architectural Narrative Column (Completely clear of the image) -->
+        <div class="space-y-6 max-w-3xl">
             <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">
-                Muziek voor iedereen
+                Muziek voor iedereen &bull; Amsterdam
             </span>
+            
             <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-semibold text-white tracking-[-0.035em] leading-[1.04]">
                 Muziek maken met <span class="italic font-normal text-[#C85A32]">Wimpie &amp; de Domino's.</span>
             </h1>
-            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed max-w-xl">
+
+            <p class="text-neutral-300 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-2xl">
                 Houd jij ook zo van zingen, drummen of gitaar spelen? Kom meedoen bij onze gezellige muziekgroep in Amsterdam. Iedereen kan meedoen op zijn eigen manier.
             </p>
-            <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+
+            <div class="flex flex-wrap items-center gap-3.5 pt-1">
                 <a href="boeken.html"
                     class="h-12 px-7 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
                     <i data-lucide="music-2" class="w-4 h-4"></i> Boek onze band
@@ -88,17 +83,22 @@
             </div>
         </div>
 
-        <!-- Bottom Asymmetric Strip -->
-        <div class="relative z-10 pt-6 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <div class="lg:col-span-7 flex flex-wrap gap-2 text-xs font-mono text-neutral-400">
-                <span class="px-3 py-1.5 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Parochie De Boom, Amsterdam</span>
-                <span class="px-3 py-1.5 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Maandag &amp; Dinsdag</span>
-                <span class="px-3 py-1.5 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Carré &amp; DWDD</span>
-            </div>
-            <div class="lg:col-span-5 lg:text-right">
-                <p class="text-xs text-neutral-400 italic font-light">"Je bent mooi zoals je bent."</p>
+        <!-- Full Panoramic Band Photography Showcase (Every band member 100% visible) -->
+        <div class="relative w-full rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.1)] bg-[#141414]">
+            <img src="banner.jpg" alt="De volledige band van Wimpie &amp; de Domino's op het podium"
+                 class="w-full h-auto max-h-[580px] object-cover object-center">
+            
+            <!-- Bottom Metadata Strip -->
+            <div class="p-4 sm:p-5 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-mono text-neutral-400">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="px-2.5 py-1 rounded bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Parochie De Boom, Amsterdam</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Maandag &amp; Dinsdag</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Carré &amp; DWDD</span>
+                </div>
+                <p class="italic text-neutral-300 font-light">&ldquo;Je bent mooi zoals je bent.&rdquo;</p>
             </div>
         </div>
+
     </section>
 
     <!-- Featured Single Release Strip -->
