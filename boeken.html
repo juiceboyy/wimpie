@@ -1,263 +1,226 @@
 <!DOCTYPE html>
-<html lang="nl" class="scroll-smooth">
+<html lang="nl" class="scroll-smooth bg-[#0C0C0C]">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wimpie &amp; de Domino's Boeken | Vrolijke Optredens voor Zorghuizen &amp; Feesten 🎺🎶</title>
+    <title>Wimpie &amp; de Domino's Boeken | Optredens voor Zorghuizen &amp; Feesten</title>
+    <meta name="description" content="Boek Wimpie &amp; de Domino's voor uw zorginstelling, festival of evenement. Vrolijke, interactieve optredens door muzikanten met een verstandelijke beperking.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="app.js" defer></script>
 </head>
 
-<body class="bg-amber-50/40 text-slate-800 font-sans antialiased selection:bg-rose-200">
+<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">
 
-    <!-- Top navigatie -->
-    <nav class="bg-white border-b border-amber-200 sticky top-0 z-50 px-4 py-3 shadow-sm">
-        <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-3">
-            <a href="index.html" class="flex items-center gap-2 font-heading text-lg font-bold text-slate-900 hover:text-rose-600 transition">
-                <span>🎵</span> Wimpie &amp; de Domino's
+    <!-- Top Micro-Bar -->
+    <header class="sticky top-0 z-50 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition">
+                <span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span>
+                <span>Wimpie &amp; de Domino's</span>
             </a>
-            <div class="flex items-center gap-2">
-                <a href="wall-of-fame.html" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-950 px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1">
-                    <span>🏆</span> Wall of Fame
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="single.html"
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Nieuwe Single
                 </a>
-                <a href="begeleiders.html" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full font-bold transition">
-                    ℹ️ Voor begeleiders &amp; PB'ers
+                <a href="wall-of-fame.html"
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Wall of Fame
                 </a>
-                <a href="index.html" class="inline-flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-950 px-3.5 py-1.5 rounded-full font-bold text-xs sm:text-sm transition">
-                    <span>←</span> Hoofdpagina
+                <a href="begeleiders.html"
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Begeleiders
                 </a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Header / Hero Sectie Boeken -->
-    <header class="bg-gradient-to-b from-rose-500 via-rose-400 to-amber-100 text-white pt-12 pb-16 px-4 text-center">
-        <div class="max-w-4xl mx-auto">
-            <div class="inline-flex items-center gap-2 bg-yellow-300 text-amber-950 font-heading text-sm sm:text-base font-bold px-4 py-1.5 rounded-full shadow mb-4 border-2 border-yellow-400">
-                ✨ Een onvergetelijke muzikale belevenis ✨
-            </div>
-            <h1 class="font-heading text-3xl sm:text-5xl md:text-6xl font-bold text-slate-900 drop-shadow-sm mb-6 flex flex-col items-center gap-3 sm:gap-5">
-                <span>Boek <span class="text-white underline decoration-wavy decoration-yellow-300 underline-offset-8">Wimpie &amp; de Domino's</span></span>
-                <span>voor uw Zorghuis of Evenement! 🎺</span>
-            </h1>
-            <p class="text-slate-900 text-lg sm:text-xl font-bold max-w-2xl mx-auto mb-8 leading-relaxed">
-                Op zoek naar een hartverwarmend, vrolijk en professioneel live optreden voor uw bewoners, cliënten of bezoekers? Wij brengen feest, herkenning en oprechte verbinding!
-            </p>
-            <div class="flex flex-wrap justify-center gap-3">
-                <a href="#boekingsformulier"
-                    class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-heading text-lg sm:text-xl font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2 border-b-4 border-amber-600">
-                    <i data-lucide="send" class="w-5 h-5"></i> Direct Boeking Aanvragen
-                </a>
-                <a href="tel:0628143815"
-                    class="bg-white hover:bg-amber-50 text-slate-900 font-heading text-lg sm:text-xl font-bold px-7 py-3.5 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2 border-b-4 border-slate-300">
-                    <i data-lucide="phone-call" class="w-5 h-5 text-emerald-600"></i> Bel Auck: 06-28143815
+                <a href="index.html"
+                    class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">
+                    &larr; Home
                 </a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto py-12 px-4 space-y-12">
+    <!-- Header / Hero Sectie Boeken -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-12 pb-8">
+        <div class="max-w-3xl space-y-4">
+            <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">
+                Concerten &amp; Optredens
+            </span>
+            <h1 class="font-serif text-4xl sm:text-6xl font-semibold text-white tracking-[-0.035em] leading-[1.05]">
+                Boek Wimpie &amp; de Domino's
+            </h1>
+            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed">
+                Op zoek naar een hartverwarmend, vrolijk en professioneel live optreden voor uw bewoners of bezoekers? Wij brengen feest, herkenning en oprechte verbinding.
+            </p>
+            <div class="flex flex-wrap gap-3 pt-2">
+                <a href="#formulier"
+                    class="h-12 px-7 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]">
+                    <i data-lucide="send" class="w-4 h-4"></i> Aanvraag Doen
+                </a>
+                <a href="tel:0628143815"
+                    class="h-12 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]">
+                    <i data-lucide="phone" class="w-4 h-4 text-[#C85A32]"></i> Bel: 06-28143815
+                </a>
+            </div>
+        </div>
+    </section>
 
-        <!-- Waarom Wimpie & de Domino's? (Speciaal voor zorgverleners) -->
-        <section class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border-4 border-amber-200">
-            <div class="text-center max-w-3xl mx-auto mb-8">
-                <span class="bg-rose-100 text-rose-800 font-bold px-3.5 py-1 rounded-full text-xs uppercase tracking-wider">Wat maakt ons uniek?</span>
-                <h2 class="font-heading text-2xl sm:text-4xl font-bold text-slate-900 mt-2">
-                    Muziek met een Glimlach &amp; Warm Hart ❤️
-                </h2>
-                <p class="text-slate-600 font-semibold mt-2">
-                    Als zorgverlener of activiteitenbegeleider wilt u een activiteit waar iedereen écht van geniet, zonder stress over organisatie of prikkels.
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 space-y-12 flex-1">
+
+        <!-- Wat maakt ons uniek? Bento Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-3">
+                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Ervaring</span>
+                <h2 class="font-serif text-xl sm:text-2xl font-semibold text-white">Thuis in de Zorg</h2>
+                <p class="text-neutral-300 text-sm leading-relaxed">
+                    Onze bandleiders werken al jarenlang met zorgorganisaties zoals Cordaan, Amsta en Thomashuizen. Wij begrijpen de doelgroep door en door.
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-amber-50/70 p-6 rounded-2xl border-2 border-amber-200 flex flex-col items-start">
-                    <div class="w-12 h-12 bg-amber-200 text-amber-900 rounded-xl flex items-center justify-center text-2xl mb-4">
-                        🤝
-                    </div>
-                    <h3 class="font-heading text-xl font-bold text-slate-900 mb-2">Ervaring in de Zorg</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed">
-                        Onze bandleiders werken al jarenlang met zorginstellingen (o.a. Cordaan, Amsta, Thomashuizen). Wij begrijpen de doelgroep door en door.
-                    </p>
-                </div>
+            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-3">
+                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Afgestemd</span>
+                <h2 class="font-serif text-xl sm:text-2xl font-semibold text-white">Veilig &amp; Prikkelarm</h2>
+                <p class="text-neutral-300 text-sm leading-relaxed">
+                    Van een intiem huiskameroptreden tot een zomers pleinfeest: we stemmen volume, tempo en interactie zorgvuldig af op het welzijn van uw bewoners.
+                </p>
+            </div>
 
-                <div class="bg-sky-50/70 p-6 rounded-2xl border-2 border-sky-200 flex flex-col items-start">
-                    <div class="w-12 h-12 bg-sky-200 text-sky-900 rounded-xl flex items-center justify-center text-2xl mb-4">
-                        🌈
-                    </div>
-                    <h3 class="font-heading text-xl font-bold text-slate-900 mb-2">Aangepast &amp; Prikkelarm</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed">
-                        Van een intiem huiskameroptreden tot een zonnig tuinfeest: we stemmen volume, tempo en interactie zorgvuldig af op het welzijn van uw bewoners.
-                    </p>
-                </div>
-
-                <div class="bg-emerald-50/70 p-6 rounded-2xl border-2 border-emerald-200 flex flex-col items-start">
-                    <div class="w-12 h-12 bg-emerald-200 text-emerald-900 rounded-xl flex items-center justify-center text-2xl mb-4">
-                        🎤
-                    </div>
-                    <h3 class="font-heading text-xl font-bold text-slate-900 mb-2">Puur Speelplezier</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed">
-                        Bekend van Koninklijk Theater Carré en DWDD! Met vrolijke eigen liedjes en een paar covers met eigen nieuwe tekst zorgen we voor een zaal vol energie en blijdschap.
-                    </p>
-                </div>
+            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-3">
+                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Podiumkracht</span>
+                <h2 class="font-serif text-xl sm:text-2xl font-semibold text-white">Puur Speelplezier</h2>
+                <p class="text-neutral-300 text-sm leading-relaxed">
+                    Bekend van Carré en DWDD. Met vrolijke eigen nummers zorgen we voor herkenning, ontspanning en een zaal vol trotse glimlachen.
+                </p>
             </div>
         </section>
 
-        <!-- Hoe ziet een optreden eruit & Praktische info -->
-        <section class="grid md:grid-cols-2 gap-8">
-            <!-- Wat kunt u verwachten -->
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-slate-200 flex flex-col justify-between">
-                <div>
-                    <h3 class="font-heading text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i data-lucide="sparkles" class="text-amber-500 w-6 h-6"></i> Wat kunt u verwachten?
-                    </h3>
-                    <ul class="space-y-3.5 text-slate-700 text-sm leading-relaxed">
+        <!-- Verwachtingen & Praktische Rider (Asymmetrisch Bento) -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <!-- Wat kunt u verwachten (7 cols) -->
+            <div class="md:col-span-7 bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Programma</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Wat kunt u verwachten?</h2>
+                    <ul class="space-y-3 text-neutral-300 text-sm leading-relaxed">
                         <li class="flex items-start gap-2.5">
-                            <i data-lucide="check" class="text-emerald-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
-                            <span><strong>Duur naar wens:</strong> Meestal een set van circa 45 tot 60 minuten (of 2 kortere sets met pauze), ideaal voor de aandachtsboog.</span>
+                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
+                            <span><strong>Duur naar wens:</strong> Meestal een set van circa 45 tot 60 minuten (of 2 kortere sets met pauze), afgestemd op de aandachtsboog.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
-                            <i data-lucide="check" class="text-emerald-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
-                            <span><strong>Eigen werk &amp; interactie:</strong> We spelen eigen liedjes, geschreven voor en door de deelnemers, waardoor het perfect aansluit bij de belevingswereld van de doelgroep. Vrolijke, toegankelijke muziek waarbij bewoners lekker mogen meezingen, klappen of luisteren.</span>
+                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
+                            <span><strong>Eigen werk &amp; interactie:</strong> Vrolijke, toegankelijke muziek waarbij bewoners mogen meezingen, klappen of rustig luisteren.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
-                            <i data-lucide="check" class="text-emerald-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
-                            <span><strong>Samen met de begeleiding:</strong> De muzikale en productionele leiding is in handen van Ronald en Auck; de vertrouwde gezichten van de eigen begeleiding maken het feestje op locatie compleet.</span>
+                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
+                            <span><strong>Deskundige leiding:</strong> Muzikale en productionele begeleiding onder leiding van Ronald van Holst en Auck Boersma.</span>
                         </li>
                     </ul>
                 </div>
-                <div class="mt-6 p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-950 font-medium">
-                    💡 <em>Tip voor zorglocaties:</em> Heeft u een jubileum, verjaardag, open dag of seizoensfeest? Laat het ons weten, we denken graag met u mee!
+                <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] text-xs font-mono text-neutral-400">
+                    Geschikt voor jubilea, verjaardagen, seizoensfeesten en intieme huiskamerconcerten.
                 </div>
             </div>
 
-            <!-- Praktische wensen (Technische Rider in gewone mensentaal) -->
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-slate-200 flex flex-col justify-between">
-                <div>
-                    <h3 class="font-heading text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i data-lucide="clipboard-list" class="text-sky-600 w-6 h-6"></i> Praktisch &amp; Toegankelijk
-                    </h3>
-                    <p class="text-slate-600 text-sm mb-4">
-                        Wij houden het graag laagdrempelig en eenvoudig. Dit is wat voor ons prettig werkt op locatie:
-                    </p>
-                    <ul class="space-y-3 text-slate-700 text-sm">
+            <!-- Praktische wensen (5 cols) -->
+            <div class="md:col-span-5 bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Rider</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Praktische Zaken</h2>
+                    <ul class="space-y-3 text-neutral-300 text-sm leading-relaxed">
                         <li class="flex items-start gap-2.5">
-                            <i data-lucide="accessibility" class="text-sky-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
-                            <span><strong>Toegankelijkheid:</strong> Gelijkvloerse speelplek of bij een verhoogd podium een veilig trapje.</span>
+                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
+                            <span><strong>Toegankelijkheid:</strong> Gelijkvloerse speelplek of een veilig trapje bij een podium.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
-                            <i data-lucide="zap" class="text-sky-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
+                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
                             <span><strong>Stroom:</strong> Een standaard stopcontact in de buurt van het speeloppervlak.</span>
                         </li>
                         <li class="flex items-start gap-2.5">
-                            <i data-lucide="coffee" class="text-sky-600 w-5 h-5 min-w-[20px] mt-0.5"></i>
-                            <span><strong>Gezelligheid &amp; Catering:</strong> Altijd wat te eten voor de band, drinken (we drinken koffie, thee of Fernandes!) en een fijne kleed- of wachtruimte voor onze muzikanten.</span>
+                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
+                            <span><strong>Verzorging:</strong> Wat te drinken en eten voor de bandleden en een rustige kleedruimte.</span>
                         </li>
                     </ul>
                 </div>
-                <div class="mt-6 p-4 bg-sky-50 rounded-2xl border border-sky-200 text-xs text-sky-950 font-medium">
-                    ♿ Volledig rolstoeltoegankelijk en vriendelijk voor alle bewoners en bezoekers.
+                <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] text-xs font-mono text-neutral-400">
+                    Volledig rolstoelvriendelijk en ontspannen georganiseerd.
                 </div>
             </div>
         </section>
 
-        <!-- Filmpje sfeerimpressie -->
-        <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
-            <div class="text-center mb-6">
-                <span class="bg-rose-500/30 text-rose-300 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider border border-rose-500/40">Sfeerimpressie</span>
-                <h3 class="font-heading text-2xl sm:text-3xl font-bold mt-2">Bekijk ons live in actie! 🎬</h3>
-                <p class="text-slate-300 text-sm max-w-xl mx-auto mt-1">Hier krijgt u meteen een gevoel bij het enthousiasme en de sfeer van Wimpie &amp; de Domino's.</p>
-            </div>
-            <div class="max-w-2xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-700">
-                <iframe class="w-full h-full"
-                    src="https://www.youtube-nocookie.com/embed/b7E6zPIfTJM"
-                    title="Wimpie & de Domino's - Optreden in Koninklijk Theater Carré"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
-            </div>
-        </section>
-
-        <!-- Boekings- & Aanvraagformulier -->
-        <section id="boekingsformulier" class="bg-gradient-to-br from-amber-100 via-yellow-50 to-rose-50 rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-amber-300">
-            <div class="max-w-2xl mx-auto text-center mb-8">
-                <span class="bg-amber-300 text-amber-950 font-bold px-3.5 py-1 rounded-full text-xs uppercase tracking-wider">Vrijblijvende Aanvraag</span>
-                <h2 class="font-heading text-2xl sm:text-4xl font-bold text-slate-900 mt-2">
-                    Vraag een Optreden Aan 📅
-                </h2>
-                <p class="text-slate-700 font-semibold text-sm sm:text-base mt-2">
-                    Vul onderstaand formulier in of neem rechtstreeks contact met ons op. We reageren altijd snel en denken met plezier met u mee!
-                </p>
+        <!-- Boekingsformulier -->
+        <section id="formulier" class="bg-[#141414] rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+            <div class="max-w-2xl mx-auto text-center mb-8 space-y-2">
+                <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Vrijblijvende Aanvraag</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-semibold text-white">Vraag een Optreden Aan</h2>
+                <p class="text-neutral-400 text-sm">Vul het formulier in of neem direct telefonisch contact met ons op.</p>
             </div>
 
             <form class="max-w-2xl mx-auto space-y-4" action="mailto:wimpieweg@gmail.com" method="GET">
-                <div class="grid sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="org-name">Zorghuis / Organisatie / Locatie</label>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="org-name">Zorghuis / Organisatie</label>
                         <input id="org-name" type="text" placeholder="Bijv. Woonzorgcentrum De Linde"
-                            class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm" required>
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="contact-name">Naam contactpersoon</label>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="contact-name">Naam contactpersoon</label>
                         <input id="contact-name" type="text" placeholder="Uw naam &amp; functie"
-                            class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm" required>
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
                     </div>
                 </div>
 
-                <div class="grid sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="email">E-mailadres</label>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="email">E-mailadres</label>
                         <input id="email" type="email" placeholder="naam@zorgorganisatie.nl"
-                            class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm" required>
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="phone">Telefoonnummer</label>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="phone">Telefoonnummer</label>
                         <input id="phone" type="tel" placeholder="06 - ..."
-                            class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm">
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     </div>
                 </div>
 
-                <div class="grid sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="event-date">Voorkeursdatum of periode</label>
-                        <input id="event-date" type="text" placeholder="Bijv. Zomer 2026 of 15 september"
-                            class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="event-date">Gewenste periode of datum</label>
+                        <input id="event-date" type="text" placeholder="Bijv. Najaar 2026 of 15 september"
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="event-type">Type gelegenheid</label>
-                        <input id="event-type" type="text" placeholder="Bijv. Zomerfeest, Huiskamerconcert, Jubileum"
-                            class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="event-type">Type gelegenheid</label>
+                        <input id="event-type" type="text" placeholder="Bijv. Huiskamerconcert, Jubileum"
+                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1" for="notes">Wensen, vragen of bijzonderheden over de groep</label>
-                    <textarea id="notes" rows="3" placeholder="Vertel ons over de bewoners/doelgroep, de locatie of specifieke wensen..."
-                        class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-rose-400 outline-none shadow-sm"></textarea>
+                    <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="notes">Wensen of vragen over de doelgroep</label>
+                    <textarea id="notes" rows="3" placeholder="Vertel ons over de bewoners, de ruimte of specifieke wensen..."
+                        class="w-full p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]"></textarea>
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-rose-600 hover:bg-rose-700 text-white font-heading text-lg font-bold py-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
-                    <i data-lucide="mail-check" class="w-5 h-5"></i> Verstuur Boekingsaanvraag
+                    class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                    <i data-lucide="send" class="w-4 h-4"></i> Verstuur Boekingsaanvraag
                 </button>
             </form>
 
-            <div class="mt-8 pt-6 border-t border-amber-200 text-center max-w-xl mx-auto">
-                <p class="text-slate-800 font-bold mb-3">Liever direct telefonisch overleggen?</p>
+            <div class="mt-8 pt-6 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] text-center max-w-xl mx-auto space-y-3">
+                <p class="text-neutral-400 text-xs font-mono uppercase tracking-wider">Direct telefonisch overleggen?</p>
                 <div class="flex flex-wrap justify-center gap-3">
                     <a href="tel:0628143815"
-                        class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-5 py-2.5 rounded-full shadow transition">
-                        <i data-lucide="phone" class="w-4 h-4"></i> 06-28143815 (Auck)
+                        class="h-10 px-5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition">
+                        <i data-lucide="phone" class="w-3.5 h-3.5 text-[#C85A32]"></i> 06-28143815 (Auck)
                     </a>
                     <a href="mailto:wimpieweg@gmail.com"
-                        class="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm px-5 py-2.5 rounded-full shadow transition">
-                        <i data-lucide="mail" class="w-4 h-4"></i> wimpieweg@gmail.com
+                        class="h-10 px-5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition">
+                        <i data-lucide="mail" class="w-3.5 h-3.5 text-[#C85A32]"></i> wimpieweg@gmail.com
                     </a>
                 </div>
             </div>
@@ -266,17 +229,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-xs">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Aletta Jacobsstraat 59, 1349 HB Almere | KvK: 96802863</p>
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="index.html" class="text-amber-300 hover:underline">← Terug naar hoofdpagina</a>
-                <a href="wall-of-fame.html" class="text-amber-300 hover:underline">🏆 Wall of Fame ↗</a>
-                <a href="begeleiders.html" class="text-amber-300 hover:underline">Voor begeleiders &amp; PB'ers ↗</a>
+    <footer class="bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-8 px-4 sm:px-8 text-xs font-mono text-neutral-400 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Admiraal de Ruijterweg, Amsterdam | KvK: 96802863</p>
+            <div class="flex flex-wrap justify-center gap-4 text-xs">
+                <a href="index.html" class="hover:text-white transition">&larr; Hoofdpagina</a>
+                <a href="single.html" class="hover:text-white transition">Nieuwe Single</a>
+                <a href="wall-of-fame.html" class="hover:text-white transition">Wall of Fame</a>
+                <a href="begeleiders.html" class="hover:text-white transition">Voor Begeleiders</a>
             </div>
         </div>
     </footer>
 
 </body>
-
 </html>
