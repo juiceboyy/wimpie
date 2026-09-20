@@ -37,10 +37,18 @@
     <script src="single.js" defer></script>
 </head>
 
-<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">
+<body class="relative bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Ambient Atmospheric Artwork in de achtergrond -->
+    <div class="fixed inset-0 pointer-events-none select-none overflow-hidden z-0" aria-hidden="true">
+        <img src="single-cover.jpg"
+             alt=""
+             class="w-full h-full object-cover opacity-15 blur-3xl scale-125 saturate-150">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0C0C0C]/90 via-[#0C0C0C]/75 to-[#0C0C0C]"></div>
+    </div>
 
     <!-- Top Micro-Bar -->
-    <header class="sticky top-0 z-50 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
+    <header class="relative z-10 sticky top-0 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
         <div class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-3">
             <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition">
                 <span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span>
@@ -61,35 +69,25 @@
     </header>
 
     <!-- Main Content Container -->
-    <main class="max-w-2xl mx-auto w-full px-4 py-8 sm:py-12 flex-1">
-        <div class="bg-[#141414] rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.08)] p-6 sm:p-10 space-y-8 text-center">
+    <main class="relative z-10 max-w-2xl mx-auto w-full px-4 py-8 sm:py-12 flex-1">
+        <div class="bg-[#141414]/90 backdrop-blur-xl rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.08)] p-6 sm:p-10 space-y-8 text-center">
 
-            <!-- Single Artwork & Headings -->
-            <div class="space-y-4">
+            <!-- Single Headings & Metadata -->
+            <div class="space-y-3">
                 <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">
-                    Officiële Single Release
+                    Nieuwe Single
                 </span>
 
                 <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight">
                     Het Leven gaat niet altijd over Rozen
                 </h1>
-                <p class="text-base sm:text-lg font-normal text-neutral-400">
+                <p class="text-sm sm:text-base font-normal text-neutral-400">
                     Wimpie &amp; de Domino's
                 </p>
-
-                <!-- Album Cover -->
-                <div class="max-w-xs mx-auto pt-2">
-                    <div class="relative rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black aspect-square">
-                        <img src="single-cover.jpg"
-                             alt="Cover Wimpie &amp; de Domino's - Het Leven gaat niet altijd over Rozen"
-                             onerror="this.onerror=null; this.src='banner.jpg';"
-                             class="w-full h-full object-cover">
-                    </div>
-                </div>
             </div>
 
-            <!-- Video Embed -->
-            <div class="pt-2 text-left">
+            <!-- Video Embed (Centerpiece) -->
+            <div class="text-left">
                 <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] bg-black">
                     <iframe
                         class="absolute top-0 left-0 w-full h-full"
@@ -190,7 +188,7 @@
     </div>
 
     <!-- Editorial Footer -->
-    <footer class="bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-6 px-4 text-center text-xs font-mono text-neutral-400">
+    <footer class="relative z-10 bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-6 px-4 text-center text-xs font-mono text-neutral-400">
         <div class="max-w-4xl mx-auto space-y-1">
             <p>Wimpie &amp; de Domino's | Muziek voor en door iedereen</p>
             <p>Boekingen &amp; informatie: <a href="tel:0628143815" class="text-white hover:underline">06 28 14 38 15</a></p>
