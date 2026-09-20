@@ -41,10 +41,13 @@
 
     <!-- Ambient Atmospheric Artwork in de achtergrond -->
     <div class="fixed inset-0 pointer-events-none select-none overflow-hidden z-0" aria-hidden="true">
-        <img src="single-cover.jpg"
-             alt=""
-             class="w-full h-full object-cover opacity-15 blur-3xl scale-125 saturate-150">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#0C0C0C]/90 via-[#0C0C0C]/75 to-[#0C0C0C]"></div>
+        <!-- Centrale sfeergloed van het artwork -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[550px] sm:w-[800px] aspect-square rounded-full overflow-hidden opacity-45 sm:opacity-55 blur-2xl sm:blur-3xl saturate-150 transform scale-110">
+            <img src="single-cover.jpg" alt="" class="w-full h-full object-cover">
+        </div>
+        <!-- Zachte overvloei naar de randen voor perfect contrast -->
+        <div class="absolute inset-0 bg-radial from-transparent via-[#0C0C0C]/60 to-[#0C0C0C]"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0C0C0C]/60 via-transparent to-[#0C0C0C]"></div>
     </div>
 
     <!-- Top Micro-Bar -->
@@ -70,7 +73,7 @@
 
     <!-- Main Content Container -->
     <main class="relative z-10 max-w-2xl mx-auto w-full px-4 py-8 sm:py-12 flex-1">
-        <div class="bg-[#141414]/90 backdrop-blur-xl rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.08)] p-6 sm:p-10 space-y-8 text-center">
+        <div class="bg-[#141414]/70 backdrop-blur-2xl rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.1)] p-6 sm:p-10 space-y-8 text-center">
 
             <!-- Single Headings & Metadata -->
             <div class="space-y-3">
