@@ -1,290 +1,262 @@
 <!DOCTYPE html>
-<html lang="nl" class="scroll-smooth">
+<html lang="nl" class="scroll-smooth bg-[#0C0C0C]">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wimpie & de Domino's | Gezellig Samen Muziek Maken! 🎶</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Wimpie &amp; de Domino's | Muziekgroep Amsterdam</title>
+    <meta name="description" content="Muziek maken met Wimpie &amp; de Domino's in Amsterdam. Bandcoaching, muziekbeleving en live optredens voor mensen met een verstandelijke beperking.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="app.js" defer></script>
 </head>
 
-<body class="bg-amber-50/50 text-slate-800 font-sans antialiased selection:bg-brand-sun selection:text-slate-900">
+<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col">
 
-    <!-- Top Bar: Voorleesknop & Snelle Hulp -->
-    <header class="bg-amber-100 border-b-2 border-amber-200 sticky top-0 z-50 px-4 py-2 shadow-sm">
-        <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-2">
-            <span class="font-heading text-lg font-bold text-amber-900 flex items-center gap-1.5">
-                🎵 Wimpie &amp; de Domino's
-            </span>
-            <div class="flex items-center gap-2">
-                <a href="single.html"
-                    class="text-xs bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-full font-bold shadow-sm transition flex items-center gap-1">
-                    Nieuwe Single
-                </a>
-                <a href="wall-of-fame.html"
-                    class="text-xs bg-amber-300 hover:bg-amber-400 text-amber-950 px-3 py-1.5 rounded-full font-bold shadow-sm transition flex items-center gap-1">
-                    <span>🏆</span> Wall of Fame
-                </a>
-                <a href="boeken.html"
-                    class="text-xs bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-full font-bold shadow-sm transition flex items-center gap-1">
-                    <span>🎺</span> Boek ons
-                </a>
+    <!-- Top Micro-Bar -->
+    <header class="sticky top-0 z-50 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition">
+                <span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span>
+                <span>Wimpie &amp; de Domino's</span>
+            </a>
+            <div class="flex items-center gap-2 sm:gap-3">
                 <button id="tts-btn" onclick="toggleReadAloud()"
-                    class="bg-white hover:bg-yellow-100 text-amber-900 font-bold px-3 sm:px-4 py-1.5 rounded-full border-2 border-amber-300 shadow-sm flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm transition transform active:scale-95"
+                    class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]"
                     aria-label="Lees de pagina voor">
-                    <span id="tts-icon">🔊</span>
+                    <span id="tts-icon"><i data-lucide="volume-2" class="w-3.5 h-3.5 text-[#C85A32]"></i></span>
                     <span id="tts-text">Lees voor</span>
                 </button>
+                <a href="single.html"
+                    class="h-9 px-3.5 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]">
+                    Single
+                </a>
+                <a href="wall-of-fame.html"
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Wall of Fame
+                </a>
+                <a href="boeken.html"
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Boeken
+                </a>
                 <a href="begeleiders.html"
-                    class="text-xs bg-amber-200/80 hover:bg-amber-300 text-amber-900 px-3 py-1.5 rounded-full font-bold transition">
-                    ℹ️ Voor begeleiders
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 text-xs font-mono uppercase tracking-wider hidden md:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Begeleiders
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Vrolijke Hero Sectie -->
-    <section class="relative bg-gradient-to-b from-sky-400 via-sky-300 to-amber-50 text-white pt-10 pb-16 px-4 text-center overflow-hidden">
-        <div class="max-w-4xl mx-auto relative z-10">
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2 bg-yellow-300 text-amber-950 font-heading text-base md:text-lg font-bold px-5 py-2 rounded-full shadow-md mb-6 rotate-[-1deg] border-2 border-yellow-400">
-                ✨ "Je bent mooi zoals je bent!" ✨
-            </div>
+    <!-- Full-Bleed Panoramic Hero -->
+    <section class="relative w-full min-h-[85vh] sm:min-h-[88vh] flex flex-col justify-between p-6 sm:p-10 lg:p-14 bg-[#0C0C0C] text-[#FDFBF7] overflow-hidden">
+        
+        <!-- Right-Side Photography Canvas -->
+        <div class="absolute inset-y-0 right-0 w-full sm:w-3/5 lg:w-[52%] pointer-events-none select-none overflow-hidden">
+            <img src="banner.jpg" alt="Wimpie en de Domino's op het podium" class="w-full h-full object-cover object-[center_20%] lg:object-center">
+            <div class="hidden sm:block absolute inset-y-0 left-0 w-28 sm:w-48 bg-gradient-to-r from-[#0C0C0C] to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-[#0C0C0C] to-transparent"></div>
+            <div class="sm:hidden absolute inset-0 bg-gradient-to-t from-[#0C0C0C] via-[#0C0C0C]/75 to-transparent"></div>
+        </div>
 
-            <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 drop-shadow-sm mb-4 leading-tight">
-                Muziek maken met <br class="hidden sm:inline" />
-                <span class="text-rose-600 underline decoration-wavy decoration-yellow-300">Wimpie &amp; de Domino's!</span> 🎸
+        <!-- Centerpiece Narrative Column -->
+        <div class="relative z-10 my-auto py-8 sm:py-12 max-w-lg lg:max-w-xl xl:max-w-2xl space-y-6">
+            <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">
+                Muziek voor iedereen
+            </span>
+            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-semibold text-white tracking-[-0.035em] leading-[1.04]">
+                Muziek maken met <span class="italic font-normal text-[#C85A32]">Wimpie &amp; de Domino's.</span>
             </h1>
-
-            <p class="text-slate-800 text-xl md:text-2xl font-bold max-w-2xl mx-auto mb-8 leading-relaxed">
-                Houd jij ook zo van muziek? Kom gezellig zingen, drummen of gitaar spelen bij onze muziekgroep in Amsterdam! 🎤🥁
+            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed max-w-xl">
+                Houd jij ook zo van zingen, drummen of gitaar spelen? Kom meedoen bij onze gezellige muziekgroep in Amsterdam. Iedereen kan meedoen op zijn eigen manier.
             </p>
-
-            <!-- Foto banner met speels kader -->
-            <div class="relative max-w-3xl mx-auto mb-8 rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900">
-                <img src="banner.jpg" alt="Wimpie en de Domino's maken vrolijk muziek op het podium" class="w-full h-64 sm:h-80 md:h-96 object-cover hover:scale-105 transition duration-500">
-            </div>
-
-            <!-- Aankondiging Nieuwe Single -->
-            <div class="max-w-3xl mx-auto mb-10 bg-white/95 backdrop-blur-sm rounded-3xl p-5 sm:p-6 shadow-xl border-4 border-amber-300 text-slate-800 flex flex-col sm:flex-row items-center gap-5 text-left">
-                <img src="single-cover.jpg" alt="Single cover Wimpie &amp; de Domino's" onerror="this.onerror=null; this.src='banner.jpg';" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow border-2 border-amber-200 shrink-0">
-                <div class="flex-1 text-center sm:text-left">
-                    <span class="inline-block text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-100 px-3 py-1 rounded-full border border-rose-300 mb-1.5">
-                        Nieuwe Single Uit
-                    </span>
-                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
-                        Het Leven gaat niet altijd over Rozen
-                    </h2>
-                    <p class="text-sm sm:text-base text-slate-600 mt-1 font-medium">
-                        Bekijk de officiële videoclip en stream het nummer direct op al je favoriete muziekplatforms!
-                    </p>
-                </div>
-                <a href="single.html" class="shrink-0 bg-rose-600 hover:bg-rose-700 text-white font-heading text-base sm:text-lg font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5">
-                    Luister Nu
-                </a>
-            </div>
-
-            <!-- Grote Actieknoppen -->
-            <div class="flex flex-wrap justify-center gap-4">
+            <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                 <a href="boeken.html"
-                    class="bg-rose-600 hover:bg-rose-700 text-white font-heading text-xl md:text-2xl font-bold px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1 flex items-center gap-3 border-b-4 border-rose-800 ring-4 ring-rose-300/60">
-                    <span>🎺</span> Boek ons voor jouw zorghuis!
+                    class="h-12 px-7 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
+                    <i data-lucide="music-2" class="w-4 h-4"></i> Boek onze band
                 </a>
-                <a href="#dagen"
-                    class="bg-emerald-500 hover:bg-emerald-600 text-white font-heading text-xl md:text-2xl font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex items-center gap-3 border-b-4 border-emerald-700">
-                    <span>👀</span> Wat doen we allemaal?
+                <a href="#programma"
+                    class="h-12 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 backdrop-blur-md shadow-[0_0_0_1px_rgba(255,255,255,0.18)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
+                    <i data-lucide="calendar" class="w-4 h-4"></i> Bekijk de dagen
                 </a>
                 <a href="#contact"
-                    class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-heading text-xl md:text-2xl font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex items-center gap-3 border-b-4 border-amber-600">
-                    <span>👋</span> Kom je meedoen?
+                    class="h-12 px-7 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    <i data-lucide="phone" class="w-4 h-4"></i> Meedoen
                 </a>
+            </div>
+        </div>
+
+        <!-- Bottom Asymmetric Strip -->
+        <div class="relative z-10 pt-6 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            <div class="lg:col-span-7 flex flex-wrap gap-2 text-xs font-mono text-neutral-400">
+                <span class="px-3 py-1.5 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Parochie De Boom, Amsterdam</span>
+                <span class="px-3 py-1.5 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Maandag &amp; Dinsdag</span>
+                <span class="px-3 py-1.5 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Carré &amp; DWDD</span>
+            </div>
+            <div class="lg:col-span-5 lg:text-right">
+                <p class="text-xs text-neutral-400 italic font-light">"Je bent mooi zoals je bent."</p>
             </div>
         </div>
     </section>
 
-    <!-- Wat doen we op maandag en dinsdag? -->
-    <section id="dagen" class="max-w-5xl mx-auto py-12 px-4">
-        <div class="text-center mb-10">
-            <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
-                Kies wat jij leuk vindt! 🌟
-            </h2>
-            <p class="text-lg text-slate-600 font-semibold mt-2">Iedereen kan meedoen op zijn of haar eigen tempo.</p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-            <!-- Kaart Maandag -->
-            <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-amber-300 hover:border-amber-400 transition flex flex-col justify-between">
-                <div>
-                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-inner">
-                        🎸
-                    </div>
-                    <span class="inline-block bg-amber-400 text-amber-950 font-heading font-bold px-3.5 py-1 rounded-full text-sm mb-3">
-                        Elke Maandag
-                    </span>
-                    <h3 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
-                        De Band (Lekker Knallen!)
-                    </h3>
-                    <p class="text-slate-700 text-lg leading-relaxed mb-4">
-                        Samen spelen in een echte band met 10 muzikanten! We schrijven eigen liedjes, zingen in de microfoon en oefenen voor vrolijke optredens.
-                    </p>
-                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 mb-6 flex items-start gap-3">
-                        <span class="text-xl leading-none select-none flex-shrink-0 mt-0.5">⭐</span>
-                        <p class="font-bold text-amber-950 text-sm leading-relaxed">
-                            <span class="text-amber-800 font-extrabold">Wist je dat?</span> Wij hebben opgetreden in <strong>Carré</strong> en op TV bij <strong>DWDD</strong>!
-                        </p>
-                    </div>
+    <!-- Featured Single Release Strip -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
+        <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+                <img src="single-cover.jpg" alt="Cover Nieuwe Single" class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover shadow-[0_0_0_1px_rgba(255,255,255,0.1)] shrink-0">
+                <div class="space-y-1">
+                    <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Nieuwe Single Uit</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">Het Leven gaat niet altijd over Rozen</h2>
+                    <p class="text-neutral-400 text-sm max-w-xl">Beluister het nieuwste nummer en bekijk direct de officiële videoclip.</p>
                 </div>
-                <a href="#videos" class="inline-flex items-center justify-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-heading font-bold py-3 px-6 rounded-2xl transition">
-                    <span>🎬</span> Bekijk de filmpjes
-                </a>
             </div>
-
-            <!-- Kaart Dinsdag -->
-            <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-purple-300 hover:border-purple-400 transition flex flex-col justify-between">
-                <div>
-                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-inner">
-                        🎶
-                    </div>
-                    <span class="inline-block bg-purple-400 text-white font-heading font-bold px-3.5 py-1 rounded-full text-sm mb-3">
-                        Elke Dinsdag
-                    </span>
-                    <h3 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
-                        Muziek Beleven &amp; Ontspannen
-                    </h3>
-                    <p class="text-slate-700 text-lg leading-relaxed mb-4">
-                        Heerlijk ontspannen met muziek. Lekker luisteren, trommelen op ritme-instrumenten, meezingen of gewoon rustig genieten in een warme en veilige groep.
-                    </p>
-                    <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 mb-6 flex items-start gap-3">
-                        <span class="text-xl leading-none select-none flex-shrink-0 mt-0.5">💖</span>
-                        <p class="font-bold text-purple-950 text-sm leading-relaxed">
-                            Niets moet, alles mag! Lekker genieten op jouw eigen manier.
-                        </p>
-                    </div>
-                </div>
-                <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-900 font-heading font-bold py-3 px-6 rounded-2xl transition">
-                    <span>☕</span> Kom sfeer proeven
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Filmpjes & Optredens Sectie -->
-    <section id="videos" class="bg-amber-100/60 py-12 px-4 border-y-2 border-amber-200">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-8">
-                <span class="bg-sky-200 text-sky-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Kijk en Luister</span>
-                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-slate-900 mt-2">
-                    Onze Mooiste Optredens! 📺🎉
-                </h2>
-                <p class="text-slate-700 font-semibold mt-1">Speel de filmpjes direct af om ons te zien spelen!</p>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-8">
-                <!-- Video 1: Carré -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-lg border-4 border-sky-300 flex flex-col">
-                    <div class="relative w-full aspect-video bg-slate-900 overflow-hidden">
-                        <iframe class="w-full h-full"
-                            src="https://www.youtube-nocookie.com/embed/b7E6zPIfTJM"
-                            title="Wimpie & de Domino's - Optreden in Koninklijk Theater Carré"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <span class="inline-block text-xs font-bold uppercase tracking-wider text-sky-800 bg-sky-100 px-3 py-1 rounded-full mb-2.5">Theater Carré</span>
-                        <h4 class="font-heading text-xl md:text-2xl font-bold text-slate-900">
-                            Optreden in Koninklijk Theater Carré! 🎭
-                        </h4>
-                    </div>
-                </div>
-
-                <!-- Video 2: DWDD -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-lg border-4 border-emerald-300 flex flex-col">
-                    <div class="relative w-full aspect-video bg-slate-900 overflow-hidden">
-                        <iframe class="w-full h-full"
-                            src="https://www.youtube-nocookie.com/embed/S-ZFQPv2SAc"
-                            title="Wimpie & de Domino's - Live bij De Wereld Draait Door"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <span class="inline-block text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full mb-2.5">Op Televisie</span>
-                        <h4 class="font-heading text-xl md:text-2xl font-bold text-slate-900">
-                            Live bij De Wereld Draait Door! 📺
-                        </h4>
-                    </div>
-                </div>
-            <div class="mt-8 text-center">
-                <a href="wall-of-fame.html"
-                    class="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-amber-950 font-heading text-lg font-bold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 border-b-4 border-amber-600">
-                    <span>🏆</span> Bekijk al onze hoogtepunten op de Wall of Fame &rarr;
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Zorghuis Boekingen Callout Banner -->
-    <section class="max-w-5xl mx-auto py-8 px-4">
-        <div class="bg-gradient-to-r from-rose-500 via-rose-600 to-amber-500 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border-4 border-rose-300">
-            <div class="text-center md:text-left">
-                <span class="bg-yellow-300 text-amber-950 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider">Voor zorgverleners &amp; zorghuizen</span>
-                <h3 class="font-heading text-2xl sm:text-3xl font-bold mt-2 mb-1">Wimpie &amp; de Domino's op uw locatie? 🎺</h3>
-                <p class="text-rose-100 text-base max-w-xl">Haal een vrolijk, interactief en inclusief live optreden naar uw woonzorgcentrum, dagbesteding of feest.</p>
-            </div>
-            <a href="boeken.html" class="flex-shrink-0 bg-white hover:bg-amber-100 text-rose-700 font-heading text-lg sm:text-xl font-bold px-7 py-3.5 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2 border-b-4 border-rose-200">
-                <span>🎉</span> Ontdek de mogelijkheden &rarr;
+            <a href="single.html"
+                class="shrink-0 h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                <i data-lucide="play" class="w-4 h-4"></i> Luister &amp; Kijk Nu
             </a>
         </div>
     </section>
 
-    <!-- Waar en Hoe? Eenvoudig Contact voor Deelnemers -->
-    <section id="contact" class="max-w-5xl mx-auto py-12 px-4">
-        <div class="bg-gradient-to-br from-amber-300 via-amber-200 to-yellow-100 rounded-3xl p-8 md:p-12 shadow-xl border-4 border-amber-400 text-center">
-            <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-amber-950 mb-3">
-                Kom je gezellig bij ons kijken?
-            </h2>
-            <p class="text-slate-800 text-lg sm:text-xl font-bold max-w-2xl mx-auto mb-6">
-                We repeteren elke week in de fijne <strong>Parochie De Boom (Boomkerk) in Amsterdam</strong>!
-            </p>
+    <!-- Asymmetric Bento: Twee Muziekprogramma's -->
+    <section id="programma" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-12">
+        <div class="mb-8 space-y-2">
+            <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Kies wat bij jou past</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-semibold text-white tracking-[-0.03em]">Onze Twee Muziekdagen</h2>
+            <p class="text-neutral-400 text-base max-w-2xl">Muziek maken kan op vele manieren. Kies het programma waarin jij je het prettigst voelt.</p>
+        </div>
 
-            <div class="flex flex-wrap justify-center gap-4 max-w-xl mx-auto">
-                <a href="tel:0628143815"
-                    class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-heading text-xl font-bold px-8 py-4 rounded-full shadow-lg transition flex items-center justify-center gap-3">
-                    <i data-lucide="phone" class="w-6 h-6"></i> Bel direct: 06-28143815
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <!-- Maandag: De Band (7 cols) -->
+            <div class="md:col-span-7 bg-[#141414] rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
+                        <span class="text-[#C85A32] uppercase tracking-wider">Elke Maandag</span>
+                        <span>10:00 - 15:00</span>
+                    </div>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white">De Band: Samen Spelen &amp; Optreden</h3>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
+                        Samen repeteren in een echte band met tien enthousiaste muzikanten. We schrijven eigen nummers, zingen in microfoons en bereiden ons voor op optredens.
+                    </p>
+                    <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] text-xs text-neutral-300 space-y-1">
+                        <span class="text-xs font-mono text-[#C85A32] uppercase tracking-wider block">Hoogtepunt</span>
+                        <p>Wimpie &amp; de Domino's stonden al live in Koninklijk Theater Carré en bij De Wereld Draait Door.</p>
+                    </div>
+                </div>
+                <a href="#videos" class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-neutral-300 hover:text-white transition">
+                    Bekijk onze optredens &rarr;
                 </a>
-                <a href="mailto:wimpieweg@gmail.com"
-                    class="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-heading text-xl font-bold px-8 py-4 rounded-full shadow-lg transition flex items-center justify-center gap-3">
-                    <i data-lucide="mail" class="w-6 h-6"></i> Stuur een mailtje
+            </div>
+
+            <!-- Dinsdag: Muziekbeleving (5 cols) -->
+            <div class="md:col-span-5 bg-[#141414] rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
+                        <span class="text-[#C85A32] uppercase tracking-wider">Elke Dinsdag</span>
+                        <span>10:00 - 15:00</span>
+                    </div>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Muziekbeleving &amp; Rust</h3>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
+                        Ontspannen genieten van muziek in een prikkelarme en veilige omgeving. Luisteren, zacht meespelen op percussie of rustig meezingen.
+                    </p>
+                    <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] text-xs text-neutral-300 space-y-1">
+                        <span class="text-xs font-mono text-[#C85A32] uppercase tracking-wider block">Sfeer</span>
+                        <p>Niets moet, alles mag. Ontspannen op jouw eigen tempo.</p>
+                    </div>
+                </div>
+                <a href="#contact" class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-neutral-300 hover:text-white transition">
+                    Kom sfeer proeven &rarr;
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-xs">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Aletta Jacobsstraat 59, 1349 HB Almere | KvK: 96802863</p>
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="wall-of-fame.html" class="text-amber-300 hover:text-amber-200 font-bold underline transition">
-                    🏆 Wall of Fame (Portfolio) ↗
+    <!-- Video Showcase: Carré & DWDD -->
+    <section id="videos" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-12 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)]">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+            <div>
+                <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Kijk en luister</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white tracking-[-0.03em] mt-1">Live in Actie</h2>
+            </div>
+            <a href="wall-of-fame.html" class="text-xs font-mono uppercase tracking-wider text-[#C85A32] hover:underline">
+                Alle hoogtepunten op Wall of Fame &rarr;
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Carré Video -->
+            <div class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                <div class="aspect-video bg-black">
+                    <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/b7E6zPIfTJM" title="Optreden in Koninklijk Theater Carré" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="p-5 space-y-1">
+                    <span class="text-xs font-mono uppercase tracking-[0.15em] text-[#C85A32]">Koninklijk Theater Carré</span>
+                    <h3 class="font-serif text-lg font-semibold text-white">Live met Ronnie Flex in Amsterdam</h3>
+                </div>
+            </div>
+
+            <!-- DWDD Video -->
+            <div class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                <div class="aspect-video bg-black">
+                    <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/S-ZFQPv2SAc" title="Live bij De Wereld Draait Door" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="p-5 space-y-1">
+                    <span class="text-xs font-mono uppercase tracking-[0.15em] text-[#C85A32]">Nationale Televisie</span>
+                    <h3 class="font-serif text-lg font-semibold text-white">Optreden bij De Wereld Draait Door</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zorghuis Boekingen Banner -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
+        <div class="bg-[#141414] rounded-2xl p-8 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-2 text-center md:text-left max-w-2xl">
+                <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Voor zorginstellingen &amp; festivals</span>
+                <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Wimpie &amp; de Domino's op uw locatie?</h3>
+                <p class="text-neutral-400 text-sm sm:text-base leading-relaxed">Haal een vrolijk en inclusief live optreden naar uw woonzorgcentrum, dagbesteding of evenement.</p>
+            </div>
+            <a href="boeken.html"
+                class="shrink-0 h-12 px-7 rounded-full bg-white hover:bg-neutral-100 text-[#0C0C0C] text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition">
+                Boekingsinformatie &rarr;
+            </a>
+        </div>
+    </section>
+
+    <!-- Eenvoudig Contact voor Deelnemers & Begeleiders -->
+    <section id="contact" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-12">
+        <div class="bg-[#141414] rounded-2xl p-8 sm:p-12 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] text-center space-y-6">
+            <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Kennismaken</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white">Kom je een keertje kijken?</h2>
+            <p class="text-neutral-300 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+                We repeteren wekelijks in Parochie De Boom (Boomkerk) aan de Admiraal de Ruijterweg in Amsterdam. Bel of mail gerust om langs te komen.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 pt-2">
+                <a href="tel:0628143815"
+                    class="h-12 px-8 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                    <i data-lucide="phone" class="w-4 h-4"></i> Bel: 06-28143815
                 </a>
-                <a href="boeken.html" class="text-rose-300 hover:text-rose-200 font-bold underline transition">
-                    🎺 Boek een optreden voor uw zorghuis ↗
-                </a>
-                <a href="begeleiders.html" class="text-amber-300 hover:text-amber-200 font-bold underline transition">
-                    Informatie voor Begeleiders, PB'ers &amp; Ouders ↗
+                <a href="mailto:wimpieweg@gmail.com"
+                    class="h-12 px-8 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                    <i data-lucide="mail" class="w-4 h-4"></i> Stuur een e-mail
                 </a>
             </div>
         </div>
-    </footer>
-</body>
+    </section>
 
+    <!-- Minimalist Editorial Footer -->
+    <footer class="mt-auto bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-8 px-4 sm:px-8 text-xs font-mono text-neutral-400">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Admiraal de Ruijterweg, Amsterdam | KvK: 96802863</p>
+            <div class="flex flex-wrap justify-center gap-4 text-xs">
+                <a href="single.html" class="hover:text-white transition">Nieuwe Single</a>
+                <a href="wall-of-fame.html" class="hover:text-white transition">Wall of Fame</a>
+                <a href="boeken.html" class="hover:text-white transition">Boeken</a>
+                <a href="begeleiders.html" class="hover:text-white transition">Voor Begeleiders</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
 </html>
