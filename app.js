@@ -138,7 +138,8 @@ function initBookingForm() {
         }
 
         const formData = new FormData(form);
-        fetch('/', {
+        const action = form.getAttribute('action') || window.location.pathname || '/boeken';
+        fetch(action, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams(formData).toString()
