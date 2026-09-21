@@ -123,7 +123,61 @@ function updateTtsButton(speaking) {
     }
 }
 
+function initBookingForm() {
+    const form = document.getElementById('boekingsformulier');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submit-btn');
+        const statusDiv = document.getElementById('form-status');
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Verzenden...';
+        }
+
+        const formData = new FormData(form);
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Netwerkrespons was niet ok');
+                }
+                if (statusDiv) {
+                    statusDiv.className = 'p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-sm';
+                    statusDiv.textContent = 'Bedankt voor uw aanvraag! We hebben uw bericht ontvangen en nemen snel contact met u op.';
+                    statusDiv.classList.remove('hidden');
+                }
+                form.reset();
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Aanvraag Verzonden';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                }
+            })
+            .catch(function (error) {
+                console.error('Formulier fout:', error);
+                if (statusDiv) {
+                    statusDiv.className = 'p-4 rounded-xl bg-rose-950/60 border border-rose-500/30 text-rose-300 text-sm';
+                    statusDiv.textContent = 'Er ging iets mis bij het verzenden. Bel ons gerust op 06-28143815 of mail naar wimpieweg@gmail.com.';
+                    statusDiv.classList.remove('hidden');
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Probeer Opnieuw';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                }
+            });
+    });
+}
+
 function initApp() {
+    initBookingForm();
+
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     } else {

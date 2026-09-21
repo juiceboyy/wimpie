@@ -159,16 +159,20 @@
                 <p class="text-neutral-400 text-sm">Vul het formulier in of neem direct telefonisch contact met ons op.</p>
             </div>
 
-            <form class="max-w-2xl mx-auto space-y-4" action="mailto:wimpieweg@gmail.com" method="GET">
+            <form id="boekingsformulier" name="boeking" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" class="max-w-2xl mx-auto space-y-4">
+                <input type="hidden" name="form-name" value="boeking" />
+                <p class="hidden">
+                    <label>Niet invullen: <input name="bot-field" /></label>
+                </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="org-name">Zorghuis / Organisatie</label>
-                        <input id="org-name" type="text" placeholder="Bijv. Woonzorgcentrum De Linde"
+                        <input id="org-name" name="organisatie" type="text" autocomplete="organization" placeholder="Bijv. Woonzorgcentrum De Linde"
                             class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
                     </div>
                     <div>
                         <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="contact-name">Naam contactpersoon</label>
-                        <input id="contact-name" type="text" placeholder="Uw naam &amp; functie"
+                        <input id="contact-name" name="naam" type="text" autocomplete="name" placeholder="Uw naam &amp; functie"
                             class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
                     </div>
                 </div>
@@ -176,12 +180,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="email">E-mailadres</label>
-                        <input id="email" type="email" placeholder="naam@zorgorganisatie.nl"
+                        <input id="email" name="email" type="email" autocomplete="email" placeholder="naam@zorgorganisatie.nl"
                             class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
                     </div>
                     <div>
                         <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="phone">Telefoonnummer</label>
-                        <input id="phone" type="tel" placeholder="06 - ..."
+                        <input id="phone" name="telefoon" type="tel" autocomplete="tel" placeholder="06 - ..."
                             class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     </div>
                 </div>
@@ -189,23 +193,25 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="event-date">Gewenste periode of datum</label>
-                        <input id="event-date" type="text" placeholder="Bijv. Najaar 2026 of 15 september"
+                        <input id="event-date" name="periode_of_datum" type="text" placeholder="Bijv. Najaar 2026 of 15 september"
                             class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     </div>
                     <div>
                         <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="event-type">Type gelegenheid</label>
-                        <input id="event-type" type="text" placeholder="Bijv. Huiskamerconcert, Jubileum"
+                        <input id="event-type" name="type_gelegenheid" type="text" placeholder="Bijv. Huiskamerconcert, Jubileum"
                             class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="notes">Wensen of vragen over de doelgroep</label>
-                    <textarea id="notes" rows="3" placeholder="Vertel ons over de bewoners, de ruimte of specifieke wensen..."
+                    <textarea id="notes" name="wensen_of_vragen" rows="3" placeholder="Vertel ons over de bewoners, de ruimte of specifieke wensen..."
                         class="w-full p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]"></textarea>
                 </div>
 
-                <button type="submit"
+                <div id="form-status" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                <button type="submit" id="submit-btn"
                     class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     <i data-lucide="send" class="w-4 h-4"></i> Verstuur Boekingsaanvraag
                 </button>
