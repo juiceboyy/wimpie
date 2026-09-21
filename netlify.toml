@@ -7,3 +7,23 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/begeleiders"
+  to = "/contact.html"
+  status = 301
+
+[[redirects]]
+  from = "/begeleiders.html"
+  to = "/contact.html"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/boeken"
+  to = "/boeken.html"
+  status = 200

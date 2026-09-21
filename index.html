@@ -40,11 +40,11 @@
                 </a>
                 <a href="boeken.html"
                     class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Contact
+                    Boek optreden
                 </a>
-                <a href="begeleiders.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 text-xs font-mono uppercase tracking-wider hidden md:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Begeleiders
+                <a href="contact.html"
+                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    Contact
                 </a>
             </div>
         </div>
@@ -76,9 +76,9 @@
                     class="h-12 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 backdrop-blur-md shadow-[0_0_0_1px_rgba(255,255,255,0.18)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
                     <i data-lucide="calendar" class="w-4 h-4"></i> Bekijk de dagen
                 </a>
-                <a href="#contact"
+                <a href="contact.html"
                     class="h-12 px-7 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    <i data-lucide="phone" class="w-4 h-4"></i> Meedoen
+                    <i data-lucide="user-plus" class="w-4 h-4"></i> Aanmelden
                 </a>
             </div>
         </div>
@@ -227,13 +227,13 @@
                 We repeteren wekelijks in Parochie De Boom (Boomkerk) aan de Admiraal de Ruijterweg in Amsterdam. Bel of mail gerust om langs te komen.
             </p>
             <div class="flex flex-wrap justify-center gap-4 pt-2">
-                <a href="tel:0628143815"
+                <a href="contact.html"
                     class="h-12 px-8 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
-                    <i data-lucide="phone" class="w-4 h-4"></i> Bel: 06-28143815
+                    <i data-lucide="user-plus" class="w-4 h-4"></i> Naar Contact &amp; Aanmelden
                 </a>
-                <a href="mailto:wimpieweg@gmail.com"
+                <a href="tel:0628143815"
                     class="h-12 px-8 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
-                    <i data-lucide="mail" class="w-4 h-4"></i> Stuur een e-mail
+                    <i data-lucide="phone" class="w-4 h-4 text-[#C85A32]"></i> Bel: 06-28143815
                 </a>
             </div>
         </div>
@@ -246,8 +246,8 @@
             <div class="flex flex-wrap justify-center gap-4 text-xs">
                 <a href="single.html" class="hover:text-white transition">Nieuwe Single</a>
                 <a href="wall-of-fame.html" class="hover:text-white transition">Wall of Fame</a>
-                <a href="boeken.html" class="hover:text-white transition">Contact</a>
-                <a href="begeleiders.html" class="hover:text-white transition">Voor Begeleiders</a>
+                <a href="boeken.html" class="hover:text-white transition">Boek optreden</a>
+                <a href="contact.html" class="hover:text-white transition">Contact &amp; Aanmelding</a>
             </div>
         </div>
     </footer>
@@ -263,6 +263,17 @@
         <input type="text" name="periode_of_datum" />
         <input type="text" name="type_gelegenheid" />
         <textarea name="wensen_of_vragen"></textarea>
+    </form>
+
+    <form name="contact" data-netlify="true" netlify netlify-honeypot="bot-field" data-netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="text" name="bot-field" />
+        <input type="text" name="naam" />
+        <input type="text" name="rol" />
+        <input type="email" name="email" />
+        <input type="tel" name="telefoon" />
+        <input type="text" name="onderwerp" />
+        <textarea name="bericht"></textarea>
     </form>
 
 </body>
