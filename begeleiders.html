@@ -1,183 +1,31 @@
 <!DOCTYPE html>
-<html lang="nl" class="scroll-smooth bg-[#0C0C0C]">
-
+<html lang="nl" class="bg-[#0C0C0C]">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=contact.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informatie voor Begeleiders &amp; Verwanten | Wimpie &amp; de Domino's</title>
-    <meta name="description" content="Informatie voor persoonlijk begeleiders, zorgcoördinatoren en ouders over muzikale dagbesteding en financiering (PGB &amp; onderaanneming).">
+    <title>Verplaatst: Contact &amp; Aanmelding Dagbesteding | Wimpie &amp; de Domino's</title>
+    <link rel="canonical" href="contact.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="app.js" defer></script>
+    <script>
+        window.location.replace("contact.html");
+    </script>
 </head>
-
-<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">
-
-    <!-- Top Micro-Bar -->
-    <header class="sticky top-0 z-50 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
-            <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition">
-                <span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span>
-                <span>Wimpie &amp; de Domino's</span>
+<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased min-h-screen flex items-center justify-center p-6 text-center">
+    <div class="max-w-md bg-[#141414] p-8 rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
+        <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Pagina verplaatst</span>
+        <h1 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Contact &amp; Aanmelding</h1>
+        <p class="text-neutral-300 text-sm">
+            Informatie over onze muzikale dagbesteding, intake en contact is verhuisd naar de vernieuwde contactpagina.
+        </p>
+        <div class="pt-2">
+            <a href="contact.html" class="inline-flex h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider items-center justify-center transition">
+                Ga naar Contact &rarr;
             </a>
-            <div class="flex items-center gap-2 sm:gap-3">
-                <a href="single.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Nieuwe Single
-                </a>
-                <a href="wall-of-fame.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Wall of Fame
-                </a>
-                <a href="boeken.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Boeken
-                </a>
-                <a href="index.html"
-                    class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">
-                    &larr; Home
-                </a>
-            </div>
         </div>
-    </header>
-
-    <!-- Header / Hero Sectie voor Begeleiders -->
-    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-12 pb-8">
-        <div class="max-w-3xl space-y-4">
-            <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">
-                Dossier voor Professionals &amp; Ouders
-            </span>
-            <h1 class="font-serif text-4xl sm:text-6xl font-semibold text-white tracking-[-0.035em] leading-[1.05]">
-                Muzikale Dagbesteding &amp; Zorg
-            </h1>
-            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed">
-                Wimpie &amp; de Domino's biedt een veilige, inspirerende en professionele dagbesteding in Amsterdam waar muzikale talentontwikkeling, eigenwaarde en ontspanning centraal staan.
-            </p>
-        </div>
-    </section>
-
-    <main class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 space-y-12 flex-1">
-
-        <!-- Wie zijn wij? & Programma overzicht (Bento Grid) -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
-                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Organisatie</span>
-                <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Over Onze Begeleiding</h2>
-                <p class="text-neutral-300 text-sm leading-relaxed">
-                    Wimpie &amp; de Domino's is een professionele VOF onder leiding van <strong>Auck Boersma</strong> en <strong>Ronald van Holst</strong>. Wij combineren jarenlange professionele band- en muziekervaring met deskundige pedagogische begeleiding van mensen met een verstandelijke beperking.
-                </p>
-                <p class="text-neutral-300 text-sm leading-relaxed">
-                    Wij hanteren heldere, betrouwbare communicatie en korte lijnen met persoonlijk begeleiders (PB'ers), zorgcoördinatoren en wettelijk vertegenwoordigers.
-                </p>
-            </div>
-
-            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
-                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Dagbesteding</span>
-                <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Programma &amp; Dagindeling</h2>
-                <div class="space-y-3 text-sm">
-                    <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] space-y-1">
-                        <span class="text-xs font-mono text-[#C85A32] uppercase tracking-wider block">Maandag: De Band (10:00 - 15:00)</span>
-                        <p class="text-neutral-300">Voor muzikanten die samen repeteren, eigen nummers schrijven en toewerken naar optredens op festivals en theaters.</p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] space-y-1">
-                        <span class="text-xs font-mono text-[#C85A32] uppercase tracking-wider block">Dinsdag: Muziekbeleving (10:00 - 15:00)</span>
-                        <p class="text-neutral-300">Laagdrempelige dagbesteding gericht op ontspanning, ritmebeleving, zintuiglijke stimulatie en plezier in een prikkelarme setting.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Zakelijke Informatie: Financiering, Tarieven & Boekingen -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Financiering & Tarieven -->
-            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-6">
-                <div class="space-y-4">
-                    <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Zakelijk</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Financiering &amp; Tarieven</h2>
-                    <ul class="space-y-3 text-neutral-300 text-sm leading-relaxed">
-                        <li class="flex items-start gap-2.5">
-                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
-                            <span><strong>Plaatsing &amp; Zorgcontracten:</strong> Plaatsing geschiedt via onderaannemingsovereenkomsten (zoals reeds met o.a. Cordaan, Stichting Amsta en Thomashuis) of via een Persoonsgebonden Budget (PGB).</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
-                            <span><strong>Tarievenstructuur:</strong> Urendeclaraties zijn gebaseerd op de geldende tariefstructuur voor dagbesteding. Onze zorgverlening is vrijgesteld van btw.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <i data-lucide="check" class="w-4 h-4 text-[#C85A32] shrink-0 mt-1"></i>
-                            <span><strong>Locatie:</strong> Parochie De Boom (onderdeel van de Boomkerk), Admiraal de Ruijterweg in Amsterdam. Goed bereikbaar en rolstoeltoegankelijk.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-                    <span class="text-neutral-400">Optreden boeken voor uw zorglocatie?</span>
-                    <a href="boeken.html" class="text-[#C85A32] hover:underline uppercase tracking-wider">
-                        Naar Boekingspagina &rarr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- Contact & Aanmeldformulier -->
-            <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
-                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32]">Contact &amp; Intake</span>
-                <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Aanmelden of Vraag Stellen</h2>
-                <p class="text-neutral-400 text-sm">Neem contact met ons op voor een kennismaking of intakegesprek.</p>
-
-                <form class="space-y-4" action="mailto:wimpieweg@gmail.com" method="GET">
-                    <div>
-                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="contact-name">Naam contactpersoon / PB'er</label>
-                        <input id="contact-name" type="text" placeholder="Bijv. Sarah de Boer"
-                            class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="contact-email">E-mailadres</label>
-                            <input id="contact-email" type="email" placeholder="uw@organisatie.nl"
-                                class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="contact-phone">Telefoonnummer</label>
-                            <input id="contact-phone" type="tel" placeholder="06-..."
-                                class="w-full h-11 px-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5" for="contact-message">Onderwerp / Hulpvraag</label>
-                        <textarea id="contact-message" rows="3" placeholder="Wat is de hulpvraag of beschikbaarheidswens?"
-                            class="w-full p-4 rounded-xl bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] text-white text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]" required></textarea>
-                    </div>
-                    <button type="submit"
-                        class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
-                        <i data-lucide="send" class="w-4 h-4"></i> Bericht Versturen
-                    </button>
-                </form>
-
-                <div class="pt-4 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] flex flex-wrap gap-4 text-xs font-mono text-neutral-400">
-                    <span>Tel: 06-28143815</span>
-                    <span>E-mail: wimpieweg@gmail.com</span>
-                    <span>KvK: 96802863</span>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-8 px-4 sm:px-8 text-xs font-mono text-neutral-400 mt-12">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Admiraal de Ruijterweg, Amsterdam | KvK: 96802863</p>
-            <div class="flex flex-wrap justify-center gap-4 text-xs">
-                <a href="index.html" class="hover:text-white transition">&larr; Hoofdpagina</a>
-                <a href="single.html" class="hover:text-white transition">Nieuwe Single</a>
-                <a href="wall-of-fame.html" class="hover:text-white transition">Wall of Fame</a>
-                <a href="boeken.html" class="hover:text-white transition">Boeken</a>
-            </div>
-        </div>
-    </footer>
-
+    </div>
 </body>
 </html>
