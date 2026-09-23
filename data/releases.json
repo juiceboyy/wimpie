@@ -1,0 +1,16 @@
+{
+  "rozen": {
+    "title": "Het Leven gaat niet altijd over Rozen",
+    "artist": "Wimpie & de Domino's",
+    "badge": "Nieuwe Single",
+    "description": "Beluister de nieuwe single 'Het Leven gaat niet altijd over Rozen' van Wimpie & de Domino's op Spotify, Apple Music, Deezer en YouTube.",
+    "artwork": "/single-cover.jpg",
+    "youtubeId": "2va192QwBOA",
+    "platforms": {
+      "spotify": "https://open.spotify.com/track/1YrYa6ONt2dYIn2BxZn391",
+      "apple": "https://music.apple.com/nl/album/het-leven-gaat-niet-altijd-over-rozen/6806836578?i=6806836579&l=en-GB",
+      "deezer": "https://link.deezer.com/s/34sekGCeKgxFAYzYsthXk",
+      "youtube": "https://youtu.be/2va192QwBOA"
+    }
+  }
+}

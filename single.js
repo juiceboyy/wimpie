@@ -23,8 +23,8 @@ function setupShareButton() {
 
     shareBtn.addEventListener('click', async () => {
         const shareData = {
-            title: "Wimpie & de Domino's - Het Leven gaat niet altijd over Rozen",
-            text: "Luister naar de nieuwe single 'Het Leven gaat niet altijd over Rozen' van Wimpie & de Domino's!",
+            title: document.title,
+            text: document.querySelector('meta[name="description"]')?.getAttribute('content') || document.title,
             url: window.location.href
         };
 

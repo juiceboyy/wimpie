@@ -1,4 +1,5 @@
 [build]
+  command = "node build-releases.js"
   publish = "."
 
 [[headers]]
@@ -26,4 +27,14 @@
 [[redirects]]
   from = "/boeken"
   to = "/boeken.html"
+  status = 200
+
+[[redirects]]
+  from = "/s/:slug"
+  to = "/s/:slug/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/s"
+  to = "/s/index.html"
   status = 200
