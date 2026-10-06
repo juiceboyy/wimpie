@@ -38,3 +38,8 @@
   from = "/s"
   to = "/s/index.html"
   status = 200
+
+[[redirects]]
+  from = "/kaart"
+  to = "/kaart/index.html"
+  status = 200
