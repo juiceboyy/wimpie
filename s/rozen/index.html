@@ -34,6 +34,7 @@
             }
         };
     </script>
+    <script src="/qr.js" defer></script>
     <script src="/single.js" defer></script>
 </head>
 
@@ -56,6 +57,9 @@
                 <span>Wimpie & de Domino's</span>
             </a>
             <div class="flex items-center gap-3">
+                <a href="/podcast.html" class="text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition">
+                    Podcast
+                </a>
                 <a href="/wall-of-fame.html" class="text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition">
                     Wall of Fame
                 </a>
@@ -90,12 +94,17 @@
                 </div>
 
                 <!-- Odesli Quick Action Chips -->
-                <div class="flex items-center justify-center gap-2 pt-1">
+                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
                     <button id="share-btn"
                             class="h-8 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                         <i data-lucide="share-2" class="w-3 h-3 text-[#C85A32]"></i>
                         <span>Deel link</span>
                     </button>
+                    <a href="#steun-band"
+                       class="h-8 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                        <i data-lucide="heart" class="w-3 h-3 text-[#C85A32]"></i>
+                        <span>Steun ons</span>
+                    </a>
                     <a href="/boeken.html"
                        class="h-8 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                         <i data-lucide="calendar" class="w-3 h-3 text-neutral-400"></i>
@@ -187,11 +196,39 @@
                 </div>
             </div>
 
+            <!-- Steun de Band: Bunq QR & Directe Betaallink -->
+            <div id="steun-band" class="pt-5 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)]">
+                <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.04] shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="space-y-2.5 text-center sm:text-left">
+                        <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32] block">Steun de band</span>
+                        <h2 class="font-serif text-lg font-semibold text-white">Draag bij aan onze muziekprojecten</h2>
+                        <p class="text-xs text-neutral-300 leading-relaxed">
+                            Steun Wimpie & de Domino's met een vrije bijdrage voor nieuwe muziek, opnames en optredens.
+                        </p>
+                        <div class="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                            <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer"
+                               class="h-9 px-4 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider inline-flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                                <span>Steun via bunq.me</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer"
+                       class="shrink-0 flex flex-col items-center gap-1.5 group rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                       aria-label="Scan of open bunq.me/Wimpie">
+                        <div class="w-28 h-28 p-1.5 rounded-xl bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition-transform duration-150 group-hover:scale-[1.03]">
+                            <div data-bunq-qr class="w-full h-full"></div>
+                        </div>
+                        <span class="text-[11px] font-mono text-neutral-400 group-hover:text-white transition">Scan met camera</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- Booking Callout (Odesli Card Footer) -->
             <div class="pt-4 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] text-center">
                 <a href="/boeken.html"
-                   class="inline-flex items-center justify-center gap-2 w-full h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                   class="inline-flex items-center justify-center gap-2 w-full h-11 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider shadow-[0_0_0_1px_rgba(255,255,255,0.14)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#C85A32]"></i>
                     <span>Boek ons voor een optreden</span>
                 </a>
             </div>

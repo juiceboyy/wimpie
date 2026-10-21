@@ -31,6 +31,7 @@
             }
         };
     </script>
+    <script src="/qr.js" defer></script>
     <script type="module" src="/kaart/kaart.js"></script>
 </head>
 <body class="relative bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
@@ -168,8 +169,7 @@
                 </a>
 
                 <!-- 2. Boekingen & Optredens -->
-                <a href="/boeken.html"
-                   class="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] shadow-[0_0_0_1px_rgba(255,255,255,0.06)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.14)] transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                <a href="/boeken.html" class="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] shadow-[0_0_0_1px_rgba(255,255,255,0.06)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.14)] transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                     <div class="flex items-center gap-3">
                         <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C85A32] to-[#8A3A22] text-white flex items-center justify-center shrink-0 shadow-sm">
                             <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
@@ -179,10 +179,37 @@
                             <div class="text-xs text-neutral-400">Festivals, theaters, feesten &amp; zorglocaties</div>
                         </div>
                     </div>
-                    <span class="h-8 px-3.5 rounded-full bg-white/10 group-hover:bg-[#C85A32] text-neutral-200 group-hover:text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center transition shadow-[0_0_0_1px_rgba(255,255,255,0.1)] group-hover:shadow-none">
-                        Boek
-                    </span>
+                    <span class="h-8 px-3.5 rounded-full bg-white/10 group-hover:bg-[#C85A32] text-neutral-200 group-hover:text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center transition shadow-[0_0_0_1px_rgba(255,255,255,0.1)] group-hover:shadow-none">Boek</span>
                 </a>
+
+                <!-- 3. Steun de band (Bunq.me & Uitklapbare QR) -->
+                <div class="rounded-2xl bg-white/[0.04] shadow-[0_0_0_1px_rgba(255,255,255,0.06)] overflow-hidden">
+                    <div class="flex items-center justify-between p-3.5 gap-2">
+                        <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 flex-1 min-w-0 group rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                            <div class="w-11 h-11 rounded-xl bg-[#C85A32]/20 text-[#C85A32] flex items-center justify-center shrink-0 shadow-[0_0_0_1px_rgba(200,90,50,0.35)]">
+                                <i data-lucide="heart" class="w-5 h-5 text-[#C85A32]"></i>
+                            </div>
+                            <div class="text-left min-w-0">
+                                <div class="font-medium text-white text-sm group-hover:text-[#C85A32] transition">Steun de band</div>
+                                <div class="text-xs text-neutral-400 truncate">Vrije bijdrage voor onze muziekprojecten</div>
+                            </div>
+                        </a>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button type="button" data-qr-toggle="kaart-qr-panel" aria-expanded="false" aria-controls="kaart-qr-panel" aria-label="Toon QR-code" class="h-8 w-8 rounded-full bg-white/5 hover:bg-white/15 text-neutral-300 hover:text-white flex items-center justify-center transition shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                                <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#C85A32]"></i>
+                            </button>
+                            <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer" class="h-8 px-3.5 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center transition shadow-[0_0_0_1px_rgba(200,90,50,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">Steun</a>
+                        </div>
+                    </div>
+                    <div id="kaart-qr-panel" class="hidden px-4 pb-4 pt-3 shadow-[0_-1px_0_0_rgba(255,255,255,0.06)]">
+                        <div class="flex flex-col items-center text-center space-y-2.5">
+                            <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer" class="w-36 h-36 p-1.5 rounded-xl bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.15)] block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C85A32]">
+                                <div data-bunq-qr class="w-full h-full"></div>
+                            </a>
+                            <p class="text-xs font-mono text-neutral-300">Scan met je camera of bank-app &bull; <span data-bunq-display class="text-[#C85A32]">bunq.me/Wimpie</span></p>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 5. Volg op Instagram -->
                 <a href="https://instagram.com/wimpiedomino"
