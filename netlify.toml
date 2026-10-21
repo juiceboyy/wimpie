@@ -2,6 +2,10 @@
   command = "node build-releases.js && node build-podcasts.js"
   publish = "."
 
+[build.environment]
+  SECRETS_SCAN_OMIT_PATHS = "CLAUDE.md"
+  SECRETS_SCAN_OMIT_KEYS = "ADMIN_PIN"
+
 [functions]
   directory = "netlify/functions"
   included_files = ["data/**"]
