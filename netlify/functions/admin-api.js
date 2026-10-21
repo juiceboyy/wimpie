@@ -175,18 +175,16 @@ async function commitToGithub(filePath, contentString, message, repo, branch, to
 }
 
 async function loadJsonData(filename, repo, branch, token) {
-    let data = readLocalJson(filename);
-    if (!data && token) {
+    let data = null;
+    if (token) {
         try {
             const gh = await fetchFromGithub(`data/${filename}`, repo, branch, token);
-            if (gh && gh.content) {
-                data = JSON.parse(Buffer.from(gh.content, 'base64').toString('utf-8'));
-            }
+            if (gh && gh.content) data = JSON.parse(Buffer.from(gh.content, 'base64').toString('utf-8'));
         } catch (e) {
             console.warn(`GitHub ophalen ${filename} mislukt:`, e.message);
         }
     }
-    return data;
+    return data || readLocalJson(filename);
 }
 
 exports.handler = async (event) => {
@@ -284,12 +282,14 @@ exports.handler = async (event) => {
             return jsonResponse(200, {
                 ok: true,
                 mode: 'local',
-                message: `Lokaal opgeslagen in ${relPath}. Let op: GITHUB_TOKEN ontbreekt, stel deze in op Netlify voor live publicatie.`
+                message: `Lokaal opgeslagen in ${relPath}. Let op: GITHUB_TOKEN ontbreekt.`
             });
         } catch (fsErr) {
-            return jsonResponse(500, {
-                error: `Kon niet lokaal opslaan en GITHUB_TOKEN ontbreekt: ${fsErr.message}`
-            });
+            const isCloud = Boolean(process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
+            const error = isCloud
+                ? 'GITHUB_TOKEN ontbreekt in deze Netlify omgeving. Stel GITHUB_TOKEN in bij Netlify Environment Variables.'
+                : `Kon niet lokaal opslaan en GITHUB_TOKEN ontbreekt: ${fsErr.message}`;
+            return jsonResponse(500, { error });
         }
     }
 

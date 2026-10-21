@@ -93,7 +93,7 @@ function renderCardArticle({ isPortrait, slug, videoBlock, metaRow, title, headi
                 <div class="space-y-3">
                     ${metaRow}
                     <${headingTag} class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</${headingTag}>
-                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">${description}</p>
                 </div>
                 <div class="space-y-2.5 pt-2">
                     <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">${actionLabel}</span>
@@ -109,7 +109,7 @@ function renderCardArticle({ isPortrait, slug, videoBlock, metaRow, title, headi
                 <div class="space-y-3">
                     ${metaRow}
                     <${headingTag} class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</${headingTag}>
-                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">${description}</p>
                 </div>
                 <div class="space-y-2.5 pt-2">
                     <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">${actionLabel}</span>
@@ -215,7 +215,7 @@ function renderPodcastPage(data) {
         <div class="max-w-3xl space-y-4">
             <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">Video &amp; Audio</span>
             <h1 class="font-serif text-4xl sm:text-6xl font-semibold text-white tracking-[-0.035em] leading-[1.05]">${escapeHtml(showTitle)}</h1>
-            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed">${escapeHtml(showSubtitle)}</p>
+            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed whitespace-pre-line">${escapeHtml(showSubtitle)}</p>
             <div class="flex flex-wrap items-center gap-2.5 pt-2">${showButtons}</div>
         </div>
     </section>
