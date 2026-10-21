@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth bg-[#0C0C0C]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beheerders Dashboard | Wimpie &amp; de Domino's</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-40 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition">
+                    <span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span>
+                    <span>Wimpie &amp; de Domino's</span>
+                </a>
+                <span class="text-xs font-mono text-neutral-400">/</span>
+                <span class="text-xs font-mono uppercase tracking-wider text-white">Beheer</span>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="flex items-center gap-2 bg-black/40 p-1 rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                <button type="button" id="tab-btn-releases" class="h-9 px-4 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition">
+                    <i data-lucide="music" class="w-3.5 h-3.5"></i>
+                    <span>Muziek &amp; Singles</span>
+                </button>
+                <button type="button" id="tab-btn-podcasts" class="h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                    <span>Videopodcasts</span>
+                </button>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2">
+                <span id="global-sync-status" class="hidden sm:inline-block text-[11px] font-mono text-neutral-400 uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">Klaar</span>
+                <button type="button" id="admin-export-btn" class="h-9 px-3 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition" title="JSON Backup Downloaden">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                    <span class="hidden md:inline">Backup</span>
+                </button>
+                <a href="index.html" target="_blank" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    <span class="hidden sm:inline">Live Site</span>
+                </a>
+                <button type="button" id="admin-logout-btn" class="h-9 px-3 rounded-full bg-white/5 hover:bg-red-500/20 text-neutral-400 hover:text-red-400 text-xs font-mono uppercase transition flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]" title="Uitloggen">
+                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8 flex-1">
+        <!-- TAB 1: MUZIEK & SINGLES -->
+        <section id="tab-releases" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Formulier -->
+                <form id="releases-form" class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                        <h2 id="rel-form-heading" class="font-serif text-xl sm:text-2xl font-semibold text-white">Nieuwe Release Toevoegen</h2>
+                        <button type="button" id="rel-cancel-btn" class="hidden text-xs font-mono text-neutral-400 hover:text-white transition">Annuleren</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="rel-title" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Titel *</label>
+                            <input type="text" id="rel-title" required placeholder="bijv. Het Leven gaat niet altijd over Rozen" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div>
+                            <label for="rel-slug" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">URL Slug * (/s/slug)</label>
+                            <input type="text" id="rel-slug" required placeholder="bijv. rozen" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="rel-artist" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Artiest</label>
+                            <input type="text" id="rel-artist" value="Wimpie &amp; de Domino's" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div>
+                            <label for="rel-badge" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Badge label</label>
+                            <input type="text" id="rel-badge" value="Nieuwe Single" placeholder="bijv. Nieuwe Single of Album" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="rel-description" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Korte beschrijving</label>
+                        <textarea id="rel-description" rows="2" placeholder="Korte toelichting voor de landingspagina..." class="w-full p-3 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="rel-artwork" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Artwork URL / Bestand</label>
+                            <input type="text" id="rel-artwork" value="/single-cover.jpg" placeholder="/single-cover.jpg of URL" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div>
+                            <label for="rel-youtube" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">YouTube Clip (Link of 11-char ID)</label>
+                            <input type="text" id="rel-youtube" placeholder="https://youtu.be/... of ID" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <span class="block text-xs font-mono uppercase tracking-wider text-[#C85A32]">Platform Links (Directe URLs)</span>
+                        <div class="space-y-2">
+                            <input type="url" id="rel-spotify" placeholder="Spotify URL (https://open.spotify.com/...)" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)] focus:outline-none focus:ring-2 focus:ring-white">
+                            <input type="url" id="rel-apple" placeholder="Apple Music URL (https://music.apple.com/...)" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)] focus:outline-none focus:ring-2 focus:ring-white">
+                            <input type="url" id="rel-deezer" placeholder="Deezer URL (https://deezer.com/...)" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" id="rel-submit-btn" class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider font-semibold shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition flex items-center justify-center gap-2">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Release Toevoegen aan Lijst</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Bestaande Releases -->
+                <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
+                    <h3 class="font-serif text-lg font-semibold text-white">Bestaande Releases</h3>
+                    <div id="releases-list" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Live Preview Releases -->
+            <div class="lg:col-span-5 sticky top-20 space-y-4">
+                <span class="text-xs font-mono uppercase tracking-wider text-neutral-400 block">Live Preview Landingspagina (/s/:slug)</span>
+                <div class="bg-[#141414] rounded-2xl p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] space-y-4">
+                    <div class="relative w-full aspect-square rounded-xl overflow-hidden bg-black shadow-inner">
+                        <img id="prev-rel-artwork" src="/single-cover.jpg" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-center space-y-1">
+                        <span id="prev-rel-badge" class="inline-block text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/10 text-[#C85A32]">Nieuwe Single</span>
+                        <h3 id="prev-rel-title" class="font-serif text-xl font-semibold text-white">Het Leven gaat niet altijd over Rozen</h3>
+                        <p id="prev-rel-artist" class="text-xs font-mono text-neutral-400">Wimpie &amp; de Domino's</p>
+                    </div>
+                    <p id="prev-rel-desc" class="text-neutral-300 text-xs leading-relaxed text-center">Beluister de nieuwe single...</p>
+                    <div id="prev-rel-video" class="pt-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: VIDEOPODCASTS -->
+        <section id="tab-podcasts" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Show Instellingen -->
+                <form id="podcast-show-form" class="bg-[#141414] rounded-2xl p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
+                    <h2 class="font-serif text-lg font-semibold text-white">Algemene Podcast Instellingen</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="pod-show-title" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1">Show Titel</label>
+                            <input type="text" id="pod-show-title" class="w-full h-10 px-3.5 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div>
+                            <label for="pod-show-youtube" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1">YouTube Playlist URL</label>
+                            <input type="url" id="pod-show-youtube" class="w-full h-10 px-3.5 rounded-xl bg-black/50 text-white text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="pod-show-subtitle" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1">Show Beschrijving</label>
+                        <textarea id="pod-show-subtitle" rows="2" class="w-full p-3 rounded-xl bg-black/50 text-white text-xs shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="url" id="pod-show-spotify" placeholder="Show Spotify link" class="w-full h-10 px-3.5 rounded-xl bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                        <input type="url" id="pod-show-apple" placeholder="Show Apple Podcasts link" class="w-full h-10 px-3.5 rounded-xl bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                    </div>
+                    <button type="submit" class="h-9 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider transition">Show Instellingen Opslaan</button>
+                </form>
+
+                <!-- Aflevering Toevoegen / Bewerken -->
+                <form id="podcast-episode-form" class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                        <h2 id="pod-form-heading" class="font-serif text-xl sm:text-2xl font-semibold text-white">Nieuwe Aflevering Toevoegen</h2>
+                        <button type="button" id="pod-cancel-btn" class="hidden text-xs font-mono text-neutral-400 hover:text-white transition">Annuleren</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label for="pod-num" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Aflevering #</label>
+                            <input type="number" id="pod-num" required class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="pod-slug" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Slug (bv. aflevering-2)</label>
+                            <input type="text" id="pod-slug" required class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="pod-title" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Titel van de Aflevering *</label>
+                        <input type="text" id="pod-title" required placeholder="bijv. Aflevering 2: Repeteren voor Carré" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+
+                    <div>
+                        <label for="pod-desc" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Beschrijving van de aflevering</label>
+                        <textarea id="pod-desc" rows="3" class="w-full p-3 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="pod-youtube" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">YouTube Video (URL of ID)</label>
+                            <input type="text" id="pod-youtube" placeholder="https://youtu.be/... of ID" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div>
+                            <label for="pod-date" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Datum (optioneel)</label>
+                            <input type="text" id="pod-date" placeholder="bijv. Maart 2026" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <span class="block text-xs font-mono uppercase tracking-wider text-[#C85A32]">Audio Platform Links</span>
+                        <input type="url" id="pod-spotify" placeholder="Spotify aflevering URL" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                        <input type="url" id="pod-apple" placeholder="Apple Podcasts aflevering URL" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" id="pod-submit-btn" class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider font-semibold shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition flex items-center justify-center gap-2">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Aflevering Toevoegen</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Bestaande Afleveringen -->
+                <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] space-y-4">
+                    <h3 class="font-serif text-lg font-semibold text-white">Bestaande Afleveringen</h3>
+                    <div id="podcasts-list" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Live Preview Podcasts (9:16 Vertical Card) -->
+            <div class="lg:col-span-5 sticky top-20 space-y-4">
+                <span class="text-xs font-mono uppercase tracking-wider text-neutral-400 block">Live Preview Podcast Card (9:16)</span>
+                <div class="bg-[#141414] rounded-2xl p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] space-y-4">
+                    <div class="w-full max-w-[260px] mx-auto aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
+                        <div id="prev-pod-video" class="w-full h-full"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
+                            <span id="prev-pod-num" class="text-[#C85A32] uppercase tracking-wider">Aflevering 01</span>
+                            <span id="prev-pod-date"></span>
+                        </div>
+                        <h4 id="prev-pod-title" class="font-serif text-lg font-semibold text-white">Titel van de Aflevering</h4>
+                        <p id="prev-pod-desc" class="text-neutral-300 text-xs leading-relaxed">Korte toelichting...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Auth Modal Overlay -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-[#141414] rounded-2xl p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.1)] space-y-6">
+            <div class="space-y-2 text-center">
+                <div class="w-12 h-12 rounded-full bg-[#C85A32]/10 text-[#C85A32] flex items-center justify-center mx-auto shadow-[0_0_0_1px_rgba(200,90,50,0.3)]">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-semibold text-white">Beheerders Toegang</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Voer de pincode of het wachtwoord in om releases en podcasts te beheren.</p>
+            </div>
+
+            <form id="auth-form" class="space-y-4">
+                <div>
+                    <label for="auth-pin-input" class="sr-only">Pincode</label>
+                    <input type="password" id="auth-pin-input" required placeholder="Pincode of wachtwoord" class="w-full h-12 px-4 rounded-xl bg-black/60 text-white text-center font-mono text-base tracking-widest shadow-[0_0_0_1px_rgba(255,255,255,0.15)] focus:outline-none focus:ring-2 focus:ring-white">
+                </div>
+                <div id="auth-error-msg" class="text-xs font-mono text-red-400 text-center min-h-[1rem]"></div>
+                <button type="submit" class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider font-semibold shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition">Inloggen</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="admin-toast" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl bg-neutral-900/90 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.15)] backdrop-blur-md transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
+        <span id="admin-toast-icon"></span>
+        <span id="admin-toast-text" class="text-xs font-mono"></span>
+    </div>
+
+    <script src="admin-releases.js"></script>
+    <script src="admin-podcasts.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
