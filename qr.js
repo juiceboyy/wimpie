@@ -60,14 +60,15 @@ function rsEncode(data, ecLen) {
 }
 
 function encodeQrMatrix(text) {
-    const bytes = Array.from(new TextEncoder().encode(text));
+    const rawBytes = Array.from(new TextEncoder().encode(text));
     let ver = 1;
-    while (ver < QR_VERSIONS_M.length && QR_VERSIONS_M[ver][0] - 2 < bytes.length) {
+    while (ver < QR_VERSIONS_M.length && QR_VERSIONS_M[ver][0] - 2 < rawBytes.length) {
         ver++;
     }
     if (ver >= QR_VERSIONS_M.length) ver = QR_VERSIONS_M.length - 1;
 
     const [totalData, ecLen, blocks] = QR_VERSIONS_M[ver];
+    const bytes = rawBytes.slice(0, totalData - 2);
     const bits = [];
     const pushBits = (val, len) => {
         for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1);
@@ -184,8 +185,7 @@ function encodeQrMatrix(text) {
         upward = !upward;
     }
 
-    // Format info voor Level M (00) + Mask 0 (000) -> 0x5412 ^ 0x5412?
-    // BCH(15,5) voor 00000 met mask 101010000010010 = 0b101010000010010 (0x5412)
+    // Format info voor Level M (00) + Mask 0 (000) -> BCH(15,5) = 0x5412
     const fmt = 0x5412;
     const fmtCoords1 = [
         [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 7], [8, 8],
@@ -204,11 +204,15 @@ function encodeQrMatrix(text) {
     return grid;
 }
 
+function escapeAttr(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function createQrSvg(url) {
     const safeUrl = (typeof url === 'string' && url.trim()) ? url.trim() : BUNQ_CONFIG.url;
     const matrix = encodeQrMatrix(safeUrl);
     const n = matrix.length;
-    const pad = 3;
+    const pad = 4; // ISO/IEC 18004 Section 6.3.3 requires 4X quiet zone
     const total = n + pad * 2;
     let pathData = '';
     for (let r = 0; r < n; r++) {
@@ -218,14 +222,12 @@ function createQrSvg(url) {
             }
         }
     }
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${total} ${total}" role="img" aria-label="Scanbare QR-code voor ${safeUrl}" class="w-full h-full block" shape-rendering="crispEdges"><rect width="${total}" height="${total}" rx="1.5" fill="#FFFFFF"/><path d="${pathData}" fill="#0C0C0C"/></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${total} ${total}" role="img" aria-label="Scanbare QR-code voor ${escapeAttr(safeUrl)}" class="w-full h-full block" shape-rendering="crispEdges"><rect width="${total}" height="${total}" rx="1.5" fill="#FFFFFF"/><path d="${pathData}" fill="#0C0C0C"/></svg>`;
 }
 
 function copyTextWithFallback(text, onSuccess) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
-            legacyCopyText(text, onSuccess);
-        });
+        navigator.clipboard.writeText(text).then(onSuccess).catch(() => legacyCopyText(text, onSuccess));
     } else {
         legacyCopyText(text, onSuccess);
     }
@@ -241,41 +243,33 @@ function legacyCopyText(text, onSuccess) {
     input.select();
     try {
         if (document.execCommand('copy')) onSuccess();
-    } catch (_) {
-        // Ignore copy error
-    }
+    } catch (_) { /* ignore */ }
     document.body.removeChild(input);
 }
 
 function initSteunOns() {
-    document.querySelectorAll('[data-bunq-qr]').forEach(container => {
-        container.innerHTML = createQrSvg(BUNQ_CONFIG.url);
-    });
-
-    document.querySelectorAll('[data-bunq-link]').forEach(link => {
-        link.setAttribute('href', BUNQ_CONFIG.url);
-    });
+    document.querySelectorAll('[data-bunq-qr]').forEach(el => { el.innerHTML = createQrSvg(BUNQ_CONFIG.url); });
+    document.querySelectorAll('[data-bunq-link]').forEach(el => { el.setAttribute('href', BUNQ_CONFIG.url); });
+    document.querySelectorAll('[data-bunq-display]').forEach(el => { el.textContent = BUNQ_CONFIG.displayUrl; });
 
     document.querySelectorAll('[data-copy-iban]').forEach(btn => {
+        const label = btn.querySelector('[data-iban-label]');
+        if (label) label.textContent = BUNQ_CONFIG.iban;
+        let resetTimer = null;
         btn.addEventListener('click', () => {
-            const label = btn.querySelector('[data-iban-label]');
-            const originalText = label ? label.textContent : '';
             copyTextWithFallback(BUNQ_CONFIG.iban, () => {
-                if (label) {
-                    label.textContent = 'IBAN gekopieerd';
-                    setTimeout(() => { label.textContent = originalText; }, 2500);
-                }
+                if (!label) return;
+                if (resetTimer) clearTimeout(resetTimer);
+                label.textContent = 'IBAN gekopieerd';
+                resetTimer = setTimeout(() => { label.textContent = BUNQ_CONFIG.iban; resetTimer = null; }, 2500);
             });
         });
     });
 
     document.querySelectorAll('[data-qr-toggle]').forEach(btn => {
         btn.addEventListener('click', () => {
-            const targetId = btn.getAttribute('data-qr-toggle');
-            const panel = document.getElementById(targetId);
-            if (!panel) return;
-            const isHidden = panel.classList.toggle('hidden');
-            btn.setAttribute('aria-expanded', String(!isHidden));
+            const panel = document.getElementById(btn.getAttribute('data-qr-toggle'));
+            if (panel) btn.setAttribute('aria-expanded', String(!panel.classList.toggle('hidden')));
         });
     });
 }
@@ -289,5 +283,5 @@ if (typeof document !== 'undefined') {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { BUNQ_CONFIG, encodeQrMatrix, createQrSvg };
+    module.exports = { BUNQ_CONFIG, encodeQrMatrix, createQrSvg, initSteunOns };
 }
