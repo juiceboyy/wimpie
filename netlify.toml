@@ -1,5 +1,5 @@
 [build]
-  command = "node build-releases.js"
+  command = "node build-releases.js && node build-podcasts.js"
   publish = "."
 
 [[headers]]
@@ -27,6 +27,11 @@
 [[redirects]]
   from = "/boeken"
   to = "/boeken.html"
+  status = 200
+
+[[redirects]]
+  from = "/podcast"
+  to = "/podcast.html"
   status = 200
 
 [[redirects]]
