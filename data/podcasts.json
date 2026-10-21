@@ -14,6 +14,7 @@
       "episodeNumber": 1,
       "title": "Onze eerste podcast! Wimpies moeten nog even wennen.",
       "description": "In deze eerste aflevering van De Wimpies Podcast kruipen we samen achter de microfoons en camera's in onze oefenruimte in Amsterdam.",
+      "orientation": "portrait",
       "youtubeId": "jUgI-LDh8dU",
       "platforms": {
         "youtube": "https://youtu.be/jUgI-LDh8dU",

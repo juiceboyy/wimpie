@@ -185,9 +185,16 @@
                             <label for="pod-num" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Aflevering #</label>
                             <input type="number" id="pod-num" required class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
                         </div>
-                        <div class="sm:col-span-2">
+                        <div>
                             <label for="pod-slug" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Slug (bv. aflevering-2)</label>
                             <input type="text" id="pod-slug" required class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <div>
+                            <label for="pod-orientation" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Video Formaat</label>
+                            <select id="pod-orientation" class="w-full h-11 px-3 rounded-xl bg-black/50 text-white text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white">
+                                <option value="portrait">Staand (9:16)</option>
+                                <option value="landscape">Liggend (16:9)</option>
+                            </select>
                         </div>
                     </div>
 
@@ -233,11 +240,11 @@
                 </div>
             </div>
 
-            <!-- Live Preview Podcasts (9:16 Vertical Card) -->
+            <!-- Live Preview Podcasts -->
             <div class="lg:col-span-5 sticky top-20 space-y-4">
-                <span class="text-xs font-mono uppercase tracking-wider text-neutral-400 block">Live Preview Podcast Card (9:16)</span>
+                <span id="prev-pod-orientation-label" class="text-xs font-mono uppercase tracking-wider text-neutral-400 block">Live Preview Podcast Card (9:16 Staand)</span>
                 <div class="bg-[#141414] rounded-2xl p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] space-y-4">
-                    <div class="w-full max-w-[260px] mx-auto aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
+                    <div id="prev-pod-frame" class="w-full max-w-[260px] mx-auto aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black transition-all duration-200">
                         <div id="prev-pod-video" class="w-full h-full"></div>
                     </div>
                     <div class="space-y-2">

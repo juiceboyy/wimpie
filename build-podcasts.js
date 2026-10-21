@@ -80,6 +80,45 @@ function renderVideoEmbed(ytId, title, showTitle) {
     return `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${ytId}" title="${title} - ${escapeHtml(showTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 }
 
+function renderCardArticle({ isPortrait, slug, videoBlock, metaRow, title, headingTag = 'h2', description, buttonsHtml, actionLabel }) {
+    const idAttr = slug ? ` id="${slug}"` : '';
+    if (isPortrait) {
+        return `        <article${idAttr} class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
+            <div class="md:col-span-5 lg:col-span-4 bg-black/60 flex items-center justify-center p-4 sm:p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+                <div class="w-full max-w-[300px] sm:max-w-[320px] aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
+                    ${videoBlock}
+                </div>
+            </div>
+            <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
+                <div class="space-y-3">
+                    ${metaRow}
+                    <${headingTag} class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</${headingTag}>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
+                </div>
+                <div class="space-y-2.5 pt-2">
+                    <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">${actionLabel}</span>
+                    <div class="flex flex-wrap gap-2.5">${buttonsHtml}</div>
+                </div>
+            </div>
+        </article>`;
+    }
+
+    return `        <article${idAttr} class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0">
+            <div class="md:col-span-7 aspect-video bg-black">${videoBlock}</div>
+            <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                <div class="space-y-3">
+                    ${metaRow}
+                    <${headingTag} class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</${headingTag}>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
+                </div>
+                <div class="space-y-2.5 pt-2">
+                    <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">${actionLabel}</span>
+                    <div class="flex flex-wrap gap-2.5">${buttonsHtml}</div>
+                </div>
+            </div>
+        </article>`;
+}
+
 function renderEpisodeCard(episode, showTitle) {
     const ytId = extractYoutubeId(episode.youtubeId) || extractYoutubeId(episode.platforms && episode.platforms.youtube);
     const epNum = episode.episodeNumber ? `Aflevering ${String(episode.episodeNumber).padStart(2, '0')}` : 'Podcast';
@@ -91,25 +130,11 @@ function renderEpisodeCard(episode, showTitle) {
     const metaRow = episode.date
         ? `<div class="flex items-center justify-between text-xs font-mono text-neutral-400"><span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span><span>${escapeHtml(episode.date)}</span></div>`
         : `<div class="text-xs font-mono text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</div>`;
+    const isPortrait = episode.orientation === 'portrait' || episode.orientation === '9:16';
 
-    return `        <article id="${slug}" class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
-            <div class="md:col-span-5 lg:col-span-4 bg-black/60 flex items-center justify-center p-4 sm:p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
-                <div class="w-full max-w-[300px] sm:max-w-[320px] aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
-                    ${videoBlock}
-                </div>
-            </div>
-            <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
-                <div class="space-y-3">
-                    ${metaRow}
-                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
-                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
-                </div>
-                <div class="space-y-2.5 pt-2">
-                    <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">Luister of kijk via</span>
-                    <div class="flex flex-wrap gap-2.5">${buttonsHtml}</div>
-                </div>
-            </div>
-        </article>`;
+    return renderCardArticle({
+        isPortrait, slug, videoBlock, metaRow, title, headingTag: 'h2', description, buttonsHtml, actionLabel: 'Luister of kijk via'
+    });
 }
 
 function renderFeaturedHomeSection(data) {
@@ -126,6 +151,10 @@ function renderFeaturedHomeSection(data) {
     const metaRow = latest.date
         ? `<div class="flex items-center justify-between text-xs font-mono text-neutral-400"><span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span><span>${escapeHtml(latest.date)}</span></div>`
         : `<div class="text-xs font-mono text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</div>`;
+    const isPortrait = latest.orientation === 'portrait' || latest.orientation === '9:16';
+    const articleHtml = renderCardArticle({
+        isPortrait, slug: '', videoBlock, metaRow, title, headingTag: 'h3', description, buttonsHtml, actionLabel: 'Kijk of beluister op'
+    });
 
     return `${FEATURE_START_MARKER}
     <section id="podcast" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
@@ -136,24 +165,7 @@ function renderFeaturedHomeSection(data) {
             </div>
             <a href="podcast.html" class="text-xs font-mono uppercase tracking-wider text-[#C85A32] hover:underline">Alle afleveringen bekijken &rarr;</a>
         </div>
-        <article class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
-            <div class="md:col-span-5 lg:col-span-4 bg-black/60 flex items-center justify-center p-4 sm:p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
-                <div class="w-full max-w-[300px] sm:max-w-[320px] aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
-                    ${videoBlock}
-                </div>
-            </div>
-            <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
-                <div class="space-y-3">
-                    ${metaRow}
-                    <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h3>
-                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
-                </div>
-                <div class="space-y-2.5 pt-2">
-                    <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">Kijk of beluister op</span>
-                    <div class="flex flex-wrap gap-2.5">${buttonsHtml}</div>
-                </div>
-            </div>
-        </article>
+${articleHtml}
     </section>
     ${FEATURE_END_MARKER}`;
 }
