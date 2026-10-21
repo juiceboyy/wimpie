@@ -225,6 +225,30 @@ async function runTests() {
     execSync('node build-podcasts.js', { stdio: 'pipe' });
     console.log('Build scripts completed successfully.');
 
+    // 11. Test Admin Podcasts Module Integrity
+    console.log('11. Testing admin-podcasts.js module initialization & exports...');
+    const podCode = fs.readFileSync(path.join(__dirname, 'admin-podcasts.js'), 'utf-8');
+    const mockElements = {};
+    const mockDoc = {
+        readyState: 'complete',
+        getElementById: (id) => {
+            if (!mockElements[id]) mockElements[id] = { value: '', textContent: '', reset: () => {}, addEventListener: () => {}, classList: { add: () => {}, remove: () => {} } };
+            return mockElements[id];
+        },
+        querySelectorAll: () => []
+    };
+    const mockWin = { adminUtils: u, document: mockDoc };
+    const podFn = new Function('window', 'document', podCode);
+    podFn(mockWin, mockDoc);
+    assert.ok(mockWin.adminPodcasts, 'window.adminPodcasts must be defined');
+    assert.strictEqual(typeof mockWin.adminPodcasts.init, 'function', 'init must be a function');
+    assert.strictEqual(typeof mockWin.adminPodcasts.handleShowSave, 'function', 'handleShowSave must be a function');
+    mockWin.adminPodcasts.init({ show: { title: 'Test Show', platforms: { spotify: 'https://spotify.com/test' } }, episodes: [] });
+    assert.strictEqual(mockElements['pod-show-title'].value, 'Test Show');
+    assert.strictEqual(mockElements['pod-show-spotify'].value, 'https://spotify.com/test');
+    assert.strictEqual(mockWin.adminPodcasts.getData().show.title, 'Test Show');
+    console.log('Admin podcasts module integrity verified successfully.');
+
     // Restore environment
     process.env = originalEnv;
 

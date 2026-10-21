@@ -175,18 +175,16 @@ async function commitToGithub(filePath, contentString, message, repo, branch, to
 }
 
 async function loadJsonData(filename, repo, branch, token) {
-    let data = readLocalJson(filename);
-    if (!data && token) {
+    let data = null;
+    if (token) {
         try {
             const gh = await fetchFromGithub(`data/${filename}`, repo, branch, token);
-            if (gh && gh.content) {
-                data = JSON.parse(Buffer.from(gh.content, 'base64').toString('utf-8'));
-            }
+            if (gh && gh.content) data = JSON.parse(Buffer.from(gh.content, 'base64').toString('utf-8'));
         } catch (e) {
             console.warn(`GitHub ophalen ${filename} mislukt:`, e.message);
         }
     }
-    return data;
+    return data || readLocalJson(filename);
 }
 
 exports.handler = async (event) => {
