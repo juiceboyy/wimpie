@@ -45,8 +45,8 @@ function extractYoutubeId(rawInput) {
     const trimmed = rawInput.trim();
     if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
     const patterns = [
-        /youtu\.be\/([a-zA-Z0-9_-]{11})/,
-        /youtube(?:-nocookie)?\.com\/(?:watch\?.*v=|embed\/|shorts\/|live\/)([a-zA-Z0-9_-]{11})/
+        /youtu\.be\/([a-zA-Z0-9_-]{11})(?=[?&#/]|$)/,
+        /youtube(?:-nocookie)?\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/|v\/)([a-zA-Z0-9_-]{11})(?=[?&#/]|$)/
     ];
     for (const pattern of patterns) {
         const match = trimmed.match(pattern);
@@ -73,16 +73,22 @@ function renderPlatformButtons(platforms = {}) {
         .join('\n                        ');
 }
 
+function renderVideoEmbed(ytId, title, showTitle) {
+    if (!ytId) {
+        return `<div class="w-full h-full flex items-center justify-center text-xs font-mono text-neutral-400">Video volgt binnenkort</div>`;
+    }
+    return `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${ytId}" title="${title} - ${escapeHtml(showTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+}
+
 function renderEpisodeCard(episode, showTitle) {
     const ytId = extractYoutubeId(episode.youtubeId) || extractYoutubeId(episode.platforms && episode.platforms.youtube);
     const epNum = episode.episodeNumber ? `Aflevering ${String(episode.episodeNumber).padStart(2, '0')}` : 'Podcast';
+    const metaRight = episode.date || showTitle;
     const title = escapeHtml(episode.title || 'Podcast Aflevering');
     const description = escapeHtml(episode.description || '');
     const slug = escapeHtml(episode.slug || `aflevering-${episode.episodeNumber || 1}`);
     const buttonsHtml = renderPlatformButtons(episode.platforms || {});
-    const videoBlock = ytId
-        ? `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${ytId}" title="${title} - ${escapeHtml(showTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-        : `<div class="w-full h-full flex items-center justify-center text-xs font-mono text-neutral-400">Video volgt binnenkort</div>`;
+    const videoBlock = renderVideoEmbed(ytId, title, showTitle);
 
     return `        <article id="${slug}" class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0">
             <div class="md:col-span-7 aspect-video bg-black">${videoBlock}</div>
@@ -90,7 +96,7 @@ function renderEpisodeCard(episode, showTitle) {
                 <div class="space-y-3">
                     <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
                         <span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span>
-                        <span>${escapeHtml(showTitle)}</span>
+                        <span>${escapeHtml(metaRight)}</span>
                     </div>
                     <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
                     <p class="text-neutral-300 text-sm leading-relaxed">${description}</p>
@@ -105,14 +111,16 @@ function renderEpisodeCard(episode, showTitle) {
 
 function renderFeaturedHomeSection(data) {
     const episodes = Array.isArray(data.episodes) ? data.episodes : [];
-    if (episodes.length === 0) return '';
+    if (episodes.length === 0) return `${FEATURE_START_MARKER}\n    ${FEATURE_END_MARKER}`;
     const latest = episodes[0];
     const showTitle = (data.show && data.show.title) || 'De Wimpies Podcast';
     const ytId = extractYoutubeId(latest.youtubeId) || extractYoutubeId(latest.platforms && latest.platforms.youtube);
     const epNum = latest.episodeNumber ? `Aflevering ${String(latest.episodeNumber).padStart(2, '0')}` : 'Nieuwste Aflevering';
+    const metaRight = latest.date || 'Video & Audio';
     const title = escapeHtml(latest.title || showTitle);
     const description = escapeHtml(latest.description || '');
     const buttonsHtml = renderPlatformButtons(latest.platforms || {});
+    const videoBlock = renderVideoEmbed(ytId, title, showTitle);
 
     return `${FEATURE_START_MARKER}
     <section id="podcast" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
@@ -125,13 +133,13 @@ function renderFeaturedHomeSection(data) {
         </div>
         <article class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0">
             <div class="md:col-span-7 aspect-video bg-black">
-                <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${ytId}" title="${title} - ${escapeHtml(showTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                ${videoBlock}
             </div>
             <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
                 <div class="space-y-3">
                     <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
                         <span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span>
-                        <span>Video &amp; Audio</span>
+                        <span>${escapeHtml(metaRight)}</span>
                     </div>
                     <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h3>
                     <p class="text-neutral-300 text-sm leading-relaxed">${description}</p>
@@ -152,7 +160,9 @@ function renderPodcastPage(data) {
     const showSubtitle = show.subtitle || "Verhalen, muziek en gesprekken met de bandleden van Wimpie & de Domino's vanuit onze oefenruimte in Amsterdam.";
     const episodes = Array.isArray(data.episodes) ? data.episodes : [];
     const showButtons = renderPlatformButtons(show.platforms || (episodes[0] && episodes[0].platforms) || {});
-    const episodesHtml = episodes.map((ep) => renderEpisodeCard(ep, showTitle)).join('\n\n');
+    const episodesHtml = episodes.length > 0
+        ? episodes.map((ep) => renderEpisodeCard(ep, showTitle)).join('\n\n')
+        : `        <div class="bg-[#141414] rounded-2xl p-8 text-center text-sm font-mono text-neutral-400 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">Nieuwe afleveringen volgen binnenkort.</div>`;
 
     return `<!DOCTYPE html>
 <html lang="nl" class="scroll-smooth bg-[#0C0C0C]">
@@ -222,31 +232,31 @@ ${episodesHtml}
 `;
 }
 
-function buildPodcasts() {
+function buildPodcasts({ dataFile = DATA_FILE, podcastPageFile = PODCAST_PAGE_FILE, indexPageFile = INDEX_PAGE_FILE } = {}) {
     console.log('Building podcast pages from data/podcasts.json...');
-    if (!fs.existsSync(DATA_FILE)) {
-        console.error('Error: data/podcasts.json not found');
-        process.exit(1);
+    if (!fs.existsSync(dataFile)) {
+        throw new Error(`Error: ${dataFile} not found`);
     }
 
-    const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+    const data = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
     const podcastHtml = renderPodcastPage(data);
-    fs.writeFileSync(PODCAST_PAGE_FILE, podcastHtml, 'utf-8');
+    fs.writeFileSync(podcastPageFile, podcastHtml, 'utf-8');
     console.log('Generated: podcast.html');
 
-    if (fs.existsSync(INDEX_PAGE_FILE)) {
-        const indexHtml = fs.readFileSync(INDEX_PAGE_FILE, 'utf-8');
+    if (fs.existsSync(indexPageFile)) {
+        const indexHtml = fs.readFileSync(indexPageFile, 'utf-8');
         const startIdx = indexHtml.indexOf(FEATURE_START_MARKER);
         const endIdx = indexHtml.indexOf(FEATURE_END_MARKER);
-        if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
-            const featuredHtml = renderFeaturedHomeSection(data);
-            const updatedIndex =
-                indexHtml.slice(0, startIdx) +
-                featuredHtml +
-                indexHtml.slice(endIdx + FEATURE_END_MARKER.length);
-            fs.writeFileSync(INDEX_PAGE_FILE, updatedIndex, 'utf-8');
-            console.log('Updated featured podcast section in: index.html');
+        if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) {
+            throw new Error(`Missing or invalid ${FEATURE_START_MARKER} / ${FEATURE_END_MARKER} markers in ${indexPageFile}`);
         }
+        const featuredHtml = renderFeaturedHomeSection(data);
+        const updatedIndex =
+            indexHtml.slice(0, startIdx) +
+            featuredHtml +
+            indexHtml.slice(endIdx + FEATURE_END_MARKER.length);
+        fs.writeFileSync(indexPageFile, updatedIndex, 'utf-8');
+        console.log('Updated featured podcast section in: index.html');
     }
 }
 
