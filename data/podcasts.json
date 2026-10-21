@@ -10,6 +10,20 @@
   },
   "episodes": [
     {
+      "slug": "aflevering-2",
+      "episodeNumber": 2,
+      "title": "De Wimpies stellen zich nog eens voor",
+      "description": "Podcast opgenomen op 19 oktober\nIedereen mag nog een keer zeggen wat ze belangrijk vinden en waar ze van dromen.\n\nWimpie & de Domino's zijn een band van verstandelijk gehandicapten #specialpeople \nWe bestaan al 20 jaar, en hebben gespeeld in Carré, op TV en hebben gewerkt met ‪@pauldeleeuw‬, Ronnie Flex, Kenny B etc.",
+      "orientation": "portrait",
+      "date": "19 oktober 2026",
+      "youtubeId": "JX3-16WfqwU",
+      "platforms": {
+        "youtube": "https://youtu.be/JX3-16WfqwU",
+        "spotify": "https://open.spotify.com/episode/4qFxkAgj88j0tQi2niFaOL?si=crUEyfbbQYqU5jdfQh6SOA",
+        "apple": "https://podcasts.apple.com/nl/podcast/de-wimpies-podcast/id6822090256?l=en-GB&i=1000797469855"
+      }
+    },
+    {
       "slug": "aflevering-1",
       "episodeNumber": 1,
       "title": "Onze eerste podcast! Wimpies moeten nog even wennen.",
