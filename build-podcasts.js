@@ -83,12 +83,14 @@ function renderVideoEmbed(ytId, title, showTitle) {
 function renderEpisodeCard(episode, showTitle) {
     const ytId = extractYoutubeId(episode.youtubeId) || extractYoutubeId(episode.platforms && episode.platforms.youtube);
     const epNum = episode.episodeNumber ? `Aflevering ${String(episode.episodeNumber).padStart(2, '0')}` : 'Podcast';
-    const metaRight = episode.date || showTitle;
     const title = escapeHtml(episode.title || 'Podcast Aflevering');
     const description = escapeHtml(episode.description || '');
     const slug = escapeHtml(episode.slug || `aflevering-${episode.episodeNumber || 1}`);
     const buttonsHtml = renderPlatformButtons(episode.platforms || {});
     const videoBlock = renderVideoEmbed(ytId, title, showTitle);
+    const metaRow = episode.date
+        ? `<div class="flex items-center justify-between text-xs font-mono text-neutral-400"><span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span><span>${escapeHtml(episode.date)}</span></div>`
+        : `<div class="text-xs font-mono text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</div>`;
 
     return `        <article id="${slug}" class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
             <div class="md:col-span-5 lg:col-span-4 bg-black/60 flex items-center justify-center p-4 sm:p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
@@ -98,10 +100,7 @@ function renderEpisodeCard(episode, showTitle) {
             </div>
             <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
-                        <span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span>
-                        <span>${escapeHtml(metaRight)}</span>
-                    </div>
+                    ${metaRow}
                     <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
                     <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
                 </div>
@@ -120,11 +119,13 @@ function renderFeaturedHomeSection(data) {
     const showTitle = (data.show && data.show.title) || 'De Wimpies Podcast';
     const ytId = extractYoutubeId(latest.youtubeId) || extractYoutubeId(latest.platforms && latest.platforms.youtube);
     const epNum = latest.episodeNumber ? `Aflevering ${String(latest.episodeNumber).padStart(2, '0')}` : 'Nieuwste Aflevering';
-    const metaRight = latest.date || 'Staande Videopodcast';
     const title = escapeHtml(latest.title || showTitle);
     const description = escapeHtml(latest.description || '');
     const buttonsHtml = renderPlatformButtons(latest.platforms || {});
     const videoBlock = renderVideoEmbed(ytId, title, showTitle);
+    const metaRow = latest.date
+        ? `<div class="flex items-center justify-between text-xs font-mono text-neutral-400"><span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span><span>${escapeHtml(latest.date)}</span></div>`
+        : `<div class="text-xs font-mono text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</div>`;
 
     return `${FEATURE_START_MARKER}
     <section id="podcast" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
@@ -143,10 +144,7 @@ function renderFeaturedHomeSection(data) {
             </div>
             <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
-                        <span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span>
-                        <span>${escapeHtml(metaRight)}</span>
-                    </div>
+                    ${metaRow}
                     <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h3>
                     <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
                 </div>
