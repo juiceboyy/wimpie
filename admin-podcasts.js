@@ -5,21 +5,12 @@
 window.adminPodcasts = (function () {
     let podcastsData = { show: {}, episodes: [] };
     let editingEpisodeIndex = null;
+    let lastRenderedYtId = null;
 
-    function extractYoutubeId(input) {
-        if (!input || typeof input !== 'string') return '';
-        const trimmed = input.trim();
-        if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
-        const patterns = [
-            /youtu\.be\/([a-zA-Z0-9_-]{11})(?=[?&#/]|$)/,
-            /youtube(?:-nocookie)?\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/|v\/)([a-zA-Z0-9_-]{11})(?=[?&#/]|$)/
-        ];
-        for (const p of patterns) {
-            const m = trimmed.match(p);
-            if (m && m[1]) return m[1];
-        }
-        return '';
-    }
+    const utils = window.adminUtils || {
+        escapeHtml: str => str || '',
+        extractYoutubeId: str => str || ''
+    };
 
     function init(data) {
         podcastsData = data || { show: {}, episodes: [] };
@@ -34,17 +25,12 @@ window.adminPodcasts = (function () {
 
     function populateShowSettings() {
         const s = podcastsData.show || {};
-        const titleEl = document.getElementById('pod-show-title');
-        const subEl = document.getElementById('pod-show-subtitle');
-        const spEl = document.getElementById('pod-show-spotify');
-        const apEl = document.getElementById('pod-show-apple');
-        const ytEl = document.getElementById('pod-show-youtube');
-
-        if (titleEl) titleEl.value = s.title || 'De Wimpies Podcast';
-        if (subEl) subEl.value = s.subtitle || '';
-        if (spEl) spEl.value = (s.platforms && s.platforms.spotify) || '';
-        if (apEl) apEl.value = (s.platforms && s.platforms.apple) || '';
-        if (ytEl) ytEl.value = (s.platforms && s.platforms.youtube) || '';
+        const p = s.platforms || {};
+        document.getElementById('pod-show-title').value = s.title || 'De Wimpies Podcast';
+        document.getElementById('pod-show-subtitle').value = s.subtitle || '';
+        document.getElementById('pod-show-spotify').value = p.spotify || '';
+        document.getElementById('pod-show-apple').value = p.apple || '';
+        document.getElementById('pod-show-youtube').value = p.youtube || '';
     }
 
     function renderEpisodesList() {
@@ -60,27 +46,38 @@ window.adminPodcasts = (function () {
         container.innerHTML = episodes.map((ep, idx) => {
             const isEditing = editingEpisodeIndex === idx;
             const epNum = ep.episodeNumber ? `Aflevering ${String(ep.episodeNumber).padStart(2, '0')}` : `Item #${idx + 1}`;
+            const safeTitle = utils.escapeHtml(ep.title || 'Zonder titel');
+            const safeSlug = utils.escapeHtml(ep.slug || '');
+            const safeDate = utils.escapeHtml(ep.date || '');
+
             return `
                 <div class="p-4 rounded-xl ${isEditing ? 'bg-[#C85A32]/10 shadow-[0_0_0_1px_rgba(200,90,50,0.5)]' : 'bg-[#181818] shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'} flex items-center justify-between gap-4 transition">
                     <div class="min-w-0">
                         <div class="flex items-center gap-2">
                             <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#C85A32]/20 text-[#C85A32] font-semibold">${epNum}</span>
-                            <h4 class="text-sm font-semibold text-white truncate">${ep.title || 'Zonder titel'}</h4>
+                            <h4 class="text-sm font-semibold text-white truncate">${safeTitle}</h4>
                         </div>
-                        <p class="text-xs font-mono text-neutral-400 truncate mt-0.5">${ep.slug ? `podcast.html#${ep.slug}` : ''} ${ep.date ? `&bull; ${ep.date}` : ''}</p>
+                        <p class="text-xs font-mono text-neutral-400 truncate mt-0.5">${safeSlug ? `podcast.html#${safeSlug}` : ''} ${safeDate ? `&bull; ${safeDate}` : ''}</p>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
-                        <button type="button" onclick="adminPodcasts.edit(${idx})" class="h-8 px-3 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-mono uppercase text-white transition flex items-center gap-1">
+                        <button type="button" data-edit-idx="${idx}" class="pod-btn-edit h-8 px-3 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-mono uppercase text-white transition flex items-center gap-1">
                             <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
                             <span class="hidden sm:inline">Bewerk</span>
                         </button>
-                        <button type="button" onclick="adminPodcasts.remove(${idx})" class="h-8 px-3 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-xs font-mono uppercase text-red-400 transition flex items-center gap-1">
+                        <button type="button" data-remove-idx="${idx}" class="pod-btn-remove h-8 px-3 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-xs font-mono uppercase text-red-400 transition flex items-center gap-1">
                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                         </button>
                     </div>
                 </div>
             `;
         }).join('');
+
+        container.querySelectorAll('.pod-btn-edit').forEach(btn => {
+            btn.addEventListener('click', () => edit(parseInt(btn.getAttribute('data-edit-idx'), 10)));
+        });
+        container.querySelectorAll('.pod-btn-remove').forEach(btn => {
+            btn.addEventListener('click', () => remove(parseInt(btn.getAttribute('data-remove-idx'), 10)));
+        });
 
         if (window.adminApp && window.adminApp.refreshIcons) {
             window.adminApp.refreshIcons();
@@ -89,24 +86,27 @@ window.adminPodcasts = (function () {
 
     function setupListeners() {
         const showForm = document.getElementById('podcast-show-form');
-        if (showForm) {
-            showForm.addEventListener('submit', handleShowSave);
-        }
-
+        if (showForm) showForm.addEventListener('submit', handleShowSave);
         const epForm = document.getElementById('podcast-episode-form');
-        if (epForm) {
-            epForm.addEventListener('submit', handleEpisodeSave);
-        }
-
+        if (epForm) epForm.addEventListener('submit', handleEpisodeSave);
         const cancelBtn = document.getElementById('pod-cancel-btn');
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', resetEpisodeForm);
+        if (cancelBtn) cancelBtn.addEventListener('click', resetEpisodeForm);
+
+        const numInput = document.getElementById('pod-num');
+        const slugInput = document.getElementById('pod-slug');
+        if (numInput && slugInput) {
+            numInput.addEventListener('input', () => {
+                if (editingEpisodeIndex === null && numInput.value) {
+                    slugInput.value = `aflevering-${numInput.value}`;
+                }
+                updatePreview();
+            });
         }
 
         const ytInput = document.getElementById('pod-youtube');
         if (ytInput) {
             ytInput.addEventListener('input', () => {
-                const extracted = extractYoutubeId(ytInput.value);
+                const extracted = utils.extractYoutubeId(ytInput.value);
                 if (extracted && extracted !== ytInput.value.trim()) {
                     ytInput.value = extracted;
                 }
@@ -114,8 +114,7 @@ window.adminPodcasts = (function () {
             });
         }
 
-        const previewFields = ['pod-title', 'pod-desc', 'pod-num', 'pod-date'];
-        previewFields.forEach(id => {
+        ['pod-title', 'pod-desc', 'pod-date'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', updatePreview);
         });
@@ -126,7 +125,7 @@ window.adminPodcasts = (function () {
         const desc = document.getElementById('pod-desc')?.value || 'Korte toelichting op de inhoud van de aflevering...';
         const num = document.getElementById('pod-num')?.value || '1';
         const date = document.getElementById('pod-date')?.value || '';
-        const ytId = extractYoutubeId(document.getElementById('pod-youtube')?.value || '');
+        const ytId = utils.extractYoutubeId(document.getElementById('pod-youtube')?.value || '');
 
         const prevNum = document.getElementById('prev-pod-num');
         const prevDate = document.getElementById('prev-pod-date');
@@ -139,7 +138,8 @@ window.adminPodcasts = (function () {
         if (prevTitle) prevTitle.textContent = title;
         if (prevDesc) prevDesc.textContent = desc;
 
-        if (prevVideo) {
+        if (prevVideo && ytId !== lastRenderedYtId) {
+            lastRenderedYtId = ytId;
             if (ytId) {
                 prevVideo.innerHTML = `<iframe class="w-full h-full rounded-xl" src="https://www.youtube-nocookie.com/embed/${ytId}" loading="lazy" allowfullscreen></iframe>`;
             } else {
@@ -148,25 +148,31 @@ window.adminPodcasts = (function () {
         }
     }
 
+    function setEpisodeFormValues(ep = {}, idx = null) {
+        document.getElementById('pod-num').value = ep.episodeNumber || 1;
+        document.getElementById('pod-slug').value = ep.slug || '';
+        document.getElementById('pod-title').value = ep.title || '';
+        document.getElementById('pod-desc').value = ep.description || '';
+        document.getElementById('pod-date').value = ep.date || '';
+        document.getElementById('pod-youtube').value = ep.youtubeId || '';
+        const pl = ep.platforms || {};
+        document.getElementById('pod-spotify').value = pl.spotify || '';
+        document.getElementById('pod-apple').value = pl.apple || '';
+    }
+
     function edit(index) {
         const ep = podcastsData.episodes[index];
         if (!ep) return;
 
         editingEpisodeIndex = index;
-        document.getElementById('pod-num').value = ep.episodeNumber || (index + 1);
-        document.getElementById('pod-slug').value = ep.slug || `aflevering-${index + 1}`;
-        document.getElementById('pod-title').value = ep.title || '';
-        document.getElementById('pod-desc').value = ep.description || '';
-        document.getElementById('pod-date').value = ep.date || '';
-        document.getElementById('pod-youtube').value = ep.youtubeId || '';
+        setEpisodeFormValues(ep, index);
 
-        const pl = ep.platforms || {};
-        document.getElementById('pod-spotify').value = pl.spotify || '';
-        document.getElementById('pod-apple').value = pl.apple || '';
-
-        document.getElementById('pod-form-heading').textContent = `Aflevering bewerken: #${ep.episodeNumber || index + 1}`;
-        document.getElementById('pod-submit-btn').textContent = 'Aflevering Bijwerken';
-        document.getElementById('pod-cancel-btn').classList.remove('hidden');
+        const heading = document.getElementById('pod-form-heading');
+        if (heading) heading.textContent = `Aflevering bewerken: #${ep.episodeNumber || index + 1}`;
+        const submitText = document.getElementById('pod-submit-text');
+        if (submitText) submitText.textContent = 'Aflevering Bijwerken';
+        const cancelBtn = document.getElementById('pod-cancel-btn');
+        if (cancelBtn) cancelBtn.classList.remove('hidden');
 
         renderEpisodesList();
         updatePreview();
@@ -175,20 +181,20 @@ window.adminPodcasts = (function () {
 
     function resetEpisodeForm() {
         editingEpisodeIndex = null;
+        lastRenderedYtId = null;
         const form = document.getElementById('podcast-episode-form');
         if (form) form.reset();
 
         const episodes = podcastsData.episodes || [];
         const nextNum = episodes.length + 1;
-        const numField = document.getElementById('pod-num');
-        if (numField) numField.value = nextNum;
-        const slugField = document.getElementById('pod-slug');
-        if (slugField) slugField.value = `aflevering-${nextNum}`;
+        setEpisodeFormValues({ episodeNumber: nextNum, slug: `aflevering-${nextNum}` });
 
         const heading = document.getElementById('pod-form-heading');
         if (heading) heading.textContent = 'Nieuwe Aflevering Toevoegen';
         const submitBtn = document.getElementById('pod-submit-btn');
-        if (submitBtn) submitBtn.textContent = 'Aflevering Toevoegen';
+        if (submitBtn) submitBtn.disabled = false;
+        const submitText = document.getElementById('pod-submit-text');
+        if (submitText) submitText.textContent = 'Aflevering Toevoegen';
         const cancelBtn = document.getElementById('pod-cancel-btn');
         if (cancelBtn) cancelBtn.classList.add('hidden');
 
@@ -203,20 +209,14 @@ window.adminPodcasts = (function () {
         const spotify = document.getElementById('pod-show-spotify')?.value.trim();
         const apple = document.getElementById('pod-show-apple')?.value.trim();
         const youtube = document.getElementById('pod-show-youtube')?.value.trim();
-
-        podcastsData.show = {
-            title,
-            subtitle,
-            platforms: {
-                ...(spotify && { spotify }),
-                ...(apple && { apple }),
-                ...(youtube && { youtube })
-            }
+        const updatedShow = {
+            title, subtitle,
+            platforms: { ...(spotify && { spotify }), ...(apple && { apple }), ...(youtube && { youtube }) }
         };
-
-        if (window.adminApp && window.adminApp.saveData) {
-            await window.adminApp.saveData('podcasts', podcastsData);
-        }
+        const updatedData = { ...podcastsData, show: updatedShow };
+        let ok = true;
+        if (window.adminApp && window.adminApp.saveData) ok = await window.adminApp.saveData('podcasts', updatedData);
+        if (ok) podcastsData.show = updatedShow;
     }
 
     async function handleEpisodeSave(e) {
@@ -227,70 +227,73 @@ window.adminPodcasts = (function () {
         const desc = document.getElementById('pod-desc')?.value.trim();
         const date = document.getElementById('pod-date')?.value.trim();
         const rawYt = document.getElementById('pod-youtube')?.value.trim();
-        const youtubeId = extractYoutubeId(rawYt);
+        const youtubeId = utils.extractYoutubeId(rawYt);
 
         if (!title) {
             alert('Vul een titel in voor de aflevering.');
             return;
         }
-
         const platforms = {};
         const spotify = document.getElementById('pod-spotify')?.value.trim();
         const apple = document.getElementById('pod-apple')?.value.trim();
-
         if (youtubeId) platforms.youtube = `https://youtu.be/${youtubeId}`;
         if (spotify) platforms.spotify = spotify;
         if (apple) platforms.apple = apple;
 
         const newEpisode = {
-            slug,
-            episodeNumber: epNum,
-            title,
-            description: desc,
-            ...(date && { date }),
-            youtubeId,
-            platforms
+            slug, episodeNumber: epNum, title, description: desc,
+            ...(date && { date }), youtubeId, platforms
         };
 
+        const updatedEpisodes = [...podcastsData.episodes];
         if (editingEpisodeIndex !== null) {
-            podcastsData.episodes[editingEpisodeIndex] = newEpisode;
+            updatedEpisodes[editingEpisodeIndex] = newEpisode;
         } else {
-            podcastsData.episodes.unshift(newEpisode);
+            updatedEpisodes.unshift(newEpisode);
         }
 
-        resetEpisodeForm();
-        renderEpisodesList();
+        const updatedData = { ...podcastsData, episodes: updatedEpisodes };
+        const submitBtn = document.getElementById('pod-submit-btn');
+        const submitText = document.getElementById('pod-submit-text');
+        if (submitBtn) submitBtn.disabled = true;
+        if (submitText) submitText.textContent = 'Bezig met opslaan...';
 
+        let success = true;
         if (window.adminApp && window.adminApp.saveData) {
-            await window.adminApp.saveData('podcasts', podcastsData);
+            success = await window.adminApp.saveData('podcasts', updatedData);
+        }
+
+        if (success) {
+            podcastsData.episodes = updatedEpisodes;
+            resetEpisodeForm();
+            renderEpisodesList();
+        } else {
+            if (submitBtn) submitBtn.disabled = false;
+            if (submitText) submitText.textContent = editingEpisodeIndex !== null ? 'Aflevering Bijwerken' : 'Aflevering Toevoegen';
         }
     }
 
     async function remove(index) {
         const ep = podcastsData.episodes[index];
         const title = ep ? ep.title : `aflevering ${index + 1}`;
-        if (!confirm(`Weet je zeker dat je "${title}" wilt verwijderen?`)) {
-            return;
-        }
+        if (!confirm(`Weet je zeker dat je "${title}" wilt verwijderen?`)) return;
 
-        podcastsData.episodes.splice(index, 1);
-        if (editingEpisodeIndex === index) resetEpisodeForm();
-        renderEpisodesList();
+        const updatedEpisodes = podcastsData.episodes.filter((_, i) => i !== index);
+        const updatedData = { ...podcastsData, episodes: updatedEpisodes };
 
+        let success = true;
         if (window.adminApp && window.adminApp.saveData) {
-            await window.adminApp.saveData('podcasts', podcastsData);
+            success = await window.adminApp.saveData('podcasts', updatedData);
+        }
+
+        if (success) {
+            podcastsData.episodes = updatedEpisodes;
+            if (editingEpisodeIndex === index) resetEpisodeForm();
+            renderEpisodesList();
         }
     }
 
-    function getData() {
-        return podcastsData;
-    }
+    function getData() { return podcastsData; }
 
-    return {
-        init,
-        edit,
-        remove,
-        resetEpisodeForm,
-        getData
-    };
+    return { init, edit, remove, resetEpisodeForm, getData };
 })();

@@ -52,9 +52,9 @@ function verifyAuth(providedPin) {
         };
     }
 
-    const a = Buffer.from(String(providedPin));
-    const b = Buffer.from(String(serverPin));
-    const isMatch = a.length === b.length && crypto.timingSafeEqual(a, b);
+    const hashA = crypto.createHash('sha256').update(String(providedPin)).digest();
+    const hashB = crypto.createHash('sha256').update(String(serverPin)).digest();
+    const isMatch = crypto.timingSafeEqual(hashA, hashB);
 
     if (!isMatch) {
         return { valid: false, error: 'Ongeldige pincode.' };
@@ -87,9 +87,16 @@ function validateReleases(data) {
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
         return 'Releases data moet een JSON object zijn met slug-keys.';
     }
-    for (const [slug, item] of Object.entries(data)) {
+    const entries = Object.entries(data);
+    if (entries.length === 0) {
+        return 'Releases data mag niet leeg zijn om dataverlies te voorkomen.';
+    }
+    for (const [slug, item] of entries) {
         if (!slug || typeof slug !== 'string' || !/^[a-z0-9_-]+$/i.test(slug)) {
             return `Ongeldige slug: "${slug}". Gebruik alleen kleine letters, cijfers en koppeltekens.`;
+        }
+        if (!item || typeof item !== 'object') {
+            return `Release "${slug}" bevat ongeldige gegevens.`;
         }
         if (!item.title || typeof item.title !== 'string') {
             return `Release "${slug}" mist een titel.`;
@@ -167,6 +174,21 @@ async function commitToGithub(filePath, contentString, message, repo, branch, to
     return await res.json();
 }
 
+async function loadJsonData(filename, repo, branch, token) {
+    let data = readLocalJson(filename);
+    if (!data && token) {
+        try {
+            const gh = await fetchFromGithub(`data/${filename}`, repo, branch, token);
+            if (gh && gh.content) {
+                data = JSON.parse(Buffer.from(gh.content, 'base64').toString('utf-8'));
+            }
+        } catch (e) {
+            console.warn(`GitHub ophalen ${filename} mislukt:`, e.message);
+        }
+    }
+    return data;
+}
+
 exports.handler = async (event) => {
     if (event.httpMethod === 'OPTIONS') {
         return { statusCode: 204, headers: CORS_HEADERS, body: '' };
@@ -200,13 +222,21 @@ exports.handler = async (event) => {
     }
 
     if (action === 'get') {
-        try {
-            const releases = readLocalJson('releases.json') || {};
-            const podcasts = readLocalJson('podcasts.json') || { show: {}, episodes: [] };
-            return jsonResponse(200, { releases, podcasts });
-        } catch (err) {
-            return jsonResponse(500, { error: `Fout bij inlezen data: ${err.message}` });
+        const token = process.env.GITHUB_TOKEN;
+        const repo = process.env.GITHUB_REPO || 'juiceboyy/wimpie';
+        const branch = process.env.GITHUB_BRANCH || 'test';
+
+        const releases = await loadJsonData('releases.json', repo, branch, token);
+        const podcasts = await loadJsonData('podcasts.json', repo, branch, token);
+
+        if (!releases && !podcasts) {
+            return jsonResponse(500, { error: 'Kon data niet inlezen van lokale bundel of GitHub.' });
         }
+
+        return jsonResponse(200, {
+            releases: releases || {},
+            podcasts: podcasts || { show: {}, episodes: [] }
+        });
     }
 
     if (action === 'save') {

@@ -29,14 +29,21 @@ async function runTests() {
     let data = JSON.parse(res.body);
     assert.ok(data.error, 'Should contain error message');
 
-    // 2. Test Auth verification with incorrect PIN
-    console.log('2. Testing auth failure with incorrect PIN...');
+    // 2. Test Auth verification with incorrect PIN (including different lengths)
+    console.log('2. Testing auth failure with incorrect PIN (different lengths)...');
     res = await adminApi({
         httpMethod: 'POST',
-        headers: { 'x-admin-pin': 'wrong-pin' },
+        headers: { 'x-admin-pin': 'short' },
         body: JSON.stringify({ action: 'verify' })
     }, {});
-    assert.strictEqual(res.statusCode, 401, 'Should return 401 on incorrect PIN');
+    assert.strictEqual(res.statusCode, 401, 'Should return 401 on short PIN');
+
+    res = await adminApi({
+        httpMethod: 'POST',
+        headers: { 'x-admin-pin': 'a-very-long-wrong-pin-that-exceeds-the-length-of-the-correct-pin' },
+        body: JSON.stringify({ action: 'verify' })
+    }, {});
+    assert.strictEqual(res.statusCode, 401, 'Should return 401 on long incorrect PIN without throwing');
 
     // 3. Test Auth verification with correct PIN in header
     console.log('3. Testing auth success with correct PIN...');
@@ -65,6 +72,17 @@ async function runTests() {
 
     // 5. Test Validation on Releases
     console.log('5. Testing releases validation...');
+    res = await adminApi({
+        httpMethod: 'POST',
+        headers: { 'x-admin-pin': 'test-secret-pin-123' },
+        body: JSON.stringify({
+            action: 'save',
+            target: 'releases',
+            data: {}
+        })
+    }, {});
+    assert.strictEqual(res.statusCode, 400, 'Should reject empty releases object to prevent data loss');
+
     res = await adminApi({
         httpMethod: 'POST',
         headers: { 'x-admin-pin': 'test-secret-pin-123' },
@@ -184,8 +202,25 @@ async function runTests() {
     assert.strictEqual(githubCalls[1].opts.method, 'PUT');
     console.log('GitHub API commit flow verified successfully.');
 
-    // 9. Test Existing Build Scripts
-    console.log('9. Running build-releases.js and build-podcasts.js...');
+    // 9. Test Shared Utilities
+    console.log('9. Testing shared admin utilities (YouTube extraction & diacritics slugify)...');
+    const utilsCode = fs.readFileSync(path.join(__dirname, 'admin-utils.js'), 'utf-8');
+    const mockWindow = {};
+    const fn = new Function('window', utilsCode);
+    fn(mockWindow);
+    const u = mockWindow.adminUtils;
+    assert.strictEqual(u.slugify('Comment Ça Va'), 'comment-ca-va', 'Should handle diacritics ç');
+    assert.strictEqual(u.slugify('Eén Twee Drie!'), 'een-twee-drie', 'Should handle é');
+    assert.strictEqual(u.extractYoutubeId('https://youtu.be/2va192QwBOA'), '2va192QwBOA');
+    assert.strictEqual(u.extractYoutubeId('https://www.youtube.com/watch?v=2va192QwBOA'), '2va192QwBOA');
+    assert.strictEqual(u.extractYoutubeId('https://m.youtube.com/watch?feature=share&v=2va192QwBOA&t=10'), '2va192QwBOA');
+    assert.strictEqual(u.extractYoutubeId('https://www.youtube.com/shorts/2va192QwBOA'), '2va192QwBOA');
+    assert.strictEqual(u.extractYoutubeId('https://youtube.com/live/2va192QwBOA'), '2va192QwBOA');
+    assert.strictEqual(u.escapeHtml('<script>alert("xss")</script>'), '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;');
+    console.log('Admin utilities verified successfully.');
+
+    // 10. Test Existing Build Scripts
+    console.log('10. Running build-releases.js and build-podcasts.js...');
     execSync('node build-releases.js', { stdio: 'pipe' });
     execSync('node build-podcasts.js', { stdio: 'pipe' });
     console.log('Build scripts completed successfully.');

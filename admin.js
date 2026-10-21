@@ -98,7 +98,7 @@ window.adminApp = (function () {
     }
 
     async function saveData(target, data) {
-        if (isSaving) return;
+        if (isSaving) return false;
         isSaving = true;
         const statusBadge = document.getElementById('global-sync-status');
         if (statusBadge) statusBadge.textContent = 'Opslaan...';
@@ -125,9 +125,11 @@ window.adminApp = (function () {
             }
 
             if (statusBadge) statusBadge.textContent = 'Opgeslagen';
+            return true;
         } catch (err) {
             showToast(err.message, 'error');
             if (statusBadge) statusBadge.textContent = 'Fout bij opslaan';
+            return false;
         } finally {
             isSaving = false;
         }

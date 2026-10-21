@@ -116,7 +116,7 @@
                     <div class="pt-2">
                         <button type="submit" id="rel-submit-btn" class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider font-semibold shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition flex items-center justify-center gap-2">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            <span>Release Toevoegen aan Lijst</span>
+                            <span id="rel-submit-text">Release Toevoegen aan Lijst</span>
                         </button>
                     </div>
                 </form>
@@ -221,7 +221,7 @@
                     <div class="pt-2">
                         <button type="submit" id="pod-submit-btn" class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider font-semibold shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition flex items-center justify-center gap-2">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            <span>Aflevering Toevoegen</span>
+                            <span id="pod-submit-text">Aflevering Toevoegen</span>
                         </button>
                     </div>
                 </form>
@@ -281,6 +281,7 @@
         <span id="admin-toast-text" class="text-xs font-mono"></span>
     </div>
 
+    <script src="admin-utils.js"></script>
     <script src="admin-releases.js"></script>
     <script src="admin-podcasts.js"></script>
     <script src="admin.js"></script>
