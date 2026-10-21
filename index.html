@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="qr.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 
@@ -24,60 +25,38 @@
                 <span>Wimpie &amp; de Domino's</span>
             </a>
             <div class="flex items-center gap-2 sm:gap-3">
-                <button id="tts-btn" onclick="toggleReadAloud()"
-                    class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]"
-                    aria-label="Lees de pagina voor">
+                <button id="tts-btn" onclick="toggleReadAloud()" class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]" aria-label="Lees de pagina voor">
                     <span id="tts-icon"><i data-lucide="volume-2" class="w-3.5 h-3.5 text-[#C85A32]"></i></span>
                     <span id="tts-text">Lees voor</span>
                 </button>
-                <a href="/s/rozen"
-                    class="h-9 px-3.5 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]">
-                    Nieuwe Single
-                </a>
-                <a href="wall-of-fame.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Wall of Fame
-                </a>
-                <a href="boeken.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Boek optreden
-                </a>
-                <a href="contact.html"
-                    class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    Contact
-                </a>
+                <a href="/s/rozen" class="h-9 px-3.5 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0C0C]">Nieuwe Single</a>
+                <a href="#steun-ons" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden md:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Steun ons</a>
+                <a href="wall-of-fame.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Wall of Fame</a>
+                <a href="boeken.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Boek optreden</a>
+                <a href="contact.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Contact</a>
             </div>
         </div>
     </header>
 
     <!-- Editorial Hero Section (Uncluttered Narrative & Dedicated Panoramic Photo) -->
     <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-8 sm:pt-12 pb-8 space-y-8">
-        
         <!-- Architectural Narrative Column (Completely clear of the image) -->
         <div class="space-y-6 max-w-3xl">
-            <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">
-                Muziek voor iedereen &bull; Amsterdam
-            </span>
-            
+            <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">Muziek voor iedereen &bull; Amsterdam</span>
             <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-semibold text-white tracking-[-0.035em] leading-[1.04]">
                 Muziek maken met <span class="italic font-normal text-[#C85A32]">Wimpie &amp; de Domino's.</span>
             </h1>
-
             <p class="text-neutral-300 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-2xl">
                 Houd jij ook zo van zingen, drummen of gitaar spelen? Kom meedoen bij onze gezellige muziekgroep in Amsterdam. Iedereen kan meedoen op zijn eigen manier.
             </p>
-
             <div class="flex flex-wrap items-center gap-3.5 pt-1">
-                <a href="boeken.html"
-                    class="h-12 px-7 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
+                <a href="boeken.html" class="h-12 px-7 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
                     <i data-lucide="music-2" class="w-4 h-4"></i> Boek onze band
                 </a>
-                <a href="#programma"
-                    class="h-12 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 backdrop-blur-md shadow-[0_0_0_1px_rgba(255,255,255,0.18)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
+                <a href="#programma" class="h-12 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 backdrop-blur-md shadow-[0_0_0_1px_rgba(255,255,255,0.18)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#C85A32]">
                     <i data-lucide="calendar" class="w-4 h-4"></i> Bekijk de dagen
                 </a>
-                <a href="contact.html"
-                    class="h-12 px-7 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
+                <a href="contact.html" class="h-12 px-7 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
                     <i data-lucide="user-plus" class="w-4 h-4"></i> Aanmelden
                 </a>
             </div>
@@ -85,14 +64,10 @@
 
         <!-- Full Panoramic Band Photography Showcase with Seamless Top Gradient Blend -->
         <div class="relative w-full overflow-hidden bg-[#0C0C0C] -mt-2 sm:-mt-4">
-            <img src="banner.jpg" alt="De volledige band van Wimpie &amp; de Domino's op het podium"
-                 class="w-full h-auto max-h-[640px] object-cover object-center">
-            <!-- Seamless Top Gradient Blend into dark background above (no border crease) -->
+            <img src="banner.jpg" alt="De volledige band van Wimpie &amp; de Domino's op het podium" class="w-full h-auto max-h-[640px] object-cover object-center">
             <div class="absolute inset-x-0 top-0 h-32 sm:h-48 lg:h-60 bg-gradient-to-b from-[#0C0C0C] via-[#0C0C0C]/80 via-20% to-transparent pointer-events-none"></div>
-            <!-- Subtle Bottom Gradient Blend into canvas -->
             <div class="absolute inset-x-0 bottom-0 h-16 sm:h-24 bg-gradient-to-t from-[#0C0C0C] to-transparent pointer-events-none"></div>
         </div>
-
     </section>
 
     <!-- Featured Single Release Strip -->
@@ -106,8 +81,7 @@
                     <p class="text-neutral-400 text-sm max-w-xl">Beluister het nieuwste nummer op jouw favoriete streamingplatform.</p>
                 </div>
             </div>
-            <a href="/s/rozen"
-                class="shrink-0 h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+            <a href="/s/rozen" class="shrink-0 h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                 <i data-lucide="play" class="w-4 h-4"></i> Beluister Single
             </a>
         </div>
@@ -203,6 +177,53 @@
         </div>
     </section>
 
+    <!-- Steun de Band: Asymmetrische Bunq QR & Bijdrage Sectie -->
+    <section id="steun-ons" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-12 shadow-[0_-1px_0_0_rgba(255,255,255,0.08)]">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+            <!-- Verhaal & Directe Betaalknop (7 kolommen) -->
+            <div class="md:col-span-7 bg-[#141414] rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Steun de band</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white tracking-[-0.03em]">Draag bij aan onze muziekprojecten</h2>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
+                        Draag je Wimpie &amp; de Domino's een warm hart toe? Met een vrijwillige bijdrage steun je onze band en muzikale projecten in de breedste zin: van nieuwe eigen liedjes en opnames tot het onderhoud van instrumenten en bijzondere optredens.
+                    </p>
+                </div>
+                <div class="space-y-4 pt-2">
+                    <div class="flex flex-wrap items-center gap-3.5">
+                        <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer"
+                            class="h-12 px-7 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono font-medium uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                            <i data-lucide="heart" class="w-4 h-4"></i> Steun met een bijdrage
+                        </a>
+                        <button type="button" data-copy-iban
+                            class="h-12 px-5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                            <i data-lucide="copy" class="w-3.5 h-3.5 text-[#C85A32]"></i>
+                            <span data-iban-label>NL81 BUNQ 2154 5934 53</span>
+                        </button>
+                    </div>
+                    <p class="text-xs font-mono text-neutral-400">
+                        Vrije bijdrage via iDEAL of Bancontact &bull; t.n.v. VOF Wimpie &amp; de Domino's
+                    </p>
+                </div>
+            </div>
+
+            <!-- Scanbare QR-code Kaart (5 kolommen) -->
+            <div class="md:col-span-5 bg-[#141414] rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col items-center justify-center text-center space-y-4">
+                <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer"
+                    class="w-44 h-44 sm:w-48 sm:h-48 p-2 rounded-2xl bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.15)] block transition-transform duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C85A32]"
+                    aria-label="Open bunq.me/Wimpie betaalpagina">
+                    <div data-bunq-qr class="w-full h-full"></div>
+                </a>
+                <div class="space-y-1">
+                    <p class="text-xs font-mono uppercase tracking-[0.15em] text-white">Scan met camera of bank-app</p>
+                    <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-[#C85A32] hover:underline block">
+                        bunq.me/Wimpie &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Zorghuis Boekingen Banner -->
     <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
         <div class="bg-[#141414] rounded-2xl p-8 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col md:flex-row items-center justify-between gap-6">
@@ -211,8 +232,7 @@
                 <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white">Wimpie &amp; de Domino's op uw locatie?</h3>
                 <p class="text-neutral-400 text-sm sm:text-base leading-relaxed">Haal een vrolijk en inclusief live optreden naar uw woonzorgcentrum, dagbesteding of evenement.</p>
             </div>
-            <a href="boeken.html"
-                class="shrink-0 h-12 px-7 rounded-full bg-white hover:bg-neutral-100 text-[#0C0C0C] text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition">
+            <a href="boeken.html" class="shrink-0 h-12 px-7 rounded-full bg-white hover:bg-neutral-100 text-[#0C0C0C] text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition">
                 Boekingsinformatie &rarr;
             </a>
         </div>
@@ -227,12 +247,10 @@
                 We repeteren wekelijks in onze oefenruimte aan de Gibraltarstraat 55 in Amsterdam. Bel of mail gerust om langs te komen (bel ons even als je er staat want de bel doet het niet).
             </p>
             <div class="flex flex-wrap justify-center gap-4 pt-2">
-                <a href="contact.html"
-                    class="h-12 px-8 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                <a href="contact.html" class="h-12 px-8 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     <i data-lucide="user-plus" class="w-4 h-4"></i> Naar Contact &amp; Aanmelden
                 </a>
-                <a href="tel:0628143815"
-                    class="h-12 px-8 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                <a href="tel:0628143815" class="h-12 px-8 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.15)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
                     <i data-lucide="phone" class="w-4 h-4 text-[#C85A32]"></i> Bel: 06-28143815
                 </a>
             </div>
@@ -245,6 +263,7 @@
             <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Admiraal de Ruijterweg, Amsterdam | KvK: 96802863</p>
             <div class="flex flex-wrap justify-center gap-4 text-xs">
                 <a href="/s/rozen" class="hover:text-white transition">Nieuwe Single</a>
+                <a href="#steun-ons" class="hover:text-white transition">Steun ons</a>
                 <a href="wall-of-fame.html" class="hover:text-white transition">Wall of Fame</a>
                 <a href="boeken.html" class="hover:text-white transition">Boek optreden</a>
                 <a href="contact.html" class="hover:text-white transition">Contact &amp; Aanmelding</a>
@@ -254,26 +273,10 @@
 
     <!-- Netlify Forms Detection Blueprint -->
     <form name="boeking" data-netlify="true" netlify netlify-honeypot="bot-field" data-netlify-honeypot="bot-field" hidden>
-        <input type="hidden" name="form-name" value="boeking" />
-        <input type="text" name="bot-field" />
-        <input type="text" name="organisatie" />
-        <input type="text" name="naam" />
-        <input type="email" name="email" />
-        <input type="tel" name="telefoon" />
-        <input type="text" name="periode_of_datum" />
-        <input type="text" name="type_gelegenheid" />
-        <textarea name="wensen_of_vragen"></textarea>
+        <input type="hidden" name="form-name" value="boeking" /><input type="text" name="bot-field" /><input type="text" name="organisatie" /><input type="text" name="naam" /><input type="email" name="email" /><input type="tel" name="telefoon" /><input type="text" name="periode_of_datum" /><input type="text" name="type_gelegenheid" /><textarea name="wensen_of_vragen"></textarea>
     </form>
-
     <form name="contact" data-netlify="true" netlify netlify-honeypot="bot-field" data-netlify-honeypot="bot-field" hidden>
-        <input type="hidden" name="form-name" value="contact" />
-        <input type="text" name="bot-field" />
-        <input type="text" name="naam" />
-        <input type="text" name="rol" />
-        <input type="email" name="email" />
-        <input type="tel" name="telefoon" />
-        <input type="text" name="onderwerp" />
-        <textarea name="bericht"></textarea>
+        <input type="hidden" name="form-name" value="contact" /><input type="text" name="bot-field" /><input type="text" name="naam" /><input type="text" name="rol" /><input type="email" name="email" /><input type="tel" name="telefoon" /><input type="text" name="onderwerp" /><textarea name="bericht"></textarea>
     </form>
 
 </body>
