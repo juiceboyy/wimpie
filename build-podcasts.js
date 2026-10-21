@@ -90,16 +90,20 @@ function renderEpisodeCard(episode, showTitle) {
     const buttonsHtml = renderPlatformButtons(episode.platforms || {});
     const videoBlock = renderVideoEmbed(ytId, title, showTitle);
 
-    return `        <article id="${slug}" class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0">
-            <div class="md:col-span-7 aspect-video bg-black">${videoBlock}</div>
-            <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+    return `        <article id="${slug}" class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
+            <div class="md:col-span-5 lg:col-span-4 bg-black/60 flex items-center justify-center p-4 sm:p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+                <div class="w-full max-w-[300px] sm:max-w-[320px] aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
+                    ${videoBlock}
+                </div>
+            </div>
+            <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
                 <div class="space-y-3">
                     <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
                         <span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span>
                         <span>${escapeHtml(metaRight)}</span>
                     </div>
                     <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
-                    <p class="text-neutral-300 text-sm leading-relaxed">${description}</p>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
                 </div>
                 <div class="space-y-2.5 pt-2">
                     <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">Luister of kijk via</span>
@@ -116,7 +120,7 @@ function renderFeaturedHomeSection(data) {
     const showTitle = (data.show && data.show.title) || 'De Wimpies Podcast';
     const ytId = extractYoutubeId(latest.youtubeId) || extractYoutubeId(latest.platforms && latest.platforms.youtube);
     const epNum = latest.episodeNumber ? `Aflevering ${String(latest.episodeNumber).padStart(2, '0')}` : 'Nieuwste Aflevering';
-    const metaRight = latest.date || 'Video & Audio';
+    const metaRight = latest.date || 'Staande Videopodcast';
     const title = escapeHtml(latest.title || showTitle);
     const description = escapeHtml(latest.description || '');
     const buttonsHtml = renderPlatformButtons(latest.platforms || {});
@@ -131,18 +135,20 @@ function renderFeaturedHomeSection(data) {
             </div>
             <a href="podcast.html" class="text-xs font-mono uppercase tracking-wider text-[#C85A32] hover:underline">Alle afleveringen bekijken &rarr;</a>
         </div>
-        <article class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0">
-            <div class="md:col-span-7 aspect-video bg-black">
-                ${videoBlock}
+        <article class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
+            <div class="md:col-span-5 lg:col-span-4 bg-black/60 flex items-center justify-center p-4 sm:p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+                <div class="w-full max-w-[300px] sm:max-w-[320px] aspect-[9/16] rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.12)] bg-black">
+                    ${videoBlock}
+                </div>
             </div>
-            <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+            <div class="md:col-span-7 lg:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
                 <div class="space-y-3">
                     <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
                         <span class="text-[#C85A32] uppercase tracking-wider">${escapeHtml(epNum)}</span>
                         <span>${escapeHtml(metaRight)}</span>
                     </div>
                     <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h3>
-                    <p class="text-neutral-300 text-sm leading-relaxed">${description}</p>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">${description}</p>
                 </div>
                 <div class="space-y-2.5 pt-2">
                     <span class="block text-xs font-mono uppercase tracking-wider text-neutral-400">Kijk of beluister op</span>
