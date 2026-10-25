@@ -10,6 +10,20 @@
   },
   "episodes": [
     {
+      "slug": "aflevering-3",
+      "episodeNumber": 3,
+      "title": "Op bezoek bij Anita",
+      "description": "podcast van 22 oktober \nWe gaan op bezoek bij Anita\n\nWimpie & de Domino's zijn een band van verstandelijk gehandicapten #specialpeople \nWe bestaan al 20 jaar, en hebben gespeeld in Carré, op TV en hebben gewerkt met ‪Paul de Leeuw, Ronnie Flex, Kenny B etc.",
+      "orientation": "landscape",
+      "date": "22 oktober 2026",
+      "youtubeId": "SEF_xRZ21Ao",
+      "platforms": {
+        "youtube": "https://youtu.be/SEF_xRZ21Ao",
+        "spotify": "https://open.spotify.com/episode/515K4b2dZuade090VDZPGS?si=-cTZWCyEQ6Ct3ltdsLzhhw",
+        "apple": "https://podcasts.apple.com/nl/podcast/de-wimpies-podcast/id6822090256?l=en-GB&i=1000798032061"
+      }
+    },
+    {
       "slug": "aflevering-2",
       "episodeNumber": 2,
       "title": "De Wimpies stellen zich nog eens voor",

@@ -215,14 +215,14 @@ exports.handler = async (event) => {
             ok: true,
             hasGithubToken: Boolean(process.env.GITHUB_TOKEN),
             repo: process.env.GITHUB_REPO || 'juiceboyy/wimpie',
-            branch: process.env.GITHUB_BRANCH || 'test'
+            branch: process.env.GITHUB_BRANCH || 'main'
         });
     }
 
     if (action === 'get') {
         const token = process.env.GITHUB_TOKEN;
         const repo = process.env.GITHUB_REPO || 'juiceboyy/wimpie';
-        const branch = process.env.GITHUB_BRANCH || 'test';
+        const branch = process.env.GITHUB_BRANCH || 'main';
 
         const releases = await loadJsonData('releases.json', repo, branch, token);
         const podcasts = await loadJsonData('podcasts.json', repo, branch, token);
@@ -256,7 +256,7 @@ exports.handler = async (event) => {
 
         const token = process.env.GITHUB_TOKEN;
         const repo = process.env.GITHUB_REPO || 'juiceboyy/wimpie';
-        const branch = process.env.GITHUB_BRANCH || 'test';
+        const branch = process.env.GITHUB_BRANCH || 'main';
 
         if (token) {
             try {
