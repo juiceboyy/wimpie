@@ -47,7 +47,11 @@
 
     <!-- Top Micro-Bar -->
     <header class="relative z-10 sticky top-0 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
-        <div class="max-w-md mx-auto flex items-center justify-end">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <a href="/podcast" class="h-8 px-3 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">
+                <i data-lucide="headphones" class="w-3 h-3 text-[#C85A32]"></i>
+                <span>Podcast</span>
+            </a>
             <a href="/" class="h-8 px-3 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">
                 <span>Website</span>
                 <i data-lucide="arrow-right" class="w-3 h-3 text-[#C85A32]"></i>
@@ -182,7 +186,21 @@
                     <span class="h-8 px-3.5 rounded-full bg-white/10 group-hover:bg-[#C85A32] text-neutral-200 group-hover:text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center transition shadow-[0_0_0_1px_rgba(255,255,255,0.1)] group-hover:shadow-none">Boek</span>
                 </a>
 
-                <!-- 3. Steun de band (Bunq.me & Uitklapbare QR) -->
+                <!-- 3. De Wimpies Podcast -->
+                <a href="/podcast" class="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] shadow-[0_0_0_1px_rgba(255,255,255,0.06)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.14)] transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C85A32] to-[#8A3A22] text-white flex items-center justify-center shrink-0 shadow-sm">
+                            <i data-lucide="headphones" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-white text-sm">De Wimpies Podcast</div>
+                            <div class="text-xs text-neutral-400">Bekijk &amp; beluister onze videopodcast</div>
+                        </div>
+                    </div>
+                    <span class="h-8 px-3.5 rounded-full bg-white/10 group-hover:bg-[#C85A32] text-neutral-200 group-hover:text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center transition shadow-[0_0_0_1px_rgba(255,255,255,0.1)] group-hover:shadow-none">Luister</span>
+                </a>
+
+                <!-- 4. Steun de band (Bunq.me & Uitklapbare QR) -->
                 <div class="rounded-2xl bg-white/[0.04] shadow-[0_0_0_1px_rgba(255,255,255,0.06)] overflow-hidden">
                     <div class="flex items-center justify-between p-3.5 gap-2">
                         <a href="https://bunq.me/Wimpie" data-bunq-link target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 flex-1 min-w-0 group rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
