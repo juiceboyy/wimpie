@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { validateReleases, validatePodcasts, validateShows } = require('./admin-validators');
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',
@@ -81,50 +82,6 @@ function readLocalJson(filename) {
     }
     const raw = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(raw);
-}
-
-function validateReleases(data) {
-    if (!data || typeof data !== 'object' || Array.isArray(data)) {
-        return 'Releases data moet een JSON object zijn met slug-keys.';
-    }
-    const entries = Object.entries(data);
-    if (entries.length === 0) {
-        return 'Releases data mag niet leeg zijn om dataverlies te voorkomen.';
-    }
-    for (const [slug, item] of entries) {
-        if (!slug || typeof slug !== 'string' || !/^[a-z0-9_-]+$/i.test(slug)) {
-            return `Ongeldige slug: "${slug}". Gebruik alleen kleine letters, cijfers en koppeltekens.`;
-        }
-        if (!item || typeof item !== 'object') {
-            return `Release "${slug}" bevat ongeldige gegevens.`;
-        }
-        if (!item.title || typeof item.title !== 'string') {
-            return `Release "${slug}" mist een titel.`;
-        }
-        if (!item.artist || typeof item.artist !== 'string') {
-            return `Release "${slug}" mist een artiest.`;
-        }
-    }
-    return null;
-}
-
-function validatePodcasts(data) {
-    if (!data || typeof data !== 'object' || Array.isArray(data)) {
-        return 'Podcast data moet een JSON object zijn met "show" en "episodes".';
-    }
-    if (!data.show || typeof data.show.title !== 'string') {
-        return 'Podcast data mist een geldige "show.title".';
-    }
-    if (!Array.isArray(data.episodes)) {
-        return 'Podcast data mist een "episodes" array.';
-    }
-    for (let i = 0; i < data.episodes.length; i++) {
-        const ep = data.episodes[i];
-        if (!ep.title || typeof ep.title !== 'string') {
-            return `Aflevering ${i + 1} mist een titel.`;
-        }
-    }
-    return null;
 }
 
 async function fetchFromGithub(filePath, repo, branch, token) {
@@ -226,14 +183,16 @@ exports.handler = async (event) => {
 
         const releases = await loadJsonData('releases.json', repo, branch, token);
         const podcasts = await loadJsonData('podcasts.json', repo, branch, token);
+        const shows = await loadJsonData('shows.json', repo, branch, token);
 
-        if (!releases && !podcasts) {
+        if (!releases && !podcasts && !shows) {
             return jsonResponse(500, { error: 'Kon data niet inlezen van lokale bundel of GitHub.' });
         }
 
         return jsonResponse(200, {
             releases: releases || {},
-            podcasts: podcasts || { show: {}, episodes: [] }
+            podcasts: podcasts || { show: {}, episodes: [] },
+            shows: shows || { shows: [] }
         });
     }
 
@@ -241,16 +200,23 @@ exports.handler = async (event) => {
         const target = body.target;
         const data = body.data;
 
-        if (target !== 'releases' && target !== 'podcasts') {
-            return jsonResponse(400, { error: 'Ongeldig doel. Kies "releases" of "podcasts".' });
+        const targetMap = {
+            releases: { filename: 'releases.json', validate: validateReleases },
+            podcasts: { filename: 'podcasts.json', validate: validatePodcasts },
+            shows: { filename: 'shows.json', validate: validateShows }
+        };
+
+        const targetConfig = targetMap[target];
+        if (!targetConfig) {
+            return jsonResponse(400, { error: 'Ongeldig doel. Kies "releases", "podcasts" of "shows".' });
         }
 
-        const validationError = target === 'releases' ? validateReleases(data) : validatePodcasts(data);
+        const validationError = targetConfig.validate(data);
         if (validationError) {
             return jsonResponse(400, { error: validationError });
         }
 
-        const filename = target === 'releases' ? 'releases.json' : 'podcasts.json';
+        const filename = targetConfig.filename;
         const relPath = `data/${filename}`;
         const formattedJson = JSON.stringify(data, null, 2) + '\n';
 

@@ -1,0 +1,26 @@
+{
+  "shows": [
+    {
+      "slug": "show-8-januari",
+      "title": "Wimpie & de Domino's Live",
+      "date": "8 januari 2027",
+      "time": "Aanvangstijd volgt",
+      "location": "Locatie volgt",
+      "address": "Amsterdam",
+      "price": 7.5,
+      "status": "available",
+      "description": "Kom meezingen, dansen en feesten bij ons eerste live optreden van het nieuwe jaar."
+    },
+    {
+      "slug": "show-6-februari",
+      "title": "Wimpie & de Domino's Live",
+      "date": "6 februari 2027",
+      "time": "Aanvangstijd volgt",
+      "location": "Locatie volgt",
+      "address": "Amsterdam",
+      "price": 5.0,
+      "status": "available",
+      "description": "Een gezellige show vol eigen Nederlandstalige rock-'n-roll. Iedereen is welkom!"
+    }
+  ]
+}

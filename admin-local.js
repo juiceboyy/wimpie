@@ -54,8 +54,8 @@ const MIME_TYPES = {
 
 function runLocalBuild() {
     try {
-        console.log('Uitvoeren build-releases.js en build-podcasts.js...');
-        execSync('node build-releases.js && node build-podcasts.js', { stdio: 'inherit', cwd: ROOT_DIR });
+        console.log('Uitvoeren build-releases.js, build-podcasts.js en build-shows.js...');
+        execSync('node build-releases.js && node build-podcasts.js && node build-shows.js', { stdio: 'inherit', cwd: ROOT_DIR });
         console.log('Lokale build succesvol afgerond.');
     } catch (err) {
         console.error('Fout bij uitvoeren van lokale build:', err.message);

@@ -27,30 +27,17 @@
 
             <!-- Tab Switcher -->
             <div class="flex items-center gap-2 bg-black/40 p-1 rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
-                <button type="button" id="tab-btn-releases" class="h-9 px-4 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition">
-                    <i data-lucide="music" class="w-3.5 h-3.5"></i>
-                    <span>Muziek &amp; Singles</span>
-                </button>
-                <button type="button" id="tab-btn-podcasts" class="h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    <i data-lucide="mic" class="w-3.5 h-3.5"></i>
-                    <span>Videopodcasts</span>
-                </button>
+                <button type="button" id="tab-btn-releases" class="h-9 px-4 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition"><i data-lucide="music" class="w-3.5 h-3.5"></i><span>Muziek &amp; Singles</span></button>
+                <button type="button" id="tab-btn-podcasts" class="h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition"><i data-lucide="mic" class="w-3.5 h-3.5"></i><span>Videopodcasts</span></button>
+                <button type="button" id="tab-btn-shows" class="h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition"><i data-lucide="ticket" class="w-3.5 h-3.5"></i><span>Shows &amp; Tickets</span></button>
             </div>
 
             <!-- Actions -->
             <div class="flex items-center gap-2">
                 <span id="global-sync-status" class="hidden sm:inline-block text-[11px] font-mono text-neutral-400 uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">Klaar</span>
-                <button type="button" id="admin-export-btn" class="h-9 px-3 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition" title="JSON Backup Downloaden">
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span class="hidden md:inline">Backup</span>
-                </button>
-                <a href="index.html" target="_blank" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">
-                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                    <span class="hidden sm:inline">Live Site</span>
-                </a>
-                <button type="button" id="admin-logout-btn" class="h-9 px-3 rounded-full bg-white/5 hover:bg-red-500/20 text-neutral-400 hover:text-red-400 text-xs font-mono uppercase transition flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]" title="Uitloggen">
-                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-                </button>
+                <button type="button" id="admin-export-btn" class="h-9 px-3 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition" title="JSON Backup Downloaden"><i data-lucide="download" class="w-3.5 h-3.5"></i><span class="hidden md:inline">Backup</span></button>
+                <a href="index.html" target="_blank" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition"><i data-lucide="external-link" class="w-3.5 h-3.5"></i><span class="hidden sm:inline">Live Site</span></a>
+                <button type="button" id="admin-logout-btn" class="h-9 px-3 rounded-full bg-white/5 hover:bg-red-500/20 text-neutral-400 hover:text-red-400 text-xs font-mono uppercase transition flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]" title="Uitloggen"><i data-lucide="log-out" class="w-3.5 h-3.5"></i></button>
             </div>
         </div>
     </header>
@@ -258,6 +245,9 @@
                 </div>
             </div>
         </section>
+
+        <!-- TAB 3: SHOWS & TICKETS -->
+        <section id="tab-shows" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"></section>
     </main>
 
     <!-- Auth Modal Overlay -->
@@ -291,6 +281,7 @@
     <script src="admin-utils.js"></script>
     <script src="admin-releases.js"></script>
     <script src="admin-podcasts.js"></script>
+    <script src="admin-shows.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>
