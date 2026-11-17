@@ -1,5 +1,5 @@
 [build]
-  command = "node build-releases.js && node build-podcasts.js"
+  command = "node build-releases.js && node build-podcasts.js && node build-shows.js"
   publish = "."
 
 [build.environment]
@@ -65,4 +65,14 @@
 [[redirects]]
   from = "/kaart"
   to = "/kaart/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/tickets"
+  to = "/tickets.html"
+  status = 200
+
+[[redirects]]
+  from = "/muziek"
+  to = "/muziek.html"
   status = 200

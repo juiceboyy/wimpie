@@ -1,0 +1,26 @@
+{
+  "shows": [
+    {
+      "slug": "show-8-januari",
+      "title": "20-jarig Jubileum: Wimpie & de Domino's Live",
+      "date": "8 januari 2027",
+      "time": "Inloop 19:00 uur",
+      "location": "Boomkerk - Glazen Huis",
+      "address": "Gibraltarstraat 55, Amsterdam",
+      "price": 7.5,
+      "status": "available",
+      "description": "Vier samen met ons het 20-jarig jubileum van Wimpie & de Domino's! Kom meezingen, dansen en feesten tijdens een onvergetelijke jubileumavond."
+    },
+    {
+      "slug": "show-6-februari",
+      "title": "Wimpie & de Domino's Live",
+      "date": "6 februari 2027",
+      "time": "Tijden nog onbekend",
+      "location": "Studio Idee",
+      "address": "Driehovenlaan 2, 3632 BK Loenen aan de Vecht",
+      "price": 5.0,
+      "status": "hidden",
+      "description": "Een avond i.s.m. Special People waarin meerdere artiesten met een beperking centraal staan."
+    }
+  ]
+}

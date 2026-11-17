@@ -249,6 +249,45 @@ async function runTests() {
     assert.strictEqual(mockWin.adminPodcasts.getData().show.title, 'Test Show');
     console.log('Admin podcasts module integrity verified successfully.');
 
+    // 12. Test Release Lookup Utilities & API Action
+    console.log('12. Testing release-lookup.js & admin-api lookup action...');
+    const { cleanYoutubeTitle, normalizeText } = require('./netlify/functions/release-lookup');
+    assert.strictEqual(cleanYoutubeTitle("Wimpie & de Domino's - Hechte Band (Officiële Videoclip)"), 'Hechte Band');
+    assert.strictEqual(cleanYoutubeTitle("Lichtjes In Je Ogen - Wimpie en de Domino's"), 'Lichtjes In Je Ogen');
+    assert.strictEqual(normalizeText('Één Twee Ça'), 'een twee ca');
+
+    global.fetch = async (url) => {
+        if (url.includes('youtube.com/oembed')) return { ok: true, json: async () => ({ title: "Wimpie & de Domino's - Hechte Band (Videoclip)", author_name: "Wimpie & de Domino's" }) };
+        if (url.includes('open.spotify.com/embed/artist')) return { ok: true, text: async () => '<script id="__NEXT_DATA__">{"props":{"pageProps":{"state":{"data":{"entity":{"trackList":[{"title":"Hechte Band","uri":"spotify:track:5Nvq5r3SWsyDXwXkgaq6cH"}]}}}}}}</script>' };
+        if (url.includes('itunes.apple.com/search')) return { ok: true, json: async () => ({ results: [{ trackName: 'Hechte Band', artistName: "Wimpie en de Domino's", trackViewUrl: 'https://music.apple.com/nl/album/hechte-band/6826422152?i=6826422154&uo=4' }] }) };
+        return { ok: false, status: 404 };
+    };
+    res = await adminApi({ httpMethod: 'POST', headers: { 'x-admin-pin': 'test-secret-pin-123' }, body: JSON.stringify({ action: 'lookup', youtubeId: 'abc123def45' }) }, {});
+    global.fetch = originalFetch;
+    assert.strictEqual(res.statusCode, 200, 'Lookup action should return 200');
+    const lookupData = JSON.parse(res.body);
+    assert.strictEqual(lookupData.title, 'Hechte Band');
+    assert.strictEqual(lookupData.platforms.spotify, 'https://open.spotify.com/track/5Nvq5r3SWsyDXwXkgaq6cH');
+    assert.strictEqual(lookupData.platforms.apple, 'https://music.apple.com/nl/album/hechte-band/6826422152?i=6826422154');
+    assert.strictEqual(lookupData.platforms.deezer, undefined);
+    console.log('Release lookup verified successfully.');
+
+    // 13. Test Artwork Upload Validation & Local Persistence
+    console.log('13. Testing artwork upload validation and saving...');
+    delete process.env.GITHUB_TOKEN;
+    res = await adminApi({ httpMethod: 'POST', headers: { 'x-admin-pin': 'test-secret-pin-123' }, body: JSON.stringify({ action: 'upload_artwork', filename: 'evil.exe', contentBase64: 'YWJj' }) }, {});
+    assert.strictEqual(res.statusCode, 400, 'Should reject invalid image extension');
+    const tinyPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
+    res = await adminApi({ httpMethod: 'POST', headers: { 'x-admin-pin': 'test-secret-pin-123' }, body: JSON.stringify({ action: 'upload_artwork', filename: 'test-cover.png', contentBase64: `data:image/png;base64,${tinyPngBase64}` }) }, {});
+    assert.strictEqual(res.statusCode, 200, 'Should upload valid PNG artwork');
+    const uploadRes = JSON.parse(res.body);
+    assert.strictEqual(uploadRes.path, '/s/covers/test-cover.png');
+    const uploadedDiskPath = path.join(__dirname, 's', 'covers', 'test-cover.png');
+    assert.ok(fs.existsSync(uploadedDiskPath), 'Uploaded file should exist on disk');
+    fs.unlinkSync(uploadedDiskPath);
+    if (fs.existsSync(path.join(__dirname, 's', 'covers')) && fs.readdirSync(path.join(__dirname, 's', 'covers')).length === 0) fs.rmdirSync(path.join(__dirname, 's', 'covers'));
+    console.log('Artwork upload verified and cleaned up successfully.');
+
     // Restore environment
     process.env = originalEnv;
 

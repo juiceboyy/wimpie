@@ -44,24 +44,19 @@ window.adminApp = (function () {
     }
 
     function switchTab(tabName) {
-        const btnReleases = document.getElementById('tab-btn-releases');
-        const btnPodcasts = document.getElementById('tab-btn-podcasts');
-        const secReleases = document.getElementById('tab-releases');
-        const secPodcasts = document.getElementById('tab-podcasts');
-
-        if (!btnReleases || !btnPodcasts || !secReleases || !secPodcasts) return;
-
-        if (tabName === 'podcasts') {
-            btnPodcasts.className = 'h-9 px-4 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition';
-            btnReleases.className = 'h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition';
-            secPodcasts.classList.remove('hidden');
-            secReleases.classList.add('hidden');
-        } else {
-            btnReleases.className = 'h-9 px-4 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition';
-            btnPodcasts.className = 'h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition';
-            secReleases.classList.remove('hidden');
-            secPodcasts.classList.add('hidden');
-        }
+        const activeCls = 'h-9 px-4 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition';
+        const idleCls = 'h-9 px-4 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition';
+        const tabs = [
+            { key: 'releases', btn: document.getElementById('tab-btn-releases'), sec: document.getElementById('tab-releases') },
+            { key: 'podcasts', btn: document.getElementById('tab-btn-podcasts'), sec: document.getElementById('tab-podcasts') },
+            { key: 'shows', btn: document.getElementById('tab-btn-shows'), sec: document.getElementById('tab-shows') }
+        ];
+        tabs.forEach(t => {
+            if (!t.btn || !t.sec) return;
+            const isActive = t.key === tabName;
+            t.btn.className = isActive ? activeCls : idleCls;
+            t.sec.classList.toggle('hidden', !isActive);
+        });
         refreshIcons();
     }
 
@@ -91,6 +86,7 @@ window.adminApp = (function () {
             const data = await res.json();
             if (window.adminReleases) window.adminReleases.init(data.releases);
             if (window.adminPodcasts) window.adminPodcasts.init(data.podcasts);
+            if (window.adminShows) window.adminShows.init(data.shows);
             hideAuthModal();
         } catch (err) {
             showToast(err.message, 'error');
@@ -133,6 +129,37 @@ window.adminApp = (function () {
         } finally {
             isSaving = false;
         }
+    }
+
+    async function lookupRelease(params) {
+        const res = await apiRequest('/api/admin-api', {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'lookup',
+                ...(params || {})
+            })
+        });
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error || 'Platform links ophalen mislukt.');
+        }
+        return result;
+    }
+
+    async function uploadArtwork({ filename, contentBase64 }) {
+        const res = await apiRequest('/api/admin-api', {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'upload_artwork',
+                filename,
+                contentBase64
+            })
+        });
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error || 'Artwork uploaden mislukt.');
+        }
+        return result;
     }
 
     function showAuthModal() {
@@ -192,10 +219,12 @@ window.adminApp = (function () {
     function exportBackup() {
         const relData = window.adminReleases ? window.adminReleases.getData() : {};
         const podData = window.adminPodcasts ? window.adminPodcasts.getData() : {};
+        const showData = window.adminShows ? window.adminShows.getData() : {};
         const backup = {
             exportedAt: new Date().toISOString(),
             releases: relData,
-            podcasts: podData
+            podcasts: podData,
+            shows: showData
         };
 
         const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
@@ -225,6 +254,9 @@ window.adminApp = (function () {
         const tabPodcasts = document.getElementById('tab-btn-podcasts');
         if (tabPodcasts) tabPodcasts.addEventListener('click', () => switchTab('podcasts'));
 
+        const tabShows = document.getElementById('tab-btn-shows');
+        if (tabShows) tabShows.addEventListener('click', () => switchTab('shows'));
+
         const exportBtn = document.getElementById('admin-export-btn');
         if (exportBtn) exportBtn.addEventListener('click', exportBackup);
 
@@ -239,10 +271,12 @@ window.adminApp = (function () {
 
     return {
         init,
+        lookupRelease,
         refreshIcons,
         saveData,
         showToast,
-        switchTab
+        switchTab,
+        uploadArtwork
     };
 })();
 
