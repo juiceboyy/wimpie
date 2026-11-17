@@ -260,7 +260,6 @@ async function runTests() {
         if (url.includes('youtube.com/oembed')) return { ok: true, json: async () => ({ title: "Wimpie & de Domino's - Hechte Band (Videoclip)", author_name: "Wimpie & de Domino's" }) };
         if (url.includes('open.spotify.com/embed/artist')) return { ok: true, text: async () => '<script id="__NEXT_DATA__">{"props":{"pageProps":{"state":{"data":{"entity":{"trackList":[{"title":"Hechte Band","uri":"spotify:track:5Nvq5r3SWsyDXwXkgaq6cH"}]}}}}}}</script>' };
         if (url.includes('itunes.apple.com/search')) return { ok: true, json: async () => ({ results: [{ trackName: 'Hechte Band', artistName: "Wimpie en de Domino's", trackViewUrl: 'https://music.apple.com/nl/album/hechte-band/6826422152?i=6826422154&uo=4' }] }) };
-        if (url.includes('api.deezer.com/search')) return { ok: true, json: async () => ({ data: [{ title: 'Hechte Band', artist: { name: "Wimpie en de Domino's" }, link: 'https://www.deezer.com/track/4367169221' }] }) };
         return { ok: false, status: 404 };
     };
     res = await adminApi({ httpMethod: 'POST', headers: { 'x-admin-pin': 'test-secret-pin-123' }, body: JSON.stringify({ action: 'lookup', youtubeId: 'abc123def45' }) }, {});
@@ -270,7 +269,7 @@ async function runTests() {
     assert.strictEqual(lookupData.title, 'Hechte Band');
     assert.strictEqual(lookupData.platforms.spotify, 'https://open.spotify.com/track/5Nvq5r3SWsyDXwXkgaq6cH');
     assert.strictEqual(lookupData.platforms.apple, 'https://music.apple.com/nl/album/hechte-band/6826422152?i=6826422154');
-    assert.strictEqual(lookupData.platforms.deezer, 'https://www.deezer.com/track/4367169221');
+    assert.strictEqual(lookupData.platforms.deezer, undefined);
     console.log('Release lookup verified successfully.');
 
     // Restore environment

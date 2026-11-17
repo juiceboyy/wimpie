@@ -80,12 +80,12 @@ window.adminReleases = (function () {
             if (!editingSlug && slugEl && !slugEl.value.trim()) slugEl.value = utils.slugify(result.title);
             if (descEl && !descEl.value.trim()) {
                 const art = result.artist || byId('rel-artist')?.value.trim() || "Wimpie & de Domino's";
-                descEl.value = `Beluister de nieuwe single '${result.title}' van ${art} op Spotify, Apple Music, Deezer en YouTube.`;
+                descEl.value = `Beluister de nieuwe single '${result.title}' van ${art} op Spotify, Apple Music en YouTube.`;
             }
         }
 
         const found = [];
-        for (const [key, id, label] of [['spotify', 'rel-spotify', 'Spotify'], ['apple', 'rel-apple', 'Apple Music'], ['deezer', 'rel-deezer', 'Deezer']]) {
+        for (const [key, id, label] of [['spotify', 'rel-spotify', 'Spotify'], ['apple', 'rel-apple', 'Apple Music']]) {
             const el = byId(id);
             const url = result.platforms && result.platforms[key];
             if (el && url && (force || !el.value.trim() || el.dataset?.autoFilled === '1')) {
@@ -99,7 +99,7 @@ window.adminReleases = (function () {
         if (found.length > 0) {
             window.adminApp.showToast(`Links ingevuld: ${found.join(', ')}`, 'success');
         } else if (force) {
-            window.adminApp.showToast('Geen Spotify, Apple Music of Deezer links gevonden.', 'error');
+            window.adminApp.showToast('Geen Spotify of Apple Music links gevonden.', 'error');
         }
     }
 
@@ -156,7 +156,7 @@ window.adminReleases = (function () {
             autoFillPlatformLinks({ youtubeId: ytId, title, force: true });
         });
 
-        ['rel-slug', 'rel-artist', 'rel-badge', 'rel-description', 'rel-artwork', 'rel-spotify', 'rel-apple', 'rel-deezer'].forEach(id => {
+        ['rel-slug', 'rel-artist', 'rel-badge', 'rel-description', 'rel-artwork', 'rel-spotify', 'rel-apple'].forEach(id => {
             const el = byId(id);
             if (el) el.addEventListener('input', () => {
                 if (el.dataset) delete el.dataset.autoFilled;
@@ -192,7 +192,7 @@ window.adminReleases = (function () {
             ['rel-slug', v.slug], ['rel-title', v.title],
             ['rel-artist', v.artist || "Wimpie & de Domino's"], ['rel-badge', v.badge || 'Nieuwe Single'],
             ['rel-description', v.description], ['rel-artwork', v.artwork || '/single-cover.jpg'],
-            ['rel-youtube', v.youtubeId], ['rel-spotify', p.spotify], ['rel-apple', p.apple], ['rel-deezer', p.deezer]
+            ['rel-youtube', v.youtubeId], ['rel-spotify', p.spotify], ['rel-apple', p.apple]
         ];
         fields.forEach(([id, value]) => {
             const el = byId(id);
@@ -251,7 +251,7 @@ window.adminReleases = (function () {
         if (!editingSlug && releasesData[slug] && !confirm(`Release met slug "${slug}" bestaat al. Wil je deze overschrijven?`)) return;
 
         const platforms = {};
-        [['spotify', 'rel-spotify'], ['apple', 'rel-apple'], ['deezer', 'rel-deezer']].forEach(([key, id]) => {
+        [['spotify', 'rel-spotify'], ['apple', 'rel-apple']].forEach(([key, id]) => {
             const val = byId(id)?.value.trim();
             if (val) platforms[key] = val;
         });

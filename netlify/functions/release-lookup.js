@@ -1,11 +1,10 @@
 /**
- * release-lookup.js - Zoekt automatisch Spotify, Apple Music en Deezer links op basis van een YouTube video of titel.
+ * release-lookup.js - Zoekt automatisch Spotify en Apple Music links op basis van een YouTube video of titel.
  */
 
 const WIMPIE_ARTIST = "Wimpie & de Domino's";
 const SPOTIFY_ARTIST_ID = '0Ydnz2FM9AVMdzMl3YDib0';
 const ITUNES_ARTIST_ID = '1181081587';
-const DEEZER_ARTIST_ID = '11493396';
 const SPOTIFY_SEARCH_HASH = 'fcad5a3e0d5af727fb76966f06971c19cfa2275e6ff7671196753e008611873c';
 
 function normalizeText(str) {
@@ -126,44 +125,6 @@ async function lookupAppleMusic(cleanTitle, artist) {
     }
 }
 
-async function lookupDeezer(cleanTitle, artist) {
-    const targetNorm = normalizeText(cleanTitle);
-    const isWimpie = /wimpie|domino/i.test(artist);
-    try {
-        const res = await fetch(`https://api.deezer.com/search?q=${encodeURIComponent(cleanTitle)}&limit=20`);
-        const data = res.ok ? await res.json() : { data: [] };
-        const list = data.data || [];
-        const matchesArtist = t => !isWimpie || /wimpie|domino/i.test(t.artist?.name || '');
-
-        let match = list.find(t => normalizeText(t.title) === targetNorm && matchesArtist(t)) ||
-            list.find(t => titlesMatch(t.title, targetNorm) && matchesArtist(t));
-
-        if (!match && isWimpie) {
-            const albumsRes = await fetch(`https://api.deezer.com/artist/${DEEZER_ARTIST_ID}/albums?limit=50`);
-            const albumsData = albumsRes.ok ? await albumsRes.json() : { data: [] };
-            const albums = albumsData.data || [];
-            const prioritized = [
-                ...albums.filter(a => titlesMatch(a.title, targetNorm)),
-                ...albums.filter(a => !titlesMatch(a.title, targetNorm)).slice(0, 5)
-            ];
-            for (const alb of prioritized) {
-                const trRes = await fetch(`https://api.deezer.com/album/${alb.id}/tracks`);
-                if (!trRes.ok) continue;
-                const trData = await trRes.json();
-                const found = (trData.data || []).find(t => titlesMatch(t.title, targetNorm));
-                if (found) {
-                    match = found;
-                    break;
-                }
-            }
-        }
-
-        return match?.link || '';
-    } catch {
-        return '';
-    }
-}
-
 async function lookupReleaseByYoutube({ youtubeId = '', title = '', artist = '' } = {}) {
     const ytMeta = youtubeId ? await fetchYoutubeMeta(youtubeId) : null;
     const resolvedTitle = cleanYoutubeTitle(title) || (ytMeta && ytMeta.cleanTitle) || '';
@@ -183,15 +144,13 @@ async function lookupReleaseByYoutube({ youtubeId = '', title = '', artist = '' 
         };
     }
 
-    const [spotify, apple, deezer] = await Promise.all([
+    const [spotify, apple] = await Promise.all([
         lookupSpotify(resolvedTitle, resolvedArtist),
-        lookupAppleMusic(resolvedTitle, resolvedArtist),
-        lookupDeezer(resolvedTitle, resolvedArtist)
+        lookupAppleMusic(resolvedTitle, resolvedArtist)
     ]);
 
     if (spotify) platforms.spotify = spotify;
     if (apple) platforms.apple = apple;
-    if (deezer) platforms.deezer = deezer;
 
     return {
         title: resolvedTitle,
