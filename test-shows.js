@@ -29,9 +29,9 @@ async function runTests() {
     const ticketsHtml = fs.readFileSync(path.join(__dirname, 'tickets.html'), 'utf-8');
     const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8');
     assert.ok(ticketsHtml.includes('8 januari 2027') && ticketsHtml.includes('€ 7,50'), 'tickets.html must contain 8 jan show');
-    assert.ok(ticketsHtml.includes('6 februari 2027') && ticketsHtml.includes('€ 5,00'), 'tickets.html must contain 6 feb show');
+    assert.ok(!ticketsHtml.includes('6 februari 2027'), 'tickets.html must hide 6 feb show while status is hidden');
     assert.ok(ticketsHtml.includes('name="tickets"') && ticketsHtml.includes('bijzonderheden'), 'tickets.html must contain Netlify form & accessibility field');
-    assert.ok(indexHtml.includes('<!-- SHOWS_FEATURE_START -->') && indexHtml.includes('8 januari 2027') && indexHtml.includes('6 februari 2027'), 'index.html must contain featured shows');
+    assert.ok(indexHtml.includes('<!-- SHOWS_FEATURE_START -->') && indexHtml.includes('8 januari 2027') && !indexHtml.includes('6 februari 2027'), 'index.html must show 8 jan and hide 6 feb');
 
     // 2. Test bunq.me URL builder & QR SVG compatibility
     console.log('2. Testing bunq.me URL generation and qr.js SVG encoding...');

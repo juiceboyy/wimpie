@@ -72,8 +72,12 @@ function renderShowCard(show) {
             </article>`;
 }
 
+function getVisibleShows(data) {
+    return (Array.isArray(data.shows) ? data.shows : []).filter(s => s && s.status !== 'hidden' && !s.hidden);
+}
+
 function renderFeaturedShowsSection(data) {
-    const shows = Array.isArray(data.shows) ? data.shows : [];
+    const shows = getVisibleShows(data);
     if (shows.length === 0) {
         return `${FEATURE_START_MARKER}\n    ${FEATURE_END_MARKER}`;
     }
@@ -98,13 +102,15 @@ function renderFeaturedShowsSection(data) {
             </article>`;
     }).join('\n');
 
+    const gridCols = shows.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2';
+
     return `${FEATURE_START_MARKER}
     <section id="shows" class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-4">
             <div><span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">Aankomende Optredens</span><h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white tracking-[-0.03em] mt-1">Live Shows &amp; Kaarten</h2></div>
             <a href="tickets.html" class="text-xs font-mono uppercase tracking-wider text-[#C85A32] hover:underline">Alle shows &amp; kaarten &rarr;</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid ${gridCols} gap-6">
 ${cardsHtml}
         </div>
     </section>
@@ -112,7 +118,7 @@ ${cardsHtml}
 }
 
 function renderTicketsPage(data) {
-    const shows = Array.isArray(data.shows) ? data.shows : [];
+    const shows = getVisibleShows(data);
     const cardsHtml = shows.length > 0
         ? shows.map(renderShowCard).join('\n')
         : '<div class="bg-[#141414] rounded-2xl p-8 text-center text-sm font-mono text-neutral-400">Er staan momenteel geen nieuwe shows gepland.</div>';

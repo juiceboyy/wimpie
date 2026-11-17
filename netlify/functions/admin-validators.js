@@ -53,7 +53,7 @@ function validateShows(data) {
     if (!Array.isArray(data.shows)) {
         return 'Shows data mist een "shows" array.';
     }
-    const allowedStatuses = ['available', 'few_left', 'sold_out'];
+    const allowedStatuses = ['available', 'few_left', 'sold_out', 'hidden'];
     const seenSlugs = new Set();
 
     for (let i = 0; i < data.shows.length; i++) {

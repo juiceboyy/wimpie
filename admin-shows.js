@@ -16,7 +16,8 @@ window.adminShows = (function () {
     const STATUS_LABELS = {
         available: { text: 'Beschikbaar', cls: 'bg-emerald-500/10 text-emerald-400' },
         few_left: { text: 'Laatste kaarten', cls: 'bg-amber-500/15 text-amber-300' },
-        sold_out: { text: 'Uitverkocht', cls: 'bg-red-500/10 text-red-400' }
+        sold_out: { text: 'Uitverkocht', cls: 'bg-red-500/10 text-red-400' },
+        hidden: { text: 'Verborgen', cls: 'bg-white/10 text-neutral-400' }
     };
 
     function formatPrice(val) {
@@ -48,7 +49,7 @@ window.adminShows = (function () {
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div><label for="show-price" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Ticketprijs (EUR) *</label><input type="number" id="show-price" step="0.50" min="0" required placeholder="7.50" class="w-full h-11 px-3.5 rounded-xl bg-black/50 text-white text-sm font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"></div>
-                        <div><label for="show-status" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Beschikbaarheid</label><select id="show-status" class="w-full h-11 px-3 rounded-xl bg-black/50 text-white text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"><option value="available">Beschikbaar</option><option value="few_left">Laatste kaarten</option><option value="sold_out">Uitverkocht</option></select></div>
+                        <div><label for="show-status" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Beschikbaarheid</label><select id="show-status" class="w-full h-11 px-3 rounded-xl bg-black/50 text-white text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"><option value="available">Beschikbaar</option><option value="few_left">Laatste kaarten</option><option value="sold_out">Uitverkocht</option><option value="hidden">Verborgen (concept)</option></select></div>
                     </div>
                     <div><label for="show-desc" class="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-1.5">Korte beschrijving</label><textarea id="show-desc" rows="2" placeholder="Informatie over de show..." class="w-full p-3 rounded-xl bg-black/50 text-white text-sm shadow-[0_0_0_1px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-white"></textarea></div>
                     <button type="submit" id="show-submit-btn" class="w-full h-12 rounded-xl bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider font-semibold shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition flex items-center justify-center gap-2">
