@@ -71,3 +71,8 @@
   from = "/tickets"
   to = "/tickets.html"
   status = 200
+
+[[redirects]]
+  from = "/muziek"
+  to = "/muziek.html"
+  status = 200

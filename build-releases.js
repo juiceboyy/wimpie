@@ -13,6 +13,7 @@ const DATA_FILE = path.join(ROOT_DIR, 'data', 'releases.json');
 const TEMPLATE_FILE = path.join(ROOT_DIR, 's', 'template.html');
 const OUTPUT_DIR = path.join(ROOT_DIR, 's');
 const INDEX_PAGE_FILE = path.join(ROOT_DIR, 'index.html');
+const MUZIEK_PAGE_FILE = path.join(ROOT_DIR, 'muziek.html');
 const FEATURE_START_MARKER = '<!-- RELEASE_FEATURE_START -->';
 const FEATURE_END_MARKER = '<!-- RELEASE_FEATURE_END -->';
 
@@ -157,7 +158,78 @@ function buildReleases() {
     console.log(`Generated: s/index.html (redirecting to /s/${latestSlug})`);
 
     updateHomeFeaturedRelease(latestSlug, releases[latestSlug]);
+    fs.writeFileSync(MUZIEK_PAGE_FILE, renderMuziekPage(releases), 'utf-8');
+    console.log('Generated: muziek.html');
     console.log(`Successfully built ${slugs.length} release page(s).`);
+}
+
+function renderReleaseCard(slug, release) {
+    const artwork = escapeHtml(release.artwork || '/single-cover.jpg');
+    const title = escapeHtml(release.title || 'Single');
+    const badge = escapeHtml(release.badge || 'Single');
+    const desc = escapeHtml(release.description || '');
+    const buttons = Object.entries(release.platforms || {}).map(([key, url]) => {
+        const cfg = PLATFORM_CONFIG[key] || { name: key.charAt(0).toUpperCase() + key.slice(1), icon: '<i data-lucide="music" class="w-4 h-4"></i>' };
+        return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="h-10 px-4 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-mono uppercase tracking-wider inline-flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.1)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition">${cfg.icon}<span>${escapeHtml(cfg.name)}</span></a>`;
+    }).join('');
+    return `        <article id="${escapeHtml(slug)}" class="bg-[#141414] rounded-2xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.08)] grid grid-cols-1 md:grid-cols-12 gap-0 items-stretch">
+            <div class="md:col-span-4 bg-black/50 p-6 flex items-center justify-center"><a href="/s/${escapeHtml(slug)}" class="block w-full max-w-[260px] aspect-square rounded-xl overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"><img src="${artwork}" alt="Cover ${title}" class="w-full h-full object-cover hover:scale-105 transition duration-500"></a></div>
+            <div class="md:col-span-8 p-6 sm:p-10 flex flex-col justify-between space-y-6">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between gap-2 text-xs font-mono"><span class="text-[#C85A32] uppercase tracking-wider">${badge}</span><a href="/s/${escapeHtml(slug)}" class="text-neutral-400 hover:text-white transition">Open releasepagina &rarr;</a></div>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
+                    <p class="text-neutral-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">${desc}</p>
+                </div>
+                <div class="flex flex-wrap gap-2.5 pt-2">${buttons}</div>
+            </div>
+        </article>`;
+}
+
+function renderMuziekPage(releases) {
+    const cards = Object.entries(releases).map(([slug, r]) => renderReleaseCard(slug, r)).join('\n\n');
+    return `<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth bg-[#0C0C0C]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muziek &amp; Singles | Wimpie &amp; de Domino's</title>
+    <meta name="description" content="Alle singles en muziekreleases van Wimpie &amp; de Domino's op Spotify, Apple Music en YouTube.">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest"></script><script src="app.js" defer></script>
+</head>
+<body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">
+    <header class="sticky top-0 z-50 bg-[#0C0C0C]/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.08)] px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition"><span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span><span>Wimpie &amp; de Domino's</span></a>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="tickets.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Tickets</a>
+                <a href="muziek.html" aria-current="page" class="h-9 px-3.5 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition">Muziek</a>
+                <a href="podcast.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Podcast</a>
+                <a href="wall-of-fame.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Wall of Fame</a>
+                <a href="boeken.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Boek optreden</a>
+                <a href="index.html" class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">&larr; Home</a>
+            </div>
+        </div>
+    </header>
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-12 pb-8">
+        <div class="max-w-3xl space-y-4">
+            <span class="inline-block text-xs font-mono uppercase tracking-[0.25em] text-[#C85A32]">Discografie</span>
+            <h1 class="font-serif text-4xl sm:text-6xl font-semibold text-white tracking-[-0.035em] leading-[1.05]">Onze Muziek</h1>
+            <p class="text-neutral-300 text-base sm:text-lg font-normal leading-relaxed">Alle singles en releases van Wimpie &amp; de Domino's. Beluister via Spotify, Apple Music of bekijk de videoclip op YouTube.</p>
+        </div>
+    </section>
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 space-y-8 flex-1">
+${cards}
+    </main>
+    <footer class="bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-8 px-4 sm:px-8 text-xs font-mono text-neutral-400 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Admiraal de Ruijterweg, Amsterdam | KvK: 96802863</p>
+            <div class="flex flex-wrap justify-center gap-4 text-xs"><a href="index.html" class="hover:text-white transition">&larr; Hoofdpagina</a><a href="tickets.html" class="hover:text-white transition">Tickets</a><a href="muziek.html" class="hover:text-white transition">Muziek</a><a href="podcast.html" class="hover:text-white transition">Podcast</a><a href="boeken.html" class="hover:text-white transition">Boek optreden</a></div>
+        </div>
+    </footer>
+</body>
+</html>\n`;
 }
 
 function updateHomeFeaturedRelease(slug, release) {
@@ -181,9 +253,10 @@ function updateHomeFeaturedRelease(slug, release) {
                     <p class="text-neutral-400 text-sm max-w-xl">Beluister het nieuwste nummer op jouw favoriete streamingplatform.</p>
                 </div>
             </div>
-            <a href="/s/${escapeHtml(slug)}" class="shrink-0 h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
-                <i data-lucide="play" class="w-4 h-4"></i> Beluister Single
-            </a>
+            <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
+                <a href="muziek.html" class="h-11 px-5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">Alle singles bekijken &rarr;</a>
+                <a href="/s/${escapeHtml(slug)}" class="h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]"><i data-lucide="play" class="w-4 h-4"></i> Beluister Single</a>
+            </div>
         </div>
     </section>
     ${FEATURE_END_MARKER}`;
