@@ -8,23 +8,19 @@ window.adminReleases = (function () {
     let lastRenderedYtId = null;
     let lastLookedUpYtId = null;
     let listenersBound = false;
+    const uploadedPreviewMap = {};
 
-    const utils = window.adminUtils || {
-        escapeHtml: str => str || '',
-        slugify: str => (str || '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-'),
-        extractYoutubeId: str => str || ''
-    };
+    const utils = window.adminUtils || { escapeHtml: s => s || '', slugify: s => (s || '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-'), extractYoutubeId: s => s || '' };
     const byId = id => document.getElementById(id);
+    const val = (id, fallback = '') => byId(id)?.value.trim() || fallback;
     const setText = (id, text) => { const el = byId(id); if (el) el.textContent = text; };
+    const setDisabled = (id, state) => { const el = byId(id); if (el) el.disabled = state; };
 
     function init(data) {
         releasesData = data || {};
         renderList();
         resetForm();
-        if (!listenersBound) {
-            setupListeners();
-            listenersBound = true;
-        }
+        if (!listenersBound) { setupListeners(); listenersBound = true; }
     }
 
     function renderList() {
@@ -39,22 +35,14 @@ window.adminReleases = (function () {
 
         container.innerHTML = slugs.map(slug => {
             const r = releasesData[slug] || {};
-            const cardCls = editingSlug === slug
-                ? 'bg-[#C85A32]/10 shadow-[0_0_0_1px_rgba(200,90,50,0.5)]'
-                : 'bg-[#181818] shadow-[0_0_0_1px_rgba(255,255,255,0.06)]';
+            const cardCls = editingSlug === slug ? 'bg-[#C85A32]/10 shadow-[0_0_0_1px_rgba(200,90,50,0.5)]' : 'bg-[#181818] shadow-[0_0_0_1px_rgba(255,255,255,0.06)]';
             const safeSlug = utils.escapeHtml(slug);
-            const safeTitle = utils.escapeHtml(r.title || 'Zonder titel');
-            const safeBadge = utils.escapeHtml(r.badge || 'Single');
-            const safeArtwork = utils.escapeHtml(r.artwork || '/single-cover.jpg');
-
+            const art = r.artwork || '/single-cover.jpg';
             return `<div class="p-4 rounded-xl ${cardCls} flex items-center justify-between gap-4 transition">
                 <div class="flex items-center gap-3 min-w-0">
-                    <img src="${safeArtwork}" alt="" class="w-12 h-12 rounded-lg object-cover bg-black shrink-0 shadow-sm" onerror="this.src='/single-cover.jpg'">
+                    <img src="${utils.escapeHtml(uploadedPreviewMap[art] || art)}" alt="" class="w-12 h-12 rounded-lg object-cover bg-black shrink-0 shadow-sm" onerror="this.src='/single-cover.jpg'">
                     <div class="min-w-0">
-                        <div class="flex items-center gap-2">
-                            <h4 class="text-sm font-semibold text-white truncate">${safeTitle}</h4>
-                            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-white/10 text-neutral-300">${safeBadge}</span>
-                        </div>
+                        <div class="flex items-center gap-2"><h4 class="text-sm font-semibold text-white truncate">${utils.escapeHtml(r.title || 'Zonder titel')}</h4><span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-white/10 text-neutral-300">${utils.escapeHtml(r.badge || 'Single')}</span></div>
                         <p class="text-xs font-mono text-neutral-400 truncate">/s/${safeSlug}</p>
                     </div>
                 </div>
@@ -65,8 +53,8 @@ window.adminReleases = (function () {
             </div>`;
         }).join('');
 
-        container.querySelectorAll('.rel-btn-edit').forEach(btn => btn.addEventListener('click', () => edit(btn.getAttribute('data-edit-slug'))));
-        container.querySelectorAll('.rel-btn-remove').forEach(btn => btn.addEventListener('click', () => remove(btn.getAttribute('data-remove-slug'))));
+        container.querySelectorAll('.rel-btn-edit').forEach(b => b.addEventListener('click', () => edit(b.getAttribute('data-edit-slug'))));
+        container.querySelectorAll('.rel-btn-remove').forEach(b => b.addEventListener('click', () => remove(b.getAttribute('data-remove-slug'))));
         window.adminApp?.refreshIcons?.();
     }
 
@@ -79,7 +67,7 @@ window.adminReleases = (function () {
             titleEl.value = result.title;
             if (!editingSlug && slugEl && !slugEl.value.trim()) slugEl.value = utils.slugify(result.title);
             if (descEl && !descEl.value.trim()) {
-                const art = result.artist || byId('rel-artist')?.value.trim() || "Wimpie & de Domino's";
+                const art = result.artist || val('rel-artist', "Wimpie & de Domino's");
                 descEl.value = `Beluister de nieuwe single '${result.title}' van ${art} op Spotify, Apple Music en YouTube.`;
             }
         }
@@ -96,35 +84,52 @@ window.adminReleases = (function () {
         }
 
         updatePreview();
-        if (found.length > 0) {
-            window.adminApp.showToast(`Links ingevuld: ${found.join(', ')}`, 'success');
-        } else if (force) {
-            window.adminApp.showToast('Geen Spotify of Apple Music links gevonden.', 'error');
-        }
+        if (found.length > 0) window.adminApp.showToast(`Links ingevuld: ${found.join(', ')}`, 'success');
+        else if (force) window.adminApp.showToast('Geen Spotify of Apple Music links gevonden.', 'error');
     }
 
     async function autoFillPlatformLinks({ youtubeId = '', title = '', force = false } = {}) {
         if (!window.adminApp?.lookupRelease) return;
-        const lookupBtn = byId('rel-lookup-btn');
-
         if (youtubeId) lastLookedUpYtId = youtubeId;
-        if (lookupBtn) lookupBtn.disabled = true;
+        setDisabled('rel-lookup-btn', true);
         setText('rel-lookup-text', 'Links zoeken...');
 
         try {
-            const result = await window.adminApp.lookupRelease({
-                youtubeId,
-                title: title || byId('rel-title')?.value.trim() || '',
-                artist: byId('rel-artist')?.value.trim() || ''
-            });
+            const result = await window.adminApp.lookupRelease({ youtubeId, title: title || val('rel-title'), artist: val('rel-artist') });
             const currentYtId = utils.extractYoutubeId(byId('rel-youtube')?.value || '');
             if (youtubeId && currentYtId && currentYtId !== youtubeId) return;
             applyLookupResult(result, force);
         } catch (err) {
             if (force) window.adminApp.showToast(err.message, 'error');
         } finally {
-            if (lookupBtn) lookupBtn.disabled = false;
+            setDisabled('rel-lookup-btn', false);
             setText('rel-lookup-text', 'Links automatisch invullen');
+        }
+    }
+
+    async function handleArtworkUpload(e) {
+        const file = e.target?.files?.[0];
+        if (!file || !utils.prepareArtworkFile || !window.adminApp?.uploadArtwork) return;
+        setDisabled('rel-artwork-upload-btn', true);
+        setText('rel-artwork-upload-text', 'Uploaden...');
+
+        try {
+            const prepared = await utils.prepareArtworkFile(file, val('rel-slug') || val('rel-title'));
+            const previewEl = byId('prev-rel-artwork');
+            if (previewEl) previewEl.src = prepared.dataUrl;
+
+            const res = await window.adminApp.uploadArtwork({ filename: prepared.filename, contentBase64: prepared.contentBase64 });
+            uploadedPreviewMap[res.path] = prepared.dataUrl;
+            const artInput = byId('rel-artwork');
+            if (artInput) artInput.value = res.path;
+            updatePreview();
+            window.adminApp.showToast(`Artwork geüpload: ${res.path}`, 'success');
+        } catch (err) {
+            window.adminApp?.showToast(err.message, 'error');
+        } finally {
+            setDisabled('rel-artwork-upload-btn', false);
+            setText('rel-artwork-upload-text', 'Upload');
+            if (e.target) e.target.value = '';
         }
     }
 
@@ -139,7 +144,6 @@ window.adminReleases = (function () {
                 updatePreview();
             });
         }
-
         if (ytInput) {
             ytInput.addEventListener('input', () => {
                 const extracted = utils.extractYoutubeId(ytInput.value);
@@ -158,19 +162,19 @@ window.adminReleases = (function () {
 
         ['rel-slug', 'rel-artist', 'rel-badge', 'rel-description', 'rel-artwork', 'rel-spotify', 'rel-apple'].forEach(id => {
             const el = byId(id);
-            if (el) el.addEventListener('input', () => {
-                if (el.dataset) delete el.dataset.autoFilled;
-                updatePreview();
-            });
+            if (el) el.addEventListener('input', () => { if (el.dataset) delete el.dataset.autoFilled; updatePreview(); });
         });
 
+        byId('rel-artwork-upload-btn')?.addEventListener('click', () => byId('rel-artwork-file')?.click());
+        byId('rel-artwork-file')?.addEventListener('change', handleArtworkUpload);
         byId('releases-form')?.addEventListener('submit', handleSubmit);
         byId('rel-cancel-btn')?.addEventListener('click', resetForm);
     }
 
     function updatePreview() {
         const previewArtwork = byId('prev-rel-artwork');
-        if (previewArtwork) previewArtwork.src = byId('rel-artwork')?.value || '/single-cover.jpg';
+        const artPath = byId('rel-artwork')?.value || '/single-cover.jpg';
+        if (previewArtwork) previewArtwork.src = uploadedPreviewMap[artPath] || artPath;
         setText('prev-rel-badge', byId('rel-badge')?.value || 'Nieuwe Single');
         setText('prev-rel-title', byId('rel-title')?.value || 'Titel van de Release');
         setText('prev-rel-artist', byId('rel-artist')?.value || "Wimpie & de Domino's");
@@ -207,14 +211,12 @@ window.adminReleases = (function () {
     function edit(slug) {
         const item = releasesData[slug];
         if (!item) return;
-
         editingSlug = slug;
         lastLookedUpYtId = item.youtubeId || null;
         setFormValues({ ...item, slug, slugReadOnly: true });
         setText('rel-form-heading', `Release bewerken: /s/${slug}`);
         setText('rel-submit-text', 'Release Bijwerken');
         byId('rel-cancel-btn')?.classList.remove('hidden');
-
         renderList();
         updatePreview();
         byId('releases-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -227,41 +229,35 @@ window.adminReleases = (function () {
         byId('releases-form')?.reset();
         setFormValues();
         setText('rel-form-heading', 'Nieuwe Release Toevoegen');
-        const submitBtn = byId('rel-submit-btn');
-        if (submitBtn) submitBtn.disabled = false;
+        setDisabled('rel-submit-btn', false);
         setText('rel-submit-text', 'Release Toevoegen aan Lijst');
         byId('rel-cancel-btn')?.classList.add('hidden');
-
         renderList();
         updatePreview();
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const slug = utils.slugify(byId('rel-slug')?.value.trim());
-        const title = byId('rel-title')?.value.trim();
-        const artist = byId('rel-artist')?.value.trim() || "Wimpie & de Domino's";
-        const badge = byId('rel-badge')?.value.trim() || 'Nieuwe Single';
-        const description = byId('rel-description')?.value.trim();
-        const artwork = byId('rel-artwork')?.value.trim() || '/single-cover.jpg';
-        const youtubeId = utils.extractYoutubeId(byId('rel-youtube')?.value.trim());
+        const slug = utils.slugify(val('rel-slug'));
+        const title = val('rel-title');
+        const artist = val('rel-artist', "Wimpie & de Domino's");
+        const badge = val('rel-badge', 'Nieuwe Single');
+        const description = val('rel-description');
+        const artwork = val('rel-artwork', '/single-cover.jpg');
+        const youtubeId = utils.extractYoutubeId(val('rel-youtube'));
 
         if (!slug) return alert('Vul een geldige slug in (bijv. rozen).');
         if (!title) return alert('Vul een titel in.');
         if (!editingSlug && releasesData[slug] && !confirm(`Release met slug "${slug}" bestaat al. Wil je deze overschrijven?`)) return;
 
         const platforms = {};
-        [['spotify', 'rel-spotify'], ['apple', 'rel-apple']].forEach(([key, id]) => {
-            const val = byId(id)?.value.trim();
-            if (val) platforms[key] = val;
-        });
+        [['spotify', 'rel-spotify'], ['apple', 'rel-apple']].forEach(([key, id]) => { const v = val(id); if (v) platforms[key] = v; });
         if (youtubeId) platforms.youtube = `https://youtu.be/${youtubeId}`;
 
         const newRelease = { title, artist, badge, description, artwork, youtubeId: youtubeId || undefined, platforms };
         const updatedData = editingSlug ? { ...releasesData, [slug]: newRelease } : { [slug]: newRelease, ...releasesData };
 
-        const submitBtn = byId('rel-submit-btn');
-        if (submitBtn) submitBtn.disabled = true;
+        setDisabled('rel-submit-btn', true);
         setText('rel-submit-text', 'Bezig met opslaan...');
 
         let success = true;
@@ -272,7 +268,7 @@ window.adminReleases = (function () {
             resetForm();
             renderList();
         } else {
-            if (submitBtn) submitBtn.disabled = false;
+            setDisabled('rel-submit-btn', false);
             setText('rel-submit-text', editingSlug ? 'Release Bijwerken' : 'Release Toevoegen aan Lijst');
         }
     }

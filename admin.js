@@ -146,6 +146,22 @@ window.adminApp = (function () {
         return result;
     }
 
+    async function uploadArtwork({ filename, contentBase64 }) {
+        const res = await apiRequest('/api/admin-api', {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'upload_artwork',
+                filename,
+                contentBase64
+            })
+        });
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error || 'Artwork uploaden mislukt.');
+        }
+        return result;
+    }
+
     function showAuthModal() {
         const modal = document.getElementById('auth-modal');
         if (modal) {
@@ -259,7 +275,8 @@ window.adminApp = (function () {
         refreshIcons,
         saveData,
         showToast,
-        switchTab
+        switchTab,
+        uploadArtwork
     };
 })();
 

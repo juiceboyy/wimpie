@@ -86,8 +86,27 @@ function validateShows(data) {
     return null;
 }
 
+function validateArtworkUpload(body) {
+    if (!body || typeof body !== 'object') {
+        return 'Ongeldig upload verzoek.';
+    }
+    const filename = typeof body.filename === 'string' ? body.filename.trim() : '';
+    if (!filename || !/^[a-z0-9_-]+\.(jpg|jpeg|png|webp|gif)$/i.test(filename)) {
+        return 'Ongeldige bestandsnaam. Gebruik alleen letters, cijfers, koppeltekens en extensie .jpg, .png, .webp of .gif.';
+    }
+    const content = typeof body.contentBase64 === 'string' ? body.contentBase64.trim() : '';
+    if (!content) {
+        return 'Geen afbeeldingsdata meegegeven.';
+    }
+    if (content.length > 5.5 * 1024 * 1024) {
+        return 'Afbeelding is te groot (maximaal ca. 4 MB).';
+    }
+    return null;
+}
+
 module.exports = {
     validateReleases,
     validatePodcasts,
-    validateShows
+    validateShows,
+    validateArtworkUpload
 };

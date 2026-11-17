@@ -272,6 +272,22 @@ async function runTests() {
     assert.strictEqual(lookupData.platforms.deezer, undefined);
     console.log('Release lookup verified successfully.');
 
+    // 13. Test Artwork Upload Validation & Local Persistence
+    console.log('13. Testing artwork upload validation and saving...');
+    delete process.env.GITHUB_TOKEN;
+    res = await adminApi({ httpMethod: 'POST', headers: { 'x-admin-pin': 'test-secret-pin-123' }, body: JSON.stringify({ action: 'upload_artwork', filename: 'evil.exe', contentBase64: 'YWJj' }) }, {});
+    assert.strictEqual(res.statusCode, 400, 'Should reject invalid image extension');
+    const tinyPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
+    res = await adminApi({ httpMethod: 'POST', headers: { 'x-admin-pin': 'test-secret-pin-123' }, body: JSON.stringify({ action: 'upload_artwork', filename: 'test-cover.png', contentBase64: `data:image/png;base64,${tinyPngBase64}` }) }, {});
+    assert.strictEqual(res.statusCode, 200, 'Should upload valid PNG artwork');
+    const uploadRes = JSON.parse(res.body);
+    assert.strictEqual(uploadRes.path, '/s/covers/test-cover.png');
+    const uploadedDiskPath = path.join(__dirname, 's', 'covers', 'test-cover.png');
+    assert.ok(fs.existsSync(uploadedDiskPath), 'Uploaded file should exist on disk');
+    fs.unlinkSync(uploadedDiskPath);
+    if (fs.existsSync(path.join(__dirname, 's', 'covers')) && fs.readdirSync(path.join(__dirname, 's', 'covers')).length === 0) fs.rmdirSync(path.join(__dirname, 's', 'covers'));
+    console.log('Artwork upload verified and cleaned up successfully.');
+
     // Restore environment
     process.env = originalEnv;
 
