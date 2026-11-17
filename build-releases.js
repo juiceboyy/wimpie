@@ -224,7 +224,7 @@ ${cards}
     </main>
     <footer class="bg-[#08090A] shadow-[0_-1px_0_0_rgba(255,255,255,0.08)] py-8 px-4 sm:px-8 text-xs font-mono text-neutral-400 mt-12">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Admiraal de Ruijterweg, Amsterdam | KvK: 96802863</p>
+            <p>&copy; 2026 VOF Wimpie &amp; de Domino's | Amsterdam | KvK: 96802863</p>
             <div class="flex flex-wrap justify-center gap-4 text-xs"><a href="index.html" class="hover:text-white transition">&larr; Hoofdpagina</a><a href="tickets.html" class="hover:text-white transition">Tickets</a><a href="muziek.html" class="hover:text-white transition">Muziek</a><a href="podcast.html" class="hover:text-white transition">Podcast</a><a href="boeken.html" class="hover:text-white transition">Boek optreden</a></div>
         </div>
     </footer>
