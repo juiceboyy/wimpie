@@ -1,4 +1,17 @@
 {
+  "hechte-band": {
+    "title": "Hechte Band",
+    "artist": "Wimpie & de Domino's",
+    "badge": "Nieuwe Single",
+    "description": "Onze 2e single van het aankomende album. Het gaat over ons als hechte band en is geschreven door Anita en Ronald",
+    "artwork": "/s/covers/hechte-band.jpg",
+    "youtubeId": "NZ4r30VHkWA",
+    "platforms": {
+      "spotify": "https://open.spotify.com/track/5Nvq5r3SWsyDXwXkgaq6cH",
+      "apple": "https://music.apple.com/nl/album/hechte-band/6826422152?i=6826422154",
+      "youtube": "https://youtu.be/NZ4r30VHkWA"
+    }
+  },
   "rozen": {
     "title": "Het Leven gaat niet altijd over Rozen",
     "artist": "Wimpie & de Domino's",
