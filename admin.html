@@ -92,7 +92,13 @@
                     </div>
 
                     <div class="space-y-3 pt-2">
-                        <span class="block text-xs font-mono uppercase tracking-wider text-[#C85A32]">Platform Links (Directe URLs)</span>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="block text-xs font-mono uppercase tracking-wider text-[#C85A32]">Platform Links (Directe URLs)</span>
+                            <button type="button" id="rel-lookup-btn" class="h-8 px-3 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-200 text-[11px] font-mono uppercase tracking-wider shadow-[0_0_0_1px_rgba(255,255,255,0.1)] transition flex items-center gap-1.5 disabled:opacity-50">
+                                <i data-lucide="wand-2" class="w-3.5 h-3.5 text-[#C85A32]"></i>
+                                <span id="rel-lookup-text">Links automatisch invullen</span>
+                            </button>
+                        </div>
                         <div class="space-y-2">
                             <input type="url" id="rel-spotify" placeholder="Spotify URL (https://open.spotify.com/...)" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)] focus:outline-none focus:ring-2 focus:ring-white">
                             <input type="url" id="rel-apple" placeholder="Apple Music URL (https://music.apple.com/...)" class="w-full h-10 px-3.5 rounded-lg bg-black/50 text-neutral-200 text-xs font-mono shadow-[0_0_0_1px_rgba(255,255,255,0.08)] focus:outline-none focus:ring-2 focus:ring-white">

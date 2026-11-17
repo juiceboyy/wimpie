@@ -131,6 +131,21 @@ window.adminApp = (function () {
         }
     }
 
+    async function lookupRelease(params) {
+        const res = await apiRequest('/api/admin-api', {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'lookup',
+                ...(params || {})
+            })
+        });
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error || 'Platform links ophalen mislukt.');
+        }
+        return result;
+    }
+
     function showAuthModal() {
         const modal = document.getElementById('auth-modal');
         if (modal) {
@@ -240,6 +255,7 @@ window.adminApp = (function () {
 
     return {
         init,
+        lookupRelease,
         refreshIcons,
         saveData,
         showToast,

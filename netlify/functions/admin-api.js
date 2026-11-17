@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { validateReleases, validatePodcasts, validateShows } = require('./admin-validators');
+const { lookupReleaseByYoutube } = require('./release-lookup');
 
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',
@@ -194,6 +195,21 @@ exports.handler = async (event) => {
             podcasts: podcasts || { show: {}, episodes: [] },
             shows: shows || { shows: [] }
         });
+    }
+
+    if (action === 'lookup') {
+        const youtubeId = (body.youtubeId || query.youtubeId || '').trim();
+        const title = (body.title || query.title || '').trim();
+        const artist = (body.artist || query.artist || '').trim();
+        if (!youtubeId && !title) {
+            return jsonResponse(400, { error: 'Geef een YouTube ID of titel mee om op te zoeken.' });
+        }
+        try {
+            const lookupResult = await lookupReleaseByYoutube({ youtubeId, title, artist });
+            return jsonResponse(200, lookupResult);
+        } catch (err) {
+            return jsonResponse(502, { error: `Platform links ophalen mislukt: ${err.message}` });
+        }
     }
 
     if (action === 'save') {
