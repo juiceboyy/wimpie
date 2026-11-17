@@ -12,6 +12,14 @@ const ROOT_DIR = __dirname;
 const DATA_FILE = path.join(ROOT_DIR, 'data', 'releases.json');
 const TEMPLATE_FILE = path.join(ROOT_DIR, 's', 'template.html');
 const OUTPUT_DIR = path.join(ROOT_DIR, 's');
+const INDEX_PAGE_FILE = path.join(ROOT_DIR, 'index.html');
+const FEATURE_START_MARKER = '<!-- RELEASE_FEATURE_START -->';
+const FEATURE_END_MARKER = '<!-- RELEASE_FEATURE_END -->';
+
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 const PLATFORM_CONFIG = {
     spotify: {
@@ -148,7 +156,41 @@ function buildReleases() {
     fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexRedirectHtml, 'utf-8');
     console.log(`Generated: s/index.html (redirecting to /s/${latestSlug})`);
 
+    updateHomeFeaturedRelease(latestSlug, releases[latestSlug]);
     console.log(`Successfully built ${slugs.length} release page(s).`);
+}
+
+function updateHomeFeaturedRelease(slug, release) {
+    if (!fs.existsSync(INDEX_PAGE_FILE) || !release) return;
+    const indexHtml = fs.readFileSync(INDEX_PAGE_FILE, 'utf-8');
+    const startIdx = indexHtml.indexOf(FEATURE_START_MARKER);
+    const endIdx = indexHtml.indexOf(FEATURE_END_MARKER);
+    if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) return;
+
+    const artwork = escapeHtml(release.artwork || '/single-cover.jpg');
+    const badge = escapeHtml(release.badge || 'Nieuwe Single Uit');
+    const title = escapeHtml(release.title || 'Nieuwe Single');
+    const sectionHtml = `${FEATURE_START_MARKER}
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-8">
+        <div class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+                <img src="${artwork}" alt="Cover ${title}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover shadow-[0_0_0_1px_rgba(255,255,255,0.1)] shrink-0">
+                <div class="space-y-1">
+                    <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#C85A32]">${badge}</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
+                    <p class="text-neutral-400 text-sm max-w-xl">Beluister het nieuwste nummer op jouw favoriete streamingplatform.</p>
+                </div>
+            </div>
+            <a href="/s/${escapeHtml(slug)}" class="shrink-0 h-11 px-6 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]">
+                <i data-lucide="play" class="w-4 h-4"></i> Beluister Single
+            </a>
+        </div>
+    </section>
+    ${FEATURE_END_MARKER}`;
+
+    const updated = indexHtml.slice(0, startIdx) + sectionHtml + indexHtml.slice(endIdx + FEATURE_END_MARKER.length);
+    fs.writeFileSync(INDEX_PAGE_FILE, updated, 'utf-8');
+    console.log(`Updated featured release section in: index.html (/s/${slug})`);
 }
 
 buildReleases();

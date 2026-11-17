@@ -151,7 +151,7 @@ function renderTicketsPage(data) {
             <a href="index.html" class="flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-neutral-300 uppercase hover:text-white transition"><span class="w-2 h-2 rounded-full bg-[#C85A32] animate-pulse"></span><span>Wimpie &amp; de Domino's</span></a>
             <div class="flex items-center gap-2 sm:gap-3">
                 <a href="tickets.html" aria-current="page" class="h-9 px-3.5 rounded-full bg-[#C85A32] text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(200,90,50,0.5)] transition">Tickets</a>
-                <a href="/s/rozen" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Nieuwe Single</a>
+                <a href="/s" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Nieuwe Single</a>
                 <a href="podcast.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden sm:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Podcast</a>
                 <a href="boeken.html" class="h-9 px-3.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-mono uppercase tracking-wider hidden md:flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition">Boek optreden</a>
                 <a href="index.html" class="h-9 px-3.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-200 text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition">&larr; Home</a>
@@ -223,7 +223,7 @@ ${cardsHtml}
             <div class="flex flex-wrap justify-center gap-4 text-xs">
                 <a href="index.html" class="hover:text-white transition">&larr; Hoofdpagina</a>
                 <a href="tickets.html" class="hover:text-white transition">Tickets</a>
-                <a href="/s/rozen" class="hover:text-white transition">Nieuwe Single</a>
+                <a href="/s" class="hover:text-white transition">Nieuwe Single</a>
                 <a href="podcast.html" class="hover:text-white transition">Podcast</a>
                 <a href="boeken.html" class="hover:text-white transition">Boek optreden</a>
             </div>
