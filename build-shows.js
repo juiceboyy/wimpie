@@ -136,6 +136,13 @@ function renderTicketsPage(data) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Shows &amp; Kaarten | Wimpie &amp; de Domino's</title>
     <meta name="description" content="Bestel direct kaarten zonder servicekosten voor de live shows van Wimpie &amp; de Domino's via de gastenlijst en iDEAL (bunq.me).">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0C0C0C">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
