@@ -50,6 +50,7 @@ const MIME_TYPES = {
     '.png': 'image/png',
     '.svg': 'image/svg+xml',
     '.ico': 'image/x-icon',
+    '.webmanifest': 'application/manifest+json; charset=utf-8',
     '.mp3': 'audio/mpeg'
 };
 

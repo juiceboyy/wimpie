@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="gold" x1="10" y1="3" x2="50" y2="59" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F6EAB0"/>
+      <stop offset="50%" stop-color="#C8BC73"/>
+      <stop offset="100%" stop-color="#87814F"/>
+    </linearGradient>
+    <linearGradient id="side" x1="48" y1="5" x2="54" y2="61" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#404A59"/>
+      <stop offset="55%" stop-color="#222834"/>
+      <stop offset="100%" stop-color="#11141B"/>
+    </linearGradient>
+    <linearGradient id="face" x1="29" y1="3" x2="29" y2="59" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#25182E"/>
+      <stop offset="50%" stop-color="#15101D"/>
+      <stop offset="100%" stop-color="#0D181E"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="29" y1="10" x2="29" y2="25" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFC2DA"/>
+      <stop offset="45%" stop-color="#FF4E95"/>
+      <stop offset="100%" stop-color="#D9206B"/>
+    </linearGradient>
+    <radialGradient id="teal" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#C2FFF8"/>
+      <stop offset="45%" stop-color="#38E2D6"/>
+      <stop offset="100%" stop-color="#10A89E"/>
+    </radialGradient>
+  </defs>
+  <rect x="16" y="5" width="38" height="56" rx="9" fill="url(#side)" stroke="#0C0C0E" stroke-width="1.5"/>
+  <rect x="10" y="3" width="38" height="56" rx="9" fill="url(#face)" stroke="url(#gold)" stroke-width="3"/>
+  <rect x="14.5" y="30" width="29" height="3" rx="1.5" fill="url(#gold)"/>
+  <path d="M17.5 11.5 L21.5 23.5 L29 15 L36.5 23.5 L40.5 11.5" fill="none" stroke="url(#pink)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="20.5" cy="40.5" r="4.5" fill="url(#teal)"/>
+  <circle cx="37.5" cy="49.5" r="4.5" fill="url(#teal)"/>
+</svg>
