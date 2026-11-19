@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="qr.js" defer></script>
     <script src="app.js" defer></script>
+    <script src="tickets-ui.js" defer></script>
     <script src="tickets.js" defer></script>
 </head>
 <body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">
@@ -40,7 +41,7 @@
                 <div class="space-y-3">
                     <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
                         <span class="text-[#C85A32] uppercase tracking-wider font-medium">8 januari 2027</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider text-emerald-400 bg-emerald-500/10">Beschikbaar</span>
+                        <span data-show-status-badge="show-8-januari" class="px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider text-emerald-400 bg-emerald-500/10">Beschikbaar</span>
                     </div>
                     <div class="flex items-baseline justify-between gap-4">
                         <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">20-jarig Jubileum: Wimpie &amp; de Domino&#39;s Live</h2>
@@ -53,7 +54,7 @@
                     <p class="text-neutral-300 text-sm leading-relaxed pt-1">Vier samen met ons het 20-jarig jubileum van Wimpie &amp; de Domino&#39;s! Kom meezingen, dansen en feesten tijdens een onvergetelijke jubileumavond.</p>
                 </div>
                 <div class="pt-2 flex items-center justify-between gap-4 border-t border-white/5">
-                    <span class="text-xs font-mono text-neutral-400">0% servicekosten via bunq.me</span>
+                    <span data-show-stock-note="show-8-januari" class="text-xs font-mono text-neutral-400">0% servicekosten via bunq.me</span>
                     <button type="button" data-select-show="show-8-januari"  class="h-10 px-5 rounded-full bg-[#C85A32] hover:bg-[#B34E2A] text-white shadow-[0_0_0_1px_rgba(200,90,50,0.5)] text-xs font-mono uppercase tracking-wider transition">Kies deze show</button>
                 </div>
             </article>
@@ -118,6 +119,6 @@
             </div>
         </div>
     </footer>
-    <script id="shows-data" type="application/json">{"shows":[{"slug":"show-8-januari","title":"20-jarig Jubileum: Wimpie & de Domino's Live","date":"8 januari 2027","time":"Inloop 19:00 uur","location":"Boomkerk - Glazen Huis","address":"Gibraltarstraat 55, Amsterdam","price":7.5,"status":"available","description":"Vier samen met ons het 20-jarig jubileum van Wimpie & de Domino's! Kom meezingen, dansen en feesten tijdens een onvergetelijke jubileumavond."}]}</script>
+    <script id="shows-data" type="application/json">{"shows":[{"slug":"show-8-januari","title":"20-jarig Jubileum: Wimpie & de Domino's Live","date":"8 januari 2027","time":"Inloop 19:00 uur","location":"Boomkerk - Glazen Huis","address":"Gibraltarstraat 55, Amsterdam","price":7.5,"maxTickets":100,"status":"available","description":"Vier samen met ons het 20-jarig jubileum van Wimpie & de Domino's! Kom meezingen, dansen en feesten tijdens een onvergetelijke jubileumavond."}]}</script>
 </body>
 </html>

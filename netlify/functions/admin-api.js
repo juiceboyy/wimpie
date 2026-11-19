@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { validateReleases, validatePodcasts, validateShows, validateArtworkUpload } = require('./admin-validators');
+const { validateReleases, validatePodcasts, validateShows, validateArtworkUpload, validateTicketCountUpdate } = require('./admin-validators');
+const { readTicketState, mutateTicketState } = require('./ticket-store');
 const { lookupReleaseByYoutube } = require('./release-lookup');
 
 const CORS_HEADERS = {
@@ -181,32 +182,29 @@ exports.handler = async (event) => {
     const action = (body.action || query.action || 'get').toLowerCase();
 
     if (action === 'verify') {
-        return jsonResponse(200, {
-            ok: true,
-            hasGithubToken: Boolean(process.env.GITHUB_TOKEN),
-            repo: process.env.GITHUB_REPO || 'juiceboyy/wimpie',
-            branch: process.env.GITHUB_BRANCH || 'main'
-        });
+        return jsonResponse(200, { ok: true, hasGithubToken: Boolean(process.env.GITHUB_TOKEN), repo: process.env.GITHUB_REPO || 'juiceboyy/wimpie', branch: process.env.GITHUB_BRANCH || 'main' });
     }
 
     if (action === 'get') {
         const token = process.env.GITHUB_TOKEN;
         const repo = process.env.GITHUB_REPO || 'juiceboyy/wimpie';
         const branch = process.env.GITHUB_BRANCH || 'main';
-
-        const releases = await loadJsonData('releases.json', repo, branch, token);
-        const podcasts = await loadJsonData('podcasts.json', repo, branch, token);
-        const shows = await loadJsonData('shows.json', repo, branch, token);
-
+        const [releases, podcasts, shows] = await Promise.all([
+            loadJsonData('releases.json', repo, branch, token),
+            loadJsonData('podcasts.json', repo, branch, token),
+            loadJsonData('shows.json', repo, branch, token)
+        ]);
+        let ticketCounts = {};
+        try {
+            const ticketState = await readTicketState(event);
+            ticketCounts = (ticketState && ticketState.counts) || {};
+        } catch (e) {
+            console.warn('Ticket counts ophalen mislukt:', e.message);
+        }
         if (!releases && !podcasts && !shows) {
             return jsonResponse(500, { error: 'Kon data niet inlezen van lokale bundel of GitHub.' });
         }
-
-        return jsonResponse(200, {
-            releases: releases || {},
-            podcasts: podcasts || { show: {}, episodes: [] },
-            shows: shows || { shows: [] }
-        });
+        return jsonResponse(200, { releases: releases || {}, podcasts: podcasts || { show: {}, episodes: [] }, shows: shows || { shows: [] }, ticketCounts });
     }
 
     if (action === 'lookup') {
@@ -269,6 +267,22 @@ exports.handler = async (event) => {
             commitMsg: `Update ${relPath} via Beheerders Dashboard`,
             localPath: resolveDataPath(targetConfig.filename)
         });
+    }
+
+    if (action === 'set_ticket_count') {
+        const err = validateTicketCountUpdate(body);
+        if (err) return jsonResponse(400, { error: err });
+        const slug = body.slug.trim();
+        const sold = body.sold;
+        try {
+            const res = await mutateTicketState(event, (state) => {
+                state.counts[slug] = sold;
+                state.updatedAt = new Date().toISOString();
+            }, `Admin correctie ticket count ${slug} [skip ci]`);
+            return jsonResponse(200, { ok: true, slug, sold, ticketCounts: res.state.counts, message: `Verkochte teller bijgewerkt naar ${sold}.` });
+        } catch (err) {
+            return jsonResponse(502, { error: err.message || 'Kon teller niet bijwerken.' });
+        }
     }
 
     return jsonResponse(400, { error: `Onbekende actie: ${action}` });
