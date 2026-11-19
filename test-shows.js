@@ -137,6 +137,7 @@ async function runTests() {
     // 5. Test admin-shows.js module initialization
     console.log('5. Testing admin-shows.js module integrity...');
     const utilsCode = fs.readFileSync(path.join(__dirname, 'admin-utils.js'), 'utf-8');
+    const showsUiCode = fs.readFileSync(path.join(__dirname, 'admin-shows-ui.js'), 'utf-8');
     const showsCode = fs.readFileSync(path.join(__dirname, 'admin-shows.js'), 'utf-8');
     const mockElements = {};
     const makeMockEl = () => ({
@@ -151,11 +152,13 @@ async function runTests() {
     };
     const mockWin = { document: mockDoc };
     new Function('window', utilsCode)(mockWin);
+    new Function('window', showsUiCode)(mockWin);
     new Function('window', 'document', showsCode)(mockWin, mockDoc);
     assert.ok(mockWin.adminShows, 'window.adminShows must be defined');
-    mockWin.adminShows.init(originalShows);
+    mockWin.adminShows.init(originalShows, { 'show-8-januari': 4 });
     assert.strictEqual(mockWin.adminShows.getData().shows.length, 2);
     assert.ok(mockElements['shows-list'].innerHTML.includes('8 januari 2027'));
+    assert.ok(mockElements['shows-list'].innerHTML.includes('Verkocht: 4 / 100'));
 
     execSync('node build-shows.js', { stdio: 'pipe' });
     process.env = originalEnv;

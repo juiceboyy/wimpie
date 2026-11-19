@@ -53,7 +53,7 @@ function renderShowCard(show) {
                 <div class="space-y-3">
                     <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
                         <span class="text-[#C85A32] uppercase tracking-wider font-medium">${date}</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider ${status.cls}">${status.label}</span>
+                        <span data-show-status-badge="${slug}" class="px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider ${status.cls}">${status.label}</span>
                     </div>
                     <div class="flex items-baseline justify-between gap-4">
                         <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em]">${title}</h2>
@@ -66,7 +66,7 @@ function renderShowCard(show) {
                     ${desc ? `<p class="text-neutral-300 text-sm leading-relaxed pt-1">${desc}</p>` : ''}
                 </div>
                 <div class="pt-2 flex items-center justify-between gap-4 border-t border-white/5">
-                    <span class="text-xs font-mono text-neutral-400">0% servicekosten via bunq.me</span>
+                    <span data-show-stock-note="${slug}" class="text-xs font-mono text-neutral-400">0% servicekosten via bunq.me</span>
                     <button type="button" data-select-show="${slug}" ${isSoldOut ? 'disabled' : ''} class="h-10 px-5 rounded-full ${isSoldOut ? 'bg-white/5 text-neutral-500 cursor-not-allowed' : 'bg-[#C85A32] hover:bg-[#B34E2A] text-white shadow-[0_0_0_1px_rgba(200,90,50,0.5)]'} text-xs font-mono uppercase tracking-wider transition">${isSoldOut ? 'Uitverkocht' : 'Kies deze show'}</button>
                 </div>
             </article>`;
@@ -92,13 +92,13 @@ function renderFeaturedShowsSection(data) {
         const isSoldOut = show.status === 'sold_out';
         const status = STATUS_META[show.status] || STATUS_META.available;
 
-        return `            <article class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-5">
+        return `            <article data-home-show-slug="${slug}" class="bg-[#141414] rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex flex-col justify-between space-y-5">
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between gap-2 text-xs font-mono"><span class="text-[#C85A32] uppercase tracking-wider">${date}</span><span class="px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider ${status.cls}">${status.label}</span></div>
+                    <div class="flex items-center justify-between gap-2 text-xs font-mono"><span class="text-[#C85A32] uppercase tracking-wider">${date}</span><span data-home-show-status class="px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider ${status.cls}">${status.label}</span></div>
                     <div class="flex items-baseline justify-between gap-3"><h3 class="font-serif text-2xl font-semibold text-white">${title}</h3><span class="font-serif text-2xl font-semibold text-white shrink-0">${priceLabel}</span></div>
                     <p class="text-xs font-mono text-neutral-400">${location} &bull; ${time}</p>
                 </div>
-                <a href="/tickets?show=${slug}" class="h-11 px-6 rounded-full ${isSoldOut ? 'bg-white/5 text-neutral-400' : 'bg-[#C85A32] hover:bg-[#B34E2A] text-white shadow-[0_0_0_1px_rgba(200,90,50,0.5)]'} text-xs font-mono uppercase tracking-wider inline-flex items-center justify-center gap-2 transition">${isSoldOut ? 'Bekijk details' : `Bestel kaarten (${priceLabel})`}</a>
+                <a data-home-show-cta href="/tickets?show=${slug}" class="h-11 px-6 rounded-full ${isSoldOut ? 'bg-white/5 text-neutral-400' : 'bg-[#C85A32] hover:bg-[#B34E2A] text-white shadow-[0_0_0_1px_rgba(200,90,50,0.5)]'} text-xs font-mono uppercase tracking-wider inline-flex items-center justify-center gap-2 transition">${isSoldOut ? 'Bekijk details' : `Bestel kaarten (${priceLabel})`}</a>
             </article>`;
     }).join('\n');
 
@@ -143,6 +143,7 @@ function renderTicketsPage(data) {
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="qr.js" defer></script>
     <script src="app.js" defer></script>
+    <script src="tickets-ui.js" defer></script>
     <script src="tickets.js" defer></script>
 </head>
 <body class="bg-[#0C0C0C] text-[#FDFBF7] font-sans antialiased selection:bg-[#C85A32] selection:text-white min-h-screen flex flex-col justify-between">

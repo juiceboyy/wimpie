@@ -229,9 +229,43 @@ function initContactForm() {
     });
 }
 
+async function initHomeShowsAvailability() {
+    const cards = document.querySelectorAll('[data-home-show-slug]');
+    if (!cards.length || window.location.protocol === 'file:') return;
+    try {
+        const res = await fetch('/api/tickets-api', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+        const showsMap = (data && data.shows) || {};
+        cards.forEach(card => {
+            const slug = card.getAttribute('data-home-show-slug');
+            const info = showsMap[slug];
+            if (!info) return;
+            const statusEl = card.querySelector('[data-home-show-status]');
+            const ctaEl = card.querySelector('[data-home-show-cta]');
+            if (info.soldOut) {
+                if (statusEl) {
+                    statusEl.textContent = 'Uitverkocht';
+                    statusEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider text-red-400 bg-red-500/10';
+                }
+                if (ctaEl) {
+                    ctaEl.textContent = 'Uitverkocht';
+                    ctaEl.className = 'h-11 px-6 rounded-full bg-white/5 text-neutral-400 text-xs font-mono uppercase tracking-wider inline-flex items-center justify-center gap-2 transition';
+                }
+            } else if (info.lowStock && statusEl) {
+                statusEl.textContent = info.remaining === 1
+                    ? 'Nog 1 kaart beschikbaar'
+                    : `Nog ${info.remaining} kaarten beschikbaar`;
+                statusEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider text-amber-300 bg-amber-500/15';
+            }
+        });
+    } catch (_) { /* negeer als offline */ }
+}
+
 function initApp() {
     initBookingForm();
     initContactForm();
+    initHomeShowsAvailability();
 
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();

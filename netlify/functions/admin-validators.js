@@ -78,6 +78,11 @@ function validateShows(data) {
         if (typeof show.price !== 'number' || Number.isNaN(show.price) || !Number.isFinite(show.price) || show.price < 0) {
             return `Show "${show.slug}" heeft een ongeldige prijs.`;
         }
+        if (show.maxTickets !== undefined && show.maxTickets !== null) {
+            if (typeof show.maxTickets !== 'number' || !Number.isInteger(show.maxTickets) || show.maxTickets < 0) {
+                return `Show "${show.slug}" heeft een ongeldige ticket cap (gebruik een geheel getal >= 0).`;
+            }
+        }
         const status = show.status || 'available';
         if (!allowedStatuses.includes(status)) {
             return `Show "${show.slug}" heeft een ongeldige status: "${status}".`;
@@ -104,9 +109,24 @@ function validateArtworkUpload(body) {
     return null;
 }
 
+function validateTicketCountUpdate(body) {
+    if (!body || typeof body !== 'object') {
+        return 'Ongeldig verzoek.';
+    }
+    const slug = typeof body.slug === 'string' ? body.slug.trim() : '';
+    if (!slug || !/^[a-z0-9_-]+$/i.test(slug)) {
+        return 'Ongeldige show-slug voor teller correctie.';
+    }
+    if (typeof body.sold !== 'number' || !Number.isInteger(body.sold) || body.sold < 0) {
+        return 'Aantal verkochte kaarten moet een geheel getal >= 0 zijn.';
+    }
+    return null;
+}
+
 module.exports = {
     validateReleases,
     validatePodcasts,
     validateShows,
-    validateArtworkUpload
+    validateArtworkUpload,
+    validateTicketCountUpdate
 };

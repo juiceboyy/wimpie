@@ -38,6 +38,7 @@ if (!process.env.ADMIN_PIN) {
 }
 
 const adminApiHandler = require('./netlify/functions/admin-api').handler;
+const ticketsApiHandler = require('./netlify/functions/tickets-api').handler;
 
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
@@ -66,9 +67,35 @@ const server = http.createServer(async (req, res) => {
     const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     let pathname = decodeURIComponent(parsedUrl.pathname);
 
-    // Redirect /admin naar /admin.html
+    // Redirect /admin en /tickets naar .html
     if (pathname === '/admin' || pathname === '/admin/') {
         pathname = '/admin.html';
+    } else if (pathname === '/tickets' || pathname === '/tickets/') {
+        pathname = '/tickets.html';
+    }
+
+    // Publieke Tickets API intercept
+    if (pathname === '/api/tickets-api' || pathname === '/.netlify/functions/tickets-api') {
+        const chunks = [];
+        req.on('data', chunk => chunks.push(chunk));
+        req.on('end', async () => {
+            const rawBody = Buffer.concat(chunks).toString('utf-8');
+            const event = {
+                httpMethod: req.method,
+                headers: req.headers,
+                queryStringParameters: Object.fromEntries(parsedUrl.searchParams.entries()),
+                body: rawBody
+            };
+            try {
+                const response = await ticketsApiHandler(event, {});
+                res.writeHead(response.statusCode, response.headers || {});
+                res.end(response.body);
+            } catch (err) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+        return;
     }
 
     // Serverless API intercept

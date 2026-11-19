@@ -8,6 +8,7 @@
       "location": "Boomkerk - Glazen Huis",
       "address": "Gibraltarstraat 55, Amsterdam",
       "price": 7.5,
+      "maxTickets": 100,
       "status": "available",
       "description": "Vier samen met ons het 20-jarig jubileum van Wimpie & de Domino's! Kom meezingen, dansen en feesten tijdens een onvergetelijke jubileumavond."
     },
@@ -19,6 +20,7 @@
       "location": "Studio Idee",
       "address": "Driehovenlaan 2, 3632 BK Loenen aan de Vecht",
       "price": 5.0,
+      "maxTickets": 60,
       "status": "hidden",
       "description": "Een avond i.s.m. Special People waarin meerdere artiesten met een beperking centraal staan."
     }

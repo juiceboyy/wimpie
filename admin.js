@@ -72,6 +72,18 @@ window.adminApp = (function () {
         });
     }
 
+    async function postAction(payload, fallbackError) {
+        const res = await apiRequest('/api/admin-api', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error || fallbackError);
+        }
+        return result;
+    }
+
     async function loadData() {
         try {
             const res = await apiRequest('/api/admin-api?action=get');
@@ -86,7 +98,7 @@ window.adminApp = (function () {
             const data = await res.json();
             if (window.adminReleases) window.adminReleases.init(data.releases);
             if (window.adminPodcasts) window.adminPodcasts.init(data.podcasts);
-            if (window.adminShows) window.adminShows.init(data.shows);
+            if (window.adminShows) window.adminShows.init(data.shows, data.ticketCounts || {});
             hideAuthModal();
         } catch (err) {
             showToast(err.message, 'error');
@@ -100,26 +112,11 @@ window.adminApp = (function () {
         if (statusBadge) statusBadge.textContent = 'Opslaan...';
 
         try {
-            const res = await apiRequest('/api/admin-api', {
-                method: 'POST',
-                body: JSON.stringify({
-                    action: 'save',
-                    target,
-                    data
-                })
-            });
-
-            const result = await res.json();
-            if (!res.ok) {
-                throw new Error(result.error || 'Opslaan mislukt.');
-            }
-
-            if (result.mode === 'github') {
-                showToast('Succesvol gepubliceerd via GitHub! Netlify bouwt de site...', 'success');
-            } else {
-                showToast(result.message || 'Succesvol opgeslagen.', 'success');
-            }
-
+            const result = await postAction({ action: 'save', target, data }, 'Opslaan mislukt.');
+            const msg = result.mode === 'github'
+                ? 'Succesvol gepubliceerd via GitHub! Netlify bouwt de site...'
+                : (result.message || 'Succesvol opgeslagen.');
+            showToast(msg, 'success');
             if (statusBadge) statusBadge.textContent = 'Opgeslagen';
             return true;
         } catch (err) {
@@ -132,34 +129,22 @@ window.adminApp = (function () {
     }
 
     async function lookupRelease(params) {
-        const res = await apiRequest('/api/admin-api', {
-            method: 'POST',
-            body: JSON.stringify({
-                action: 'lookup',
-                ...(params || {})
-            })
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error || 'Platform links ophalen mislukt.');
-        }
-        return result;
+        return postAction({ action: 'lookup', ...(params || {}) }, 'Platform links ophalen mislukt.');
     }
 
     async function uploadArtwork({ filename, contentBase64 }) {
-        const res = await apiRequest('/api/admin-api', {
-            method: 'POST',
-            body: JSON.stringify({
-                action: 'upload_artwork',
-                filename,
-                contentBase64
-            })
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error || 'Artwork uploaden mislukt.');
+        return postAction({ action: 'upload_artwork', filename, contentBase64 }, 'Artwork uploaden mislukt.');
+    }
+
+    async function setTicketCount(slug, sold) {
+        try {
+            const result = await postAction({ action: 'set_ticket_count', slug, sold }, 'Teller bijwerken mislukt.');
+            showToast(result.message || 'Verkochte teller bijgewerkt.', 'success');
+            return result.ticketCounts || { [slug]: sold };
+        } catch (err) {
+            showToast(err.message, 'error');
+            return null;
         }
-        return result;
     }
 
     function showAuthModal() {
@@ -274,6 +259,7 @@ window.adminApp = (function () {
         lookupRelease,
         refreshIcons,
         saveData,
+        setTicketCount,
         showToast,
         switchTab,
         uploadArtwork
